@@ -1,0 +1,55 @@
+$hover-color: #000000
+
+.footer
+    background-color: var(--primary)
+    background-image: url(https://dahz.daffyhazan.com/pabu/wp-content/uploads/2018/06/footer-bg-white-brush-5.png)
+    background-position: center top
+    background-repeat: repeat-x
+    background-size: auto
+    padding-top: 100px
+    padding-bottom: 40px
+    .title-footer
+        color: #ffffff
+        font-weight: 600
+        font-size: 17.5px
+        line-height: 1.25
+        letter-spacing: 1px
+    .site_copyright
+        color: #e0e0e0
+    .menu-footer
+        list-style: none
+        display: inline-flex
+        a
+            display: inline-block
+            padding: 0 12px
+            color: #ffffff
+            transition: .3s
+            &:hover
+                color: $hover-color
+                &:after
+                    width: 100%
+            &:after
+                content: ''
+                display: block
+                width: 0
+                height: 1px
+                transition: .6s width
+                background-color: $hover-color
+    .footer-icon svg
+        fill: #ffffff
+        transition: .3s
+        &:hover
+            cursor: pointer
+            fill: $hover-color
+    .menu-items-footer
+        a
+            color: #ffffff
+            transition: .3s
+            &:hover
+                color: $hover-color
+@media only screen and (max-width: 768px)
+    .footer
+        .site_copyright .copyright-text
+            text-align: center
+        .categories-sect , .info-sect , .menu-footer
+            display: none

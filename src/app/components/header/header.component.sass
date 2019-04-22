@@ -1,0 +1,134 @@
+.header-section1
+    background-color: var(--primary)
+    background-image: url(https://dahz.daffyhazan.com/pabu/wp-content/uploads/2018/06/header-brush-7.png)
+    background-position: center bottom
+    background-repeat: repeat-x
+    .menu-header1
+        .user-circle
+            width: 30px
+            height: 30px
+            cursor: pointer
+        a
+            color: rgba(255,255,255,0.9)
+            font-weight: 600
+            font-size: 16px
+            padding: 10px 0
+            transition: .3s
+            &:hover
+                color: #ffffff
+    @media only screen and (max-width: 768px)
+        display: none
+.header-section2
+    border-bottom: 1px solid #e0e0e0
+    padding: 15px 0 15px 0
+    &.scroll-header
+        position: fixed !important
+        box-shadow: 0 2px 8px rgba(0,0,0,.08)
+        background-color: #ffffff
+        animation: 300ms ease-in-out 0s normal none 1 running fadeInDown
+        .menu-header2
+            & li a, path
+                color: #5e5e5e !important
+                fill: #5e5e5e !important
+    .menu-header2
+        li
+            a
+                color: #5e5e5e
+                font-weight: 600
+                font-size: 16px
+                padding: 10px 0
+                &:hover
+                    color: var(--primary)
+        .cart-short-view
+            .count-cart
+                min-width: 22px
+                height: 22px
+                padding: 0 5px
+                border-radius: 500px
+                background-color: var(--primary)
+                font-size: .875rem
+    @media only screen and (min-width: 768px)
+        &.text-home
+            position: absolute
+            top: 0
+            right: 0
+            left: 0
+            z-index: 1030
+            .menu-header2 li a, path
+                color: rgba(255,255,255,0.9)
+                fill: rgba(255,255,255,0.9)
+    @media only screen and (max-width: 768px)
+        padding: 5px 0
+        position: relative
+        &.text-home svg path
+            fill: #5e5e5e !important
+        .menu-header2
+            justify-content: space-between
+            max-width: 100%
+            li, .cart-total, .count-cart
+                display: none
+            li.logo , li.icons-header2 ,li.icon-menu-he
+                display: block
+
+.icon_search-he
+    cursor: pointer
+    svg path
+        fill: rgba(255,255,255,0.9)
+    &:hover svg path
+        fill: #ffffff
+
+@keyframes fadeInDown
+    from
+        opacity: 0
+        transform: translate3d(0, -100%, 0)
+
+    to
+        opacity: 1
+        transform: none
+
+/* MODAL SEARCH */
+.modal-search
+    z-index: 2000
+    background-color: rgba(255, 255, 255, 0.95)
+    display: none
+    transition: opacity .15s linear
+    &.active
+        display: block
+    .modal-search-close
+        position: absolute
+        z-index: 1010
+        top: 10px
+        right: 10px
+        padding: 5px
+        cursor: pointer
+        svg line
+            stroke: var(--primary)
+    .modal-search-from
+        padding-top: 2.5rem
+    .search-input
+        font-size: inherit
+        line-height: 2.5
+        padding: 0
+        border: 0
+        background-color: transparent
+        opacity: .5
+        transition: .3s
+        width: 80%
+        min-height: 50px
+        padding: 10px
+        border-bottom: 1px solid var(--primary)
+        outline: 0
+        background: 0 0
+        color: inherit
+        font-size: inherit
+        font-family: inherit
+        box-sizing: border-box
+        font-size: 36px
+        margin: auto
+        display: block
+        &:focus
+            opacity: 1
+    @media only screen and (max-width: 768px)
+        .search-input
+            line-height: 1
+            font-size: 30px

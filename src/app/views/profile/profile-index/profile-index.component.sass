@@ -1,0 +1,36 @@
+.profile
+    border-radius: 20px
+    background-color: #191919
+    overflow: hidden
+    .avatar
+        width: 120px
+        height: 120px
+        margin: 0 auto
+        padding: 20px 0
+        img
+            border-radius: 50%
+    .list-items
+        background-color: var(--primary)
+        &:before
+            bottom: 100%
+            left: 50%
+            border: solid transparent
+            content: ''
+            height: 0
+            width: 0
+            position: absolute
+            pointer-events: none
+            border-color: rgba(231, 76, 60, 0)
+            border-bottom-color: #e74c3c
+            border-width: 10px
+            margin-left: -10px
+        li
+            border-top: 1px solid #891d1d
+            cursor: pointer
+            &:first-child
+                border: none
+            &:hover
+                background-color: #FF7364
+
+
+

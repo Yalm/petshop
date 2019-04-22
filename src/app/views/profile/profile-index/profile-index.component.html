@@ -1,0 +1,31 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4 p-md-0">
+            <div class="profile">
+                <div class="avatar mb-5">
+                    <img [src]="customer.photoURL" [alt]="customer.name" class="img-fluid">
+                </div>
+                <ul class="list-unstyled list-items position-relative text-center mb-0 font-weight-bold">
+                    <li class="py-4">
+                        <a href="" class="text-white text-decoration-none">Inicio</a>
+                    </li>
+                    <li class="py-4">
+                        <a href="" class="text-white text-decoration-none">Pedidos</a>
+                    </li>
+                    <li class="py-4">
+                        <a href="" class="text-white text-decoration-none">Detalles de la cuenta</a>
+                    </li>
+                    <li class="py-4" (click)="auth.signOut()">
+                        <a class="text-white text-decoration-none"> Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>
+
+
