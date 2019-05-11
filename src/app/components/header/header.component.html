@@ -39,13 +39,24 @@
         <li class="icons-header2 ml-md-auto">
             <a class="cart-short-view text-decoration-none" routerLink="/cart" aria-label="Ir a la pagina de carrito">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path d="M16,4V15.38L14.76,16H5.24L4,15.38V4H16M13.5,1h-7L6,1.52V3H3V16l2,1H15l2-1V3H14V1.52L13.5,1ZM7,3V2h6V3Z" fill="#5e5e5e"></path><path d="M7,7H6V6H7Zm7-1H13V7h1ZM7,4H6V5H7Zm7,0H13V5h1Z" fill="#5e5e5e"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+                        <path d="M16,4V15.38L14.76,16H5.24L4,15.38V4H16M13.5,1h-7L6,1.52V3H3V16l2,1H15l2-1V3H14V1.52L13.5,1ZM7,3V2h6V3Z" fill="#5e5e5e"></path>
+                        <path d="M7,7H6V6H7Zm7-1H13V7h1ZM7,4H6V5H7Zm7,0H13V5h1Z" fill="#5e5e5e"></path>
+                    </svg>
                 </span>
-                <span class="cart-total mx-lg-2">S/ 50.00</span>
-                <span class="count-cart d-md-inline-flex justify-content-center text-white">5</span>
+                <ng-container *ngIf="shoppingCartService.cart$ | async as cart; else cart_empty">
+                    <span class="cart-total mx-lg-2">S/ {{cart.totalCart() | number: '1.2-2' }}</span>
+                    <span class="count-cart d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
+                </ng-container>
+                <ng-template #cart_empty>
+                    <span class="cart-total mx-lg-2">S/ 0.00</span>
+                    <span class="count-cart d-md-inline-flex justify-content-center text-white">0</span>
+                </ng-template>
             </a>
             <span class="icon_search-he" [className]="home ? 'pl-2' : 'd-md-none'">
-                <svg (click)="search = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path d="M11.5,2.46a6,6,0,0,0-4.56,9.89l-3.3,3.3.71.71,3.3-3.3A6,6,0,1,0,11.5,2.46Zm0,11a5,5,0,1,1,5-5A5,5,0,0,1,11.5,13.46Z" fill="#5e5e5e"></path></svg>
+                <svg (click)="search = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
+                    <path d="M11.5,2.46a6,6,0,0,0-4.56,9.89l-3.3,3.3.71.71,3.3-3.3A6,6,0,1,0,11.5,2.46Zm0,11a5,5,0,1,1,5-5A5,5,0,0,1,11.5,13.46Z" fill="#5e5e5e"></path>
+                </svg>
             </span>
         </li>
     </ul>
@@ -53,7 +64,10 @@
 
 <div class="modal-search fixed-top w-100 h-100 p-3" [class.active]="search">
     <span class="modal-search-close" (click)="search = false">
-        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"></line><line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"></line></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"></line>
+            <line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"></line>
+        </svg>
     </span>
     <form class="modal-search-from">
         <input type="text" aria-label="search products" name="search" placeholder="Buscar..." class="search-input" autocomplete="off" [autofocus]="search">

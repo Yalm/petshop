@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Signika')
 
 body
-    font-family: "Signika", serif
+    font-family: 'Signika', serif
     font-style: normal
     font-weight: 400
     background-color: #ffffff
@@ -14,22 +14,20 @@ body
 \:root
     --primary: #da573e
 
-/* BUTTON PET SHOP */
-.button-petshop
-    border-radius: 5px
+/* DEFAULT CSS */
+.c-p
+    cursor: pointer
+
+@mixin hover-pet-shop($color)
     font-size: 16px
+    border-radius: 5px
     letter-spacing: 1px
-    background-color: var(--primary)
-    border: none
-    padding-left: 3.75em
-    padding-right: 3.75em
+    font-weight: 600
     min-height: 3.575em
     overflow: hidden
-    z-index: 0
-    font-weight: 600
     &:after
         content: ''
-        background-color: #000
+        background-color: #000000
         position: absolute
         top: -2px
         right: -2px
@@ -39,13 +37,34 @@ body
         transition: .3s
         z-index: -1
     &:hover
+        color: #ffffff
         &:after
-            background-color: #4c4c4c
+            background-color: $color
             transform: none
     &:disabled
         background-color: rgba(218, 87, 62,0.7)
         &:after
             content: none
+/* BUTTON PET SHOP */
+.button-petshop
+    background-color: var(--primary)
+    border: none
+    padding-left: 3.75em
+    padding-right: 3.75em
+    min-height: 3.575em
+    z-index: 0
+    @include hover-pet-shop(#4c4c4c)
+
+/* LINK PET SHOP */
+.link-pet-shop
+    border: 1px solid var(--primary)
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    color: var(--primary)
+    padding: 0 .813em
+    transition: border-color .3s
+    @include hover-pet-shop(var(--primary))
 /* INPUT PET SHOP */
 .form-group
     .form-control

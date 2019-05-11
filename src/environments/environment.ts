@@ -4,6 +4,10 @@
 
 export const environment = {
     production: false,
+    cuqli: {
+        public_key: 'pk_test_3h54x8PMEbZy9YxS',
+        logo: 'assets/img/logo.png',
+    },
     firebase: {
         apiKey: "AIzaSyBRtDychy2Bz4gEpKkU4JEIgKfaAnkz56E",
         authDomain: "yalm-94feb.firebaseapp.com",

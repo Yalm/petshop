@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProductService } from 'src/app/services/product/product.service';
+import { Product } from 'src/app/models/Product.model';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-shop',
-  templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.sass']
+    selector: 'app-shop',
+    templateUrl: './shop.component.html',
+    styleUrls: ['./shop.component.sass']
 })
-export class ShopComponent implements OnInit {
+export class ShopComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+    public products: Product[];
+    private subscription: Subscription;
 
-  ngOnInit() {
-  }
+    constructor(private productService: ProductService) { }
+
+    ngOnInit() {
+        this.subscription = this.productService.index().subscribe(response => this.products = response);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 
 }

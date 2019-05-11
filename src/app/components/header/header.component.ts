@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.sass']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
     public home: boolean;
     public search: boolean;
 
-    constructor(private router: Router,public auth: AuthService) { }
+    private subscriptionRouter: Subscription;
+
+    constructor(private router: Router,
+        public auth: AuthService,
+        private shoppingCartService: ShoppingCartService) { }
 
     ngOnInit() {
 
-        this.router.events.subscribe(
+        this.subscriptionRouter = this.router.events.subscribe(
             (event: any) => {
                 if (event instanceof NavigationEnd) {
                     this.home = this.router.url == '/' ? true : false;
@@ -35,6 +41,10 @@ export class HeaderComponent implements OnInit {
                 NAV.remove('scroll-header');
             }
         }
+    }
+
+    ngOnDestroy() {
+        this.subscriptionRouter.unsubscribe();
     }
 
 }

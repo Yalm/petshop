@@ -19,11 +19,11 @@ export class AuthService {
         private afs: AngularFirestore,
         private router: Router,
     ) {
-        this.customer$ = this.afAuth.authState.pipe(
+        this.customer$ = this.afAuth.authState
+        .pipe(
             switchMap(customer => {
                 if (customer) {
-                    if (!customer.emailVerified) { return of(null); }
-                    else { return this.afs.doc<Customer>(`customers/${customer.uid}`).valueChanges(); }
+                    return this.afs.doc<Customer>(`customers/${customer.uid}`).valueChanges();
                 } else {
                     return of(null);
                 }
@@ -38,12 +38,7 @@ export class AuthService {
 
     public async defaultSignIn(email: string, password: string) {
         const credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-        if (!credential.user.emailVerified) {
-            await this.afAuth.auth.signOut();
-            throw "email no verifed";
-        } else {
-            return credential;
-        }
+        return credential;
     }
 
     public async doRegister(email: string, password: string, name: string): Promise<void> {

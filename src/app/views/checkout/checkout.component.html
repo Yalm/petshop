@@ -1,0 +1,96 @@
+<app-breadcrumb title="Pago" [image]="null"></app-breadcrumb>
+<div class="container">
+    <div class="row pb-5 d-flex justify-content-center" *ngIf="shoppingCartService.cart$ | async as cart">
+        <div class="col-xl-8 col-lg-7" *ngIf="!order">
+            <h2>Infomarción extra</h2>
+            <p>Si desea dejarnos un comentario acerca de su pedido, por favor, escríbalo a continuación</p>
+            <div class="form-group">
+                <label for="txtPlus">Infomarción extra de pedido (optional)</label>
+                <textarea class="form-control" id="txtPlus" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5 col-11 order-details" *ngIf="!order">
+            <table class="checkout-review-order">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cart.items">
+                        <td>{{item.name}} x{{item.quantity}}</td>
+                        <td class="text-right">S/{{ (item.price * item.quantity) | number: '1.2-2' }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="cart-subtotal">
+                        <td>Subtotal</td>
+                        <td class="text-right">S/{{cart.totalCart() | number: '1.2-2'}}</td>
+                    </tr>
+                    <tr class="order-total">
+                        <td>Total</td>
+                        <td class="text-right total">S/{{cart.totalCart() | number: '1.2-2' }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="custom-control custom-radio mt-3">
+                <input type="radio" class="custom-control-input" id="customCheck1" checked>
+                <label class="custom-control-label" for="customCheck1">Tarjeta de crédito o débito | Visa, Mastercard y
+                    más!</label>
+            </div>
+            <hr>
+            <button type="button" (click)="openCulqui(cart.totalCart())" class="button-petshop text-center text-white position-relative w-100">Finalizar</button>
+        </div>
+        <div class="col-12 end-order pb-5" *ngIf="order">
+            <h1>Gracias. Tu orden ha sido recibida.</h1>
+            <ul class="pt-2 pb-3">
+                <li>
+                    <span>Número de orden:</span>
+                    <strong class="ml-2">{{order.id}}</strong>
+                </li>
+                <li>
+                    <span>Fecha:</span>
+                    <strong class="ml-2">{{order.created_at}}</strong>
+                </li>
+                <li>
+                    <span>Total:</span>
+                    <strong class="ml-2">S/{{cart.totalCart()}}</strong>
+                </li>
+                <li>
+                    <span>Metodo de Pago:</span>
+                    <strong class="ml-2">Tarjeta de credito</strong>
+                </li>
+            </ul>
+            <h3>Pedido detalle</h3>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cart.items">
+                        <td>{{item.name}}</td>
+                        <td class="text-right">S/{{ (item.price * item.quantity).toFixed(2) }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="cart-subtotal font-weight-bold">
+                        <td>Subtotal:</td>
+                        <td class="text-right">S/{{total}}</td>
+                    </tr>
+                    <tr class="payment-method font-weight-bold">
+                        <td>Metododo de Pago:</td>
+                        <td class="text-right">Tarjeta de credito</td>
+                    </tr>
+                    <tr class="order-total font-weight-bold">
+                        <td>Total:</td>
+                        <td class="text-right total">S/{{cart.totalCart()}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

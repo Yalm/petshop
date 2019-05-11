@@ -16,9 +16,8 @@
                     </div>
                 </div>
                 <p class="text-center">O inicia sesión con </p>
-                <div class="alert alert-warning" role="alert" *ngIf="warEmailVerifiedEmail">
-                    <strong>Advertencia!</strong> Debes confirmar tu cuenta le hemos enviado un código de activación,
-                    verifique su correo electrónico.
+                <div class="alert alert-danger" role="alert" *ngIf="messageBannedUser">
+                    Su cuenta ha sido suspendida. Póngase en contacto con el administrador.
                 </div>
                 <div class="form-group">
                     <label for="email" class="font-weight-bold">Dirección de correo electrónico (requerido)</label>

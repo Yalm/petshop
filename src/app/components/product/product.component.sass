@@ -1,0 +1,20 @@
+.product
+    overflow: hidden
+    .product-category
+        font-size: .875em
+        color: var(--primary)
+    .product-title a
+        color: #2a2926
+        &:hover
+            color: #6d6d6d
+    .product-detail__price
+        flex-direction: column
+        height: 20px
+        overflow: hidden
+        line-height: 20px
+        & *
+            transition: .3s
+            color: var(--primary)
+    &:hover
+        .product-price
+            margin-top: -20px

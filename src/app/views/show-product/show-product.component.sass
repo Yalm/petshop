@@ -1,0 +1,33 @@
+.bread-crumb
+    border-bottom: 1px solid #e0e0e0
+    padding: 20px 0
+    li
+        &:first-child::before
+            content: ''
+        &::before
+            content: "/"
+            display: inline-block
+            margin: 0 5px
+            color: inherit
+    .name-product
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        max-width: 500px
+        margin: 0
+        @media only screen and (max-width: 768px)
+            max-width: 250px
+        @media only screen and (max-width: 450px)
+            max-width: 150px
+
+.plus_info
+    border-bottom: 1px solid #dee2e6
+    .nav-item
+        font-size: 25px
+        line-height: 1.25
+        letter-spacing: 1px
+        .nav-link
+            border: none
+            color: #2a2926
+            &.active
+                border-bottom: 3px solid var(--primary)
