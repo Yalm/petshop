@@ -22,16 +22,11 @@ export class ProductService {
 
     public show(id: string): Observable<Product> {
         return this.firestore.collection('products').doc(id).get().pipe(
-            switchMap(payload =>
-                iif(() => payload.exists == true,
-                    this.categoryService.show(payload.data().category.id).pipe(map(result => {
-                        const data = payload.data() as Product;
-                        data.category = result;
-                        return { id: payload.id, ...data };
-                    })),
-                    of(null)
-                )
-            ));
+            map(payload => {
+                if (!payload.exists) { return null }
+                const data = payload.data() as Product;
+                return { id: payload.id, ...data };
+            }));
     }
 
 }

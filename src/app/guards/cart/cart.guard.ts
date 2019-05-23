@@ -16,11 +16,7 @@ export class CartGuard implements CanActivate {
                 if (cart.items.length > 0) {
                     return true;
                 } else {
-                    return this.router.createUrlTree(['/login'], {
-                        queryParams: {
-                            return: state.url
-                        }
-                    });
+                    return this.router.parseUrl('/cart');
                 }
             })
         );

@@ -1,4 +1,4 @@
-<app-breadcrumb title="Carrito" [image]="null"></app-breadcrumb>
+<app-breadcrumb title="Carrito" [image]="null" subTitle="Carrito"></app-breadcrumb>
 <div class="container" *ngIf="shoppingCartService.cart$ | async as cart">
     <div class="row">
         <div class="cart col-12">
@@ -20,12 +20,12 @@
                                     <path fill="none" stroke="#000" stroke-width="1.06" d="M16,4 L4,16"></path>
                                 </svg>
                             </i>
-                            <a class="item-thumbnail" routerLink="/">
+                            <a class="item-thumbnail" [routerLink]="['/p',item.url]">
                                 <img [src]="item.cover" [alt]="item.name" class="img-fluid">
                             </a>
                             <div class="item-name">
                                 <span class="d-md-none">Producto:</span>
-                                <a routerLink="/" class="text-decoration-none">{{item.name}}</a>
+                                <a [routerLink]="['/p',item.url]" class="text-decoration-none">{{item.name}}</a>
                             </div>
                         </td>
                         <td class="item-price">
@@ -34,7 +34,7 @@
                         </td>
                         <td class="item-quantity">
                             <span class="d-md-none">Cantidad:</span>
-                            <app-qty [product]="item" [btn]="false" [quantity]="item.quantity"></app-qty>
+                            <app-qty [product]="item" [btn]="false" [quantity]="item.quantity" (changeQty)="item.quantity_edit = $event"></app-qty>
                         </td>
                         <td class="item-total">
                             <span class="d-md-none">Total:</span>
@@ -42,6 +42,11 @@
                         </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <button type="button" #btnUpdate (click)="updateItem(cart.items,btnUpdate)"
+                        class="button-petshop text-center text-white position-relative ml-auto mt-4">Actualizar
+                        carrito</button>
+                </tfoot>
             </table>
             <table class="cart-total" *ngIf="cart.items.length > 0">
                 <thead>
@@ -64,17 +69,16 @@
                 </tbody>
                 <tfoot class="w-100">
                     <a class="button-petshop text-center text-white text-decoration-none position-relative d-flex align-items-center justify-content-center mt-4"
-                    routerLink="/checkout">Procesar Compra</a>
+                        routerLink="/checkout">Procesar Compra</a>
                 </tfoot>
             </table>
-            <div class="empty-cart pb-5" *ngIf="cart.items.length < 0">
+            <div class="empty-cart pb-5" *ngIf="cart.items.length < 1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 512 512">
 
                     <polygon points="473.668,139.109 410.282,303.914 153.733,303.914 98.973,30.118 0,30.118 0,71.187 65.305,71.187
                 120.064,344.984 438.488,344.984 512,153.853 		" />
 
-                    <path
-                        d="M191.658,358.674c-33.969,0-61.604,27.634-61.604,61.604s27.636,61.604,61.604,61.604
+                    <path d="M191.658,358.674c-33.969,0-61.604,27.634-61.604,61.604s27.636,61.604,61.604,61.604
                 c33.969,0,61.604-27.634,61.604-61.604S225.626,358.674,191.658,358.674z M191.658,440.813c-11.323,0-20.535-9.211-20.535-20.535
                 s9.212-20.535,20.535-20.535c11.323,0,20.535,9.211,20.535,20.535S202.981,440.813,191.658,440.813z" />
 

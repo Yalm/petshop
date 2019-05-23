@@ -19,28 +19,28 @@ export class ShoppingCartService {
         this.getCart();
     }
 
-    public add(item: CartItem) {
+    public add(item: CartItem): Promise<void> {
         let itemReturn;
         switch (this.cart_init.add(item)) {
             case 'add':
                 itemReturn = this.firestore.doc(`carts/${this.cart_init.id}`)
-                    .update({ items: firebase.firestore.FieldValue.arrayUnion(this.cart_init.convertInJson(item.id)) })
+                    .set({ items: firebase.firestore.FieldValue.arrayUnion(this.cart_init.convertInJson(item.id)) }, { merge: true })
                     .catch(() => {
                         this.cart_init.delete(item.id);
                     });
                 break;
             case 'update':
                 itemReturn = this.firestore.firestore.runTransaction(transaction => {
-                        const cartRef = this.firestore.firestore.doc(`carts/${this.cart_init.id}`);
-                        return transaction.get(cartRef).then(doc => {
-                            const items = doc.data().items;
-                            const index = this.cart_init.items.findIndex(x => x.id == item.id);
-                            items[index].quantity = this.cart_init.items[index].quantity;
-                            transaction.update(cartRef, { items: items });
-                        });
-                    }).catch(() => {
-                        this.cart_init.delete(item.id);
+                    const cartRef = this.firestore.firestore.doc(`carts/${this.cart_init.id}`);
+                    return transaction.get(cartRef).then(doc => {
+                        const items = doc.data().items;
+                        const index = this.cart_init.items.findIndex(x => x.id == item.id);
+                        items[index].quantity = this.cart_init.items[index].quantity;
+                        transaction.update(cartRef, { items: items });
                     });
+                }).catch(() => {
+                    this.cart_init.delete(item.id);
+                });
                 break;
 
             default:
@@ -50,8 +50,9 @@ export class ShoppingCartService {
         return itemReturn;
     }
 
-    public getitems() :CartItem[] {
-        return this.cart_init.items;
+    public update(items: CartItem[]): Promise<void> {
+        return this.firestore.doc(`carts/${this.cart_init.id}`)
+            .update({ items: items })
     }
 
     public delete(id: string) {
@@ -66,11 +67,11 @@ export class ShoppingCartService {
             this.cart$ = this.firestore.doc(`carts/${id}`).snapshotChanges().pipe(
                 shareReplay(1),
                 map(
-                cart => {
-                    const data: any = cart.payload.data();
-                    this.cart_init = new ShoppingCart(cart.payload.id, data.items || []);
-                    return this.cart_init;
-                }));
+                    cart => {
+                        const data: any = cart.payload.data();
+                        this.cart_init = new ShoppingCart(cart.payload.id, data ? data.items || [] : []);
+                        return this.cart_init;
+                    }));
         } else {
             this.cart$ = this.createNewCart();
         }
@@ -86,10 +87,9 @@ export class ShoppingCartService {
         }).pipe(switchMap(cart => {
             return this.firestore.doc(`carts/${cart.id}`).snapshotChanges().pipe(
                 map((cart) => {
-                const data: any = cart.payload.data();
-                this.cart_init = new ShoppingCart(cart.payload.id, data.items || []);
-                return this.cart_init;
-            }));
+                    this.cart_init = new ShoppingCart(cart.payload.id, []);
+                    return this.cart_init;
+                }));
         }));
     }
 }

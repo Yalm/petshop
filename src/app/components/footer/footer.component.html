@@ -16,25 +16,27 @@
             </div>
             <div class="col-md-3 categories-sect">
                 <h6 class="title-footer pb-4">Categorías</h6>
-                <ul class="menu-items-footer list-unstyled ">
-                    <li><a class="item-link text-decoration-none" href="/shop">Ropa</a></li>
+                <ul class="menu-items-footer list-unstyled">
+                    <li *ngFor="let category of categories">
+                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop">{{category.id}}</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-3 info-sect">
                 <h6 class="title-footer pb-4">Información</h6>
                 <ul class="menu-items-footer list-unstyled ">
-                    <li><a class="text-decoration-none" href="/about">Nosotros</a></li>
-                    <li><a class="text-decoration-none" href="/contact">Contáctanos</a></li>
-                    <li><a class="text-decoration-none" href="/services">Servicios</a></li>
-                    <li><a class="text-decoration-none" href="/">Términos y Condiciones</a></li>
+                    <li><a class="text-decoration-none" routerLink="/about">Nosotros</a></li>
+                    <li><a class="text-decoration-none" routerLink="/contact">Contáctanos</a></li>
+                    <li><a class="text-decoration-none" routerLink="/services">Servicios</a></li>
+                    <li><a class="text-decoration-none" routerLink="/">Términos y Condiciones</a></li>
                 </ul>
             </div>
             <div class="col-12 site_copyright d-flex justify-content-between pt-5">
                 <span class="copyright-text">©{{ year }} Pet Shop - Todos los derechos reservados </span>
                 <ul class="menu-footer list-unstyled">
-                    <li><a class="text-decoration-none" href="/">Inicio</a></li>
-                    <li><a class="text-decoration-none" href="/shop">Productos</a></li>
-                    <li><a class="text-decoration-none" href="/contact">Contáctanos</a></li>
+                    <li><a class="text-decoration-none" routerLink="/">Inicio</a></li>
+                    <li><a class="text-decoration-none" routerLink="/shop">Productos</a></li>
+                    <li><a class="text-decoration-none" routerLink="/contact">Contáctanos</a></li>
                 </ul>
             </div>
         </div>

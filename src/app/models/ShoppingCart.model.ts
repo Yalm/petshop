@@ -6,17 +6,18 @@ export class ShoppingCart {
         public items?: CartItem[],
     ) { }
 
-    public add(item: CartItem): string {
-        const index: number = this.itemIndexOf(item.id);
+    public add({ cover, id, name, price, quantity, stock, url }: CartItem): string {
+        const index: number = this.itemIndexOf(id);
         const cartItem = this.items[index];
 
         if (index < 0) {
-            this.items.unshift(item);
+            const ITEM: CartItem = { cover, id, name, price, quantity, stock, url } as CartItem;
+            this.items.unshift(ITEM);
             return 'add';
         } else if (cartItem.quantity == cartItem.stock) {
             return null;
         } else {
-            cartItem.quantity += item.quantity;
+            cartItem.quantity += quantity;
             if (cartItem.quantity > cartItem.stock) {
                 cartItem.quantity = cartItem.stock;
             }
@@ -38,7 +39,7 @@ export class ShoppingCart {
 
     public delete(id: string): void {
         const index = this.items.findIndex(x => x.id == id);
-        if(index >= 0) {
+        if (index >= 0) {
             this.items.splice(index, 1);
         }
     }
@@ -49,14 +50,6 @@ export class ShoppingCart {
 
     public convertInJson(id: string): any {
         const ITEM = this.items.find(x => x.id == id);
-        return {
-            id: ITEM.id,
-            name: ITEM.name,
-            url: ITEM.url,
-            price: ITEM.price,
-            cover: ITEM.cover,
-            quantity: ITEM.quantity,
-            stock: ITEM.stock
-        }
+        return ITEM;
     }
 }

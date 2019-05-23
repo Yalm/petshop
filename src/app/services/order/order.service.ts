@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Order } from 'src/app/models/Order.model';
-import { Observable, observable } from 'rxjs';
-import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -26,14 +27,16 @@ export class OrderService {
         }));
     }
 
-    public store(token: string): Observable<any> {
+    public store(culqi_token: string, plus_info?: string): Observable<Order> {
+        const cart_id: string = localStorage.getItem('cart_id');
         return this.afAuth.idToken
             .pipe(switchMap(tokenUser => {
-                return this.http.post('http://localhost:5000/yalm-94feb/us-central1/order', { token }, {
-                    headers: {
-                        Authorization: `Bearer ${tokenUser}`
-                    }
-                });
+                return this.http.post<Order>(`https://us-central1-${environment.firebase.projectId}.cloudfunctions.net/order`,
+                    { culqi_token, cart_id, plus_info }, {
+                        headers: {
+                            Authorization: `Bearer ${tokenUser}`
+                        }
+                    });
             }));
     }
 }

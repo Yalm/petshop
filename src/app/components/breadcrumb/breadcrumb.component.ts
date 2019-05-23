@@ -10,6 +10,7 @@ export class BreadcrumbComponent {
 
     @Input() image: string = '/assets/img/breadcrumb-01.jpg';
     @Input() title: string;
+    @Input() subTitle: string;
 
     constructor(private sanitizer: DomSanitizer) { }
 

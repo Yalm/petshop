@@ -15,6 +15,7 @@ const routes: Routes = [
     { path: 'p/:url', component: ShowProductComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard] },
+    { path: '404', component: PageNotFoundComponent },
     { path: '**', component: PageNotFoundComponent }
 ];
 

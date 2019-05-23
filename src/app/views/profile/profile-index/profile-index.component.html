@@ -8,13 +8,13 @@
                     </div>
                     <ul class="list-unstyled list-items position-relative text-center mb-0 font-weight-bold">
                         <li class="py-4">
-                            <a href="" class="text-white text-decoration-none">Inicio</a>
+                            <a routerLink="/profile" class="text-white text-decoration-none">Inicio</a>
                         </li>
                         <li class="py-4">
-                            <a href="" class="text-white text-decoration-none">Pedidos</a>
+                            <a routerLink="/profile/orders" class="text-white text-decoration-none">Pedidos</a>
                         </li>
                         <li class="py-4">
-                            <a href="" class="text-white text-decoration-none">Detalles de la cuenta</a>
+                            <a routerLink="/profile/account" class="text-white text-decoration-none">Detalles de la cuenta</a>
                         </li>
                         <li class="py-4" (click)="auth.signOut()">
                             <a class="text-white text-decoration-none"> Cerrar Sesión</a>
@@ -29,5 +29,3 @@
     </div>
 
 </div>
-
-

@@ -15,6 +15,10 @@ export class CategoryService {
         this.category = this.firestore.collection('categories');
     }
 
+    public index(): Observable<any> {
+        return this.category.get().pipe(map(data => data.docs));
+    }
+
     public show(id: string): Observable<Category> {
         return this.category.doc(id).get().pipe(map(payload => {
             const data = payload.data();

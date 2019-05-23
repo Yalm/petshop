@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { CulqiService } from 'src/app/services/culqi/culqi.service';
+import { Order } from 'src/app/models/Order.model';
 
 @Component({
     selector: 'app-checkout',
@@ -10,8 +10,10 @@ import { CulqiService } from 'src/app/services/culqi/culqi.service';
     styleUrls: ['./checkout.component.sass']
 })
 export class CheckoutComponent implements OnInit {
-    public cart: ShoppingCart = new ShoppingCart(null, []);
-    public enabledCulqui: boolean = true;
+    public plus_info: string = '';
+    private token: string;
+    public loading: boolean;
+    public order: Order;
 
     constructor(private shoppingCartService: ShoppingCartService,
         private culqiService: CulqiService,
@@ -19,19 +21,26 @@ export class CheckoutComponent implements OnInit {
 
     ngOnInit() {
         this.culqiService.Culqi.subscribe(data => {
-            if(data.token) {
+            if (data.token) {
                 this.checkout(data.token.id);
             }
         });
     }
 
     openCulqui(total: number) {
-        this.culqiService.open(total);
+        if (this.token) this.checkout(this.token);
+        else this.culqiService.open(total);
     }
 
     private checkout(token: string) {
-        this.orderService.store(token).subscribe(data => {
-            console.log(data);
-        });
+        this.token = token != this.token ? token : this.token;
+        this.loading = true;
+        this.orderService.store(this.token, this.plus_info).subscribe(data => {
+            this.loading = false;
+            this.order = data;
+        }, () => {
+            this.loading = false;
+        }
+        );
     }
 }

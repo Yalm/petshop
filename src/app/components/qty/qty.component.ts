@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Product } from 'src/app/models/Product.model';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
+
 
 @Component({
     selector: 'app-qty',
@@ -10,9 +10,11 @@ import { CartItem } from 'src/app/models/CartItem.model';
 })
 export class QtyComponent {
 
-    @Input() product: Product;
+    @Output() changeQty = new EventEmitter();
+    @Input() product: CartItem;
     @Input() btn: boolean = true;
     @Input() quantity: number = 1;
+    public loading: boolean;
 
     constructor(private shoppingCartService: ShoppingCartService) { }
 
@@ -21,8 +23,8 @@ export class QtyComponent {
             this.quantity = this.quantity;
         } else {
             this.quantity++;
+            this.changeQty.emit(this.quantity);
         }
-        this.updated();
     }
 
     quantityDown(): void {
@@ -30,15 +32,15 @@ export class QtyComponent {
             this.quantity = this.quantity;
         } else {
             this.quantity--;
+            this.changeQty.emit(this.quantity);
         }
-        this.updated();
     }
 
     addCartProduct(): void {
-        this.shoppingCartService.add({ ...this.product, quantity: this.quantity });
-    }
-
-    private updated(): void {
-
+        this.loading = true;
+        this.shoppingCartService.add({ ...this.product, quantity: this.quantity })
+            .then(() => {
+                this.loading = false;
+            });
     }
 }

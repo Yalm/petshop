@@ -2,7 +2,7 @@
     <div class="bread-crumb">
         <ul class="d-flex container list-unstyled">
             <li><a href="">Inicio</a></li>
-            <li><a>{{product.category.name}}</a></li>
+            <li><a class="text-capitalize">{{product.category.id}}</a></li>
             <li class="name-product">{{product.name}}</li>
         </ul>
     </div>
@@ -36,14 +36,14 @@
                     <div class="tab-pane fade pb-1" id="more" role="tabpanel" aria-labelledby="more-tab">
                         <div class="aditional_information-color">
                             <span>Color:</span>
-                            <span class="ml-2">{{product.color.name}}</span>
+                            <span class="ml-2">{{product.color.id}}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 text-center pb-5">
                 <strong>SKU: {{product.id}}</strong>
-                <span class="ml-5">Categoría: <a>{{product.category.name}}</a></span>
+                <span class="ml-5">Categoría: <a class="text-capitalize">{{product.category.id}}</a></span>
             </div>
         </div>
     </div>
