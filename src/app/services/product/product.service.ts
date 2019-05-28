@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, iif } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap } from 'rxjs/operators';
-import { CategoryService } from '../category/category.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,12 +10,24 @@ import { CategoryService } from '../category/category.service';
 
 export class ProductService {
 
-    constructor(private firestore: AngularFirestore,
-        private categoryService: CategoryService,
-        private http: HttpClient) { }
+    constructor(private firestore: AngularFirestore) { }
 
-    public index(): Observable<any> {
-        return this.http.get<Product[]>('https://petshopj.herokuapp.com/api/products');
+    public index(category?: string): Observable<Product[]> {
+        if (category) {
+            return this.firestore
+                .collection('products', ref => ref.where('category', '==', this.firestore.doc(`categories/${category}`).ref))
+                .snapshotChanges().pipe(map(items => items.map(item => {
+                    const data = item.payload.doc.data();
+                    return { id: item.payload.doc.id, ...data } as Product;
+                })));
+        } else {
+            return this.firestore
+                .collection('products')
+                .snapshotChanges().pipe(map(items => items.map(item => {
+                    const data = item.payload.doc.data();
+                    return { id: item.payload.doc.id, ...data } as Product;
+                })));
+        }
     }
 
     public show(id: string): Observable<Product> {

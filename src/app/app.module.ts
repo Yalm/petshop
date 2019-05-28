@@ -23,6 +23,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { QtyComponent } from './components/qty/qty.component';
 import { CartComponent } from './views/cart/cart.component';
 import { CheckoutComponent } from './views/checkout/checkout.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { CheckoutComponent } from './views/checkout/checkout.component';
         ProfileModule,
         AppRoutingModule,
         AngularFirestoreModule,
-        HttpClientModule
+        HttpClientModule,
+        NgbModule
     ],
     providers: [],
     bootstrap: [AppComponent]

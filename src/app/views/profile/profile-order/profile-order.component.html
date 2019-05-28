@@ -1,3 +1,21 @@
-<p>
-  profile-order works!
-</p>
+<table class="table table-striped">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">id</th>
+            <th scope="col">Fecha de pedido</th>
+            <th scope="col">Monto de su Pedido</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orders" class="text-center">
+            <th scope="row">
+                <a class="text-decoration-none" [routerLink]="['/profile/orders',order.id]">{{order.id}}</a>
+            </th>
+            <td>{{order.created_at.toDate() | date:'medium'}}</td>
+            <td>S/ {{order.payment.amount | number: '1.2-2'}}</td>
+        </tr>
+    </tbody>
+</table>
+<!-- <ng-template>
+    <h1>hola</h1>
+</ng-template> -->

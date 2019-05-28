@@ -11,16 +11,15 @@ import { Router } from '@angular/router';
 export class ShowProductComponent implements OnInit {
 
     public product: Product;
-    constructor(private productService: ProductService,private router:Router) { }
+    constructor(private productService: ProductService, private router: Router) { }
 
     ngOnInit() {
         this.productService.show('KT6UY77Jxp4n0AyKEyrE').subscribe(response => {
-            if(response) {
+            if (response) {
                 this.product = response;
-            }else {
-                this.router.navigateByUrl('404');
+            } else {
+                this.router.navigateByUrl('404', { skipLocationChange: true });
             }
-
         });
     }
 

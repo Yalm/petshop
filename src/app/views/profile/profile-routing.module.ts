@@ -12,6 +12,7 @@ export const ProfileRoutingModule: Routes = [
             [
                 { path: '', component: ProfileWelcomeComponent },
                 { path: 'orders', component: ProfileOrderComponent },
+                { path: 'orders/:id', component: ProfileWelcomeComponent },
             ]
     },
 ];

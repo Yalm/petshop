@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer bg-primary">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -18,7 +18,7 @@
                 <h6 class="title-footer pb-4">Categorías</h6>
                 <ul class="menu-items-footer list-unstyled">
                     <li *ngFor="let category of categories">
-                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop">{{category.id}}</a>
+                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop" [queryParams]="{ category: category.id}">{{category.id}}</a>
                     </li>
                 </ul>
             </div>

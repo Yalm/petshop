@@ -1,5 +1,6 @@
+@import 'src/assets/sass/variables'
+
 .header-section1
-    background-color: var(--primary)
     background-image: url(https://dahz.daffyhazan.com/pabu/wp-content/uploads/2018/06/header-brush-7.png)
     background-position: center bottom
     background-repeat: repeat-x
@@ -37,14 +38,13 @@
                 font-size: 16px
                 padding: 10px 0
                 &:hover
-                    color: var(--primary)
+                    color: $primary
         .cart-short-view
             .count-cart
                 min-width: 22px
                 height: 22px
                 padding: 0 5px
                 border-radius: 500px
-                background-color: var(--primary)
                 font-size: .875rem
     @media only screen and (min-width: 768px)
         &.text-home
@@ -101,7 +101,7 @@
         padding: 5px
         cursor: pointer
         svg line
-            stroke: var(--primary)
+            stroke: $primary
     .modal-search-from
         padding-top: 2.5rem
     .search-input
@@ -115,7 +115,7 @@
         width: 80%
         min-height: 50px
         padding: 10px
-        border-bottom: 1px solid var(--primary)
+        border-bottom: 1px solid transparent
         outline: 0
         background: 0 0
         color: inherit

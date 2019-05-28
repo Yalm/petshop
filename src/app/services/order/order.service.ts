@@ -20,6 +20,17 @@ export class OrderService {
         this.order = this.firestore.collection('orders');
     }
 
+    public index(): Observable<Order[]> {
+        return this.afAuth.user.pipe(switchMap(user => {
+            return this.firestore
+                .collection('orders', ref => ref.where('customer', '==', this.firestore.doc(`customers/${user.uid}`).ref))
+                .snapshotChanges().pipe(map(items => items.map(item => {
+                    const data = item.payload.doc.data();
+                    return { id: item.payload.doc.id, ...data } as Order;
+                })));
+        }));
+    }
+
     public show(id: string): Observable<Order> {
         return this.order.doc(id).get().pipe(map(payload => {
             const data = payload.data();

@@ -1,4 +1,4 @@
-<nav class="header-section1 pb-3 h-100 pt-3" [class.d-none]="home">
+<nav class="header-section1 bg-primary pb-3 h-100 pt-3" [class.d-none]="home">
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
@@ -46,11 +46,11 @@
                 </span>
                 <ng-container *ngIf="shoppingCartService.cart$ | async as cart; else cart_empty">
                     <span class="cart-total mx-lg-2">S/ {{cart.totalCart() | number: '1.2-2' }}</span>
-                    <span class="count-cart d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
+                    <span class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
                 </ng-container>
                 <ng-template #cart_empty>
                     <span class="cart-total mx-lg-2">S/ 0.00</span>
-                    <span class="count-cart d-md-inline-flex justify-content-center text-white">0</span>
+                    <span class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">0</span>
                 </ng-template>
             </a>
             <span class="icon_search-he" [className]="home ? 'pl-2' : 'd-md-none'">
@@ -70,6 +70,6 @@
         </svg>
     </span>
     <form class="modal-search-from">
-        <input type="text" aria-label="search products" name="search" placeholder="Buscar..." class="search-input" autocomplete="off" [autofocus]="search">
+        <input type="text" aria-label="search products" name="search" placeholder="Buscar..." class="search-input border-primary" autocomplete="off" [autofocus]="search">
     </form>
 </div>

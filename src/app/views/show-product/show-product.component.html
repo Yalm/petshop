@@ -1,8 +1,8 @@
 <ng-container *ngIf="product">
     <div class="bread-crumb">
         <ul class="d-flex container list-unstyled">
-            <li><a href="">Inicio</a></li>
-            <li><a class="text-capitalize">{{product.category.id}}</a></li>
+            <li><a routerLink="/">Inicio</a></li>
+            <li><a routerLink="/shop" [queryParams]="{ category: product.category.id}" class="text-capitalize">{{product.category.id}}</a></li>
             <li class="name-product">{{product.name}}</li>
         </ul>
     </div>
@@ -17,30 +17,23 @@
                 <p>{{product.short_description}}</p>
                 <app-qty [product]="product"></app-qty>
             </div>
-            <div class="col-12 pt-5 plus_info mb-5">
-                <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab"
-                            aria-controls="description" aria-selected="true">Descripción</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="more-tab" data-toggle="tab" href="#more" role="tab" aria-controls="more"
-                            aria-selected="false">Información Adicional</a>
-                    </li>
-                </ul>
-                <div class="tab-content pt-5 pb-4" id="myTabContent">
-                    <div class="tab-pane fade show active" id="description" role="tabpanel"
-                        aria-labelledby="description-tab">
-                        <p>{{product.description}}</p>
-                    </div>
-                    <div class="tab-pane fade pb-1" id="more" role="tabpanel" aria-labelledby="more-tab">
+
+            <ngb-tabset class="col-12 pt-5 plus_info mb-5" justify="center">
+                <ngb-tab title="Descripción">
+                    <ng-template ngbTabContent>
+                        <p class="m-0">{{product.description}}</p>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Información Adicional">
+                    <ng-template ngbTabContent>
                         <div class="aditional_information-color">
                             <span>Color:</span>
                             <span class="ml-2">{{product.color.id}}</span>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+
             <div class="col-12 text-center pb-5">
                 <strong>SKU: {{product.id}}</strong>
                 <span class="ml-5">Categoría: <a class="text-capitalize">{{product.category.id}}</a></span>

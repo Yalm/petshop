@@ -1,5 +1,5 @@
 <ng-container *ngIf="auth.customer$ | async as customer">
-    <h1 class="pt-4">Hola {{customer.displayName}} (¿no eres {{customer.displayName}}? <span class="text-primary"
+    <h1 class="pt-4">Hola {{customer.displayName}} (¿no eres {{customer.displayName}}? <span class="text-primary c-p"
             (click)="auth.signOut()">Cerrar sesión</span>)</h1>
     <p>Desde el panel de control de tu cuenta puedes ver tus <a href="#" class="text-decoration-none">pedidos
             recientes</a> y

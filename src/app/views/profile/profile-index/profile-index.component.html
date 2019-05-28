@@ -6,18 +6,18 @@
                     <div class="avatar mb-5">
                         <img [src]="customer.photoURL" [alt]="customer.name" class="img-fluid">
                     </div>
-                    <ul class="list-unstyled list-items position-relative text-center mb-0 font-weight-bold">
-                        <li class="py-4">
-                            <a routerLink="/profile" class="text-white text-decoration-none">Inicio</a>
+                    <ul class="list-unstyled list-items bg-primary position-relative text-center mb-0 font-weight-bold">
+                        <li>
+                            <a routerLink="/profile" class="text-white text-decoration-none py-4 d-inline-flex justify-content-center">Inicio</a>
                         </li>
-                        <li class="py-4">
-                            <a routerLink="/profile/orders" class="text-white text-decoration-none">Pedidos</a>
+                        <li>
+                            <a routerLink="/profile/orders" class="text-white text-decoration-none py-4 d-inline-flex justify-content-center">Pedidos</a>
                         </li>
-                        <li class="py-4">
-                            <a routerLink="/profile/account" class="text-white text-decoration-none">Detalles de la cuenta</a>
+                        <li>
+                            <a routerLink="/profile/account" class="text-white text-decoration-none py-4 d-inline-flex justify-content-center">Detalles de la cuenta</a>
                         </li>
-                        <li class="py-4" (click)="auth.signOut()">
-                            <a class="text-white text-decoration-none"> Cerrar Sesión</a>
+                        <li (click)="auth.signOut()">
+                            <a class="text-white text-decoration-none py-4 d-inline-flex justify-content-center">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>

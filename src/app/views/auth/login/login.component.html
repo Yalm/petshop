@@ -30,7 +30,7 @@
                     <div class="invalid-feedback" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched">{{getErrorMessage()}}</div>
                 </div>
                 <button type="submit" [disabled]="loginForm.invalid" class="button-petshop text-center text-white position-relative w-100">Iniciar Sesión</button>
-                <div class="elements text-right pt-3">
+                <div class="elements text-right pt-3 text-primary">
                     <a routerLink="/password/reset" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
                 </div>
             </form>

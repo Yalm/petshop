@@ -75,15 +75,14 @@ export const order = https.onRequest(async (req, res) => {
                 plus_info: req.body.plus_info || '',
                 state: db.doc('states/4'),
                 created_at: field.FieldValue.serverTimestamp(),
-                products: SHOPPING_CART.items
+                products: SHOPPING_CART.items,
+                payment: {
+                    amount: SHOPPING_CART.total,
+                    payment_type: db.doc('paymentTypes/1')
+                }
             });
 
             const batch = db.batch();
-
-            batch.set(db.doc(`payments/${ORDER.id}`), {
-                amount: SHOPPING_CART.total,
-                payment_type: db.doc('paymentTypes/1'),
-            });
 
             for (const product of SHOPPING_CART.items) {
                 batch.update(db.doc(`products/${product.id}`), {
@@ -109,7 +108,7 @@ export const order = https.onRequest(async (req, res) => {
                 res.status(422).json(error.response.data);
                 return;
             }
-            console.error(error)
+            console.error(error);
             res.status(500).json({ status: 500, msg: 'ERROR' });
             return;
         }
