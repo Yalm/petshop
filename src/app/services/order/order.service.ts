@@ -33,6 +33,7 @@ export class OrderService {
 
     public show(id: string): Observable<Order> {
         return this.order.doc(id).get().pipe(map(payload => {
+            if(!payload.exists) return null;
             const data = payload.data();
             return { id: payload.id, ...data } as Order;
         }));

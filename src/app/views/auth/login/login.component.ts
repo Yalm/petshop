@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit,OnDestroy {
         });
     }
 
-    public googleSignIn(): void {
+    googleSignIn(): void {
         this.auth.googleSignIn().then(() => {
             this.router.navigateByUrl(this.returnUrl);
         }).catch(err => {

@@ -1,0 +1,30 @@
+<ng-container *ngIf="order">
+    <h2 class="h2 mb-3">
+        Pedido # {{order.id}}
+        <span class="text-success h6 border border-success rounded p-2 ml-2">Completado</span>
+    </h2>
+    <span>{{order.created_at.toDate() | date:'medium'}}</span>
+    <h5 class="h5 mt-4">Artículos ordenados</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">SKU</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of order.products">
+                <th scope="row">
+                    <a class="text-decoration-none" [routerLink]="['/p',product.url]">{{product.name}}</a>
+                </th>
+                <td>{{product.id}}</td>
+                <td>S/ {{product.price | number: '1.2-2'}}</td>
+                <td class="text-center">{{product.quantity}}</td>
+                <td>S/ {{product.quantity * product.price | number: '1.2-2'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>

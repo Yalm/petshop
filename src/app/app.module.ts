@@ -24,6 +24,10 @@ import { QtyComponent } from './components/qty/qty.component';
 import { CartComponent } from './views/cart/cart.component';
 import { CheckoutComponent } from './views/checkout/checkout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from './modules/shared.module';
+import { AboutComponent } from './views/about/about.component';
+import { ServicesComponent } from './views/services/services.component';
+import { ContactComponent } from './views/contact/contact.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +42,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         PageNotFoundComponent,
         QtyComponent,
         CartComponent,
-        CheckoutComponent
+        CheckoutComponent,
+        AboutComponent,
+        ServicesComponent,
+        ContactComponent
     ],
     imports: [
         BrowserModule,
@@ -48,7 +55,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         AppRoutingModule,
         AngularFirestoreModule,
         HttpClientModule,
-        NgbModule
+        NgbModule,
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -8,14 +8,36 @@ import { CartComponent } from './views/cart/cart.component';
 import { CheckoutComponent } from './views/checkout/checkout.component';
 import { CartGuard } from './guards/cart/cart.guard';
 import { AuthGuard } from './views/auth/guards/auth/auth.guard';
+import { AboutComponent } from './views/about/about.component';
+import { ContactComponent } from './views/contact/contact.component';
+import { ServicesComponent } from './views/services/services.component';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    {
+        path: '', component: HomeComponent,
+        data: { headerDisabled: true }
+    },
     { path: 'shop', component: ShopComponent },
+    {
+        path: 'about', component: AboutComponent,
+        data: { headerDisabled: true, relative: true }
+    },
+    {
+        path: 'services', component: ServicesComponent,
+        data: { headerDisabled: true, relative: true }
+    },
+    { path: 'contact', component: ContactComponent },
     { path: 'p/:url', component: ShowProductComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard] },
     { path: '404', component: PageNotFoundComponent },
+
+    {
+        path: 'profile', loadChildren: () => {
+            return import('./views/profile/profile.module').then(m => m.ProfileModule)
+        }
+    },
+
     { path: '**', component: PageNotFoundComponent }
 ];
 

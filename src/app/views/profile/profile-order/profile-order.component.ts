@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order/order.service';
 import { Order } from 'src/app/models/Order.model';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-profile-order',
@@ -9,12 +10,11 @@ import { Order } from 'src/app/models/Order.model';
 })
 export class ProfileOrderComponent implements OnInit {
 
-    public orders:Order[] = [];
+    public orders: Observable< Order[]>;
 
     constructor(private orderService: OrderService) { }
 
     ngOnInit() {
-        this.orderService.index().subscribe(data => this.orders = data);
+        this.orders = this.orderService.index();
     }
-
 }

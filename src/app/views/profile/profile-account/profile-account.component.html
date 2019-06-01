@@ -1,0 +1,33 @@
+<form class="form-row" [formGroup]="form" *ngIf="form" (ngSubmit)="edit()">
+    <h2 class="h2 col-12 border-bottom pb-2 mb-4">Información personal</h2>
+    <div class="form-group col-md-6">
+        <label for="name">Nombre</label>
+        <input type="text" formControlName="displayName" class="form-control" id="name" name="name" placeholder="Nombre">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="surnames">Apellidos</label>
+        <input type="text" formControlName="surnames" class="form-control" id="surnames" name="surnames" placeholder="Apellidos">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="document_id">Tipo de documento</label>
+        <select id="document_id" formControlName="document_id" class="form-control">
+            <option *ngFor="let item of documents | async" [value]="item.id">{{item.name}}</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="document_number">Numero de documento</label>
+        <input type="text" formControlName="document_number" class="form-control" id="document_number" placeholder="Numero de documento">
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="phone">Telefono/Celular</label>
+        <input type="text" formControlName="phone" class="form-control" id="phone" placeholder="Telefono/Celular">
+    </div>
+    <div class="form-group col-md-12 d-flex justify-content-end">
+        <button type="submit" class="button-petshop text-center text-white position-relative">Guardar</button>
+    </div>
+
+</form>

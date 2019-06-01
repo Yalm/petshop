@@ -1,4 +1,43 @@
-.home
-    width: 100%
-    height: 100vh
-    background-color: black
+::ng-deep .carousel
+    .carousel-inner
+        img:first-child
+            width: 100%
+            height: 100%
+        .image-pet-car
+            width: 130px !important
+            height: 130px !important
+        .image-pet-sep
+            width: 150px !important
+            height: auto !important
+            padding-bottom: 1rem
+        .car-title
+            font-size: 74px
+        .carousel-caption
+            top: 30%
+    @media only screen and (max-width: 1116px)
+        .image-pet-car
+            width: 100px !important
+            height: 100px !important
+        .image-pet-sep
+            width: 120px !important
+        .car-title
+            font-size: 54px
+    @media only screen and (max-width: 900px)
+        .image-pet-car
+            width: 80px !important
+            height: 80px !important
+        .image-pet-sep
+            width: 100px !important
+            padding: 0 !important
+        .car-title
+            font-size: 34px
+    @media only screen and (max-width: 643px)
+        .carousel-caption
+            top: 10%
+        .image-pet-car
+            width: 70px !important
+            height: 70px !important
+        .image-pet-sep
+            width: 90px !important
+        .car-title
+            font-size: 24px

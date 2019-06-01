@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
-
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-qty',
@@ -40,6 +40,11 @@ export class QtyComponent {
         this.loading = true;
         this.shoppingCartService.add({ ...this.product, quantity: this.quantity })
             .then(() => {
+                Swal.fire(
+                    'Agregado',
+                    'Su producto ha sido agregado.',
+                    'success'
+                )
                 this.loading = false;
             });
     }

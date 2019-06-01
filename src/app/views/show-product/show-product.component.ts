@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/app/models/Product.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-show-product',
@@ -11,14 +11,20 @@ import { Router } from '@angular/router';
 export class ShowProductComponent implements OnInit {
 
     public product: Product;
-    constructor(private productService: ProductService, private router: Router) { }
+    constructor(private productService: ProductService,
+        private router: Router,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.productService.show('KT6UY77Jxp4n0AyKEyrE').subscribe(response => {
-            if (response) {
-                this.product = response;
-            } else {
-                this.router.navigateByUrl('404', { skipLocationChange: true });
+        this.route.params.subscribe(param => {
+            if (param.url) {
+                this.productService.show(param.url).subscribe(response => {
+                    if (response) {
+                        this.product = response;
+                    } else {
+                        this.router.navigateByUrl('404', { skipLocationChange: true });
+                    }
+                });
             }
         });
     }

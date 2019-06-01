@@ -3,6 +3,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-car
 import { OrderService } from 'src/app/services/order/order.service';
 import { CulqiService } from 'src/app/services/culqi/culqi.service';
 import { Order } from 'src/app/models/Order.model';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-checkout',
@@ -10,17 +11,25 @@ import { Order } from 'src/app/models/Order.model';
     styleUrls: ['./checkout.component.sass']
 })
 export class CheckoutComponent implements OnInit {
-    public plus_info: string = '';
-    private token: string;
     public loading: boolean;
-    public order: Order;
+    public order: any;
+    private token: string;
+    public form: FormGroup;
 
-    constructor(private shoppingCartService: ShoppingCartService,
+
+    constructor(public shoppingCartService: ShoppingCartService,
         private culqiService: CulqiService,
         private orderService: OrderService) { }
 
     ngOnInit() {
+        this.form = new FormGroup({
+            culqi: new FormControl(null, Validators.required),
+            plus_info: new FormControl({ value: null, disabled: this.loading }, [Validators.minLength(3), Validators.maxLength(250)]),
+            method: new FormControl(null, Validators.required)
+        });
+
         this.culqiService.Culqi.subscribe(data => {
+            this.form.get('culqi').setValue(data);
             if (data.token) {
                 this.checkout(data.token.id);
             }
@@ -35,7 +44,7 @@ export class CheckoutComponent implements OnInit {
     private checkout(token: string) {
         this.token = token != this.token ? token : this.token;
         this.loading = true;
-        this.orderService.store(this.token, this.plus_info).subscribe(data => {
+        this.orderService.store(this.token, this.form.get('plus_info').value).subscribe(data => {
             this.loading = false;
             this.order = data;
         }, () => {

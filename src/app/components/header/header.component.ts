@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { Subscription } from 'rxjs';
@@ -12,20 +12,22 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
     public home: boolean;
+    public position: boolean;
     public search: boolean;
 
     private subscriptionRouter: Subscription;
 
     constructor(private router: Router,
         public auth: AuthService,
-        private shoppingCartService: ShoppingCartService) { }
+        public shoppingCartService: ShoppingCartService) { }
 
     ngOnInit() {
 
         this.subscriptionRouter = this.router.events.subscribe(
             (event: any) => {
-                if (event instanceof NavigationEnd) {
-                    this.home = this.router.url == '/' ? true : false;
+                if (event instanceof RoutesRecognized) {
+                    this.home = event.state.root.firstChild.data.headerDisabled ? true : false;
+                    this.position = event.state.root.firstChild.data.relative ? true : false;
                 }
             }
         );

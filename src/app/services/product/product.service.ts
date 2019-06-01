@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { map, first, take, single } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -15,27 +15,21 @@ export class ProductService {
     public index(category?: string): Observable<Product[]> {
         if (category) {
             return this.firestore
-                .collection('products', ref => ref.where('category', '==', this.firestore.doc(`categories/${category}`).ref))
-                .snapshotChanges().pipe(map(items => items.map(item => {
-                    const data = item.payload.doc.data();
-                    return { id: item.payload.doc.id, ...data } as Product;
-                })));
+                .collection<Product>('products', ref => ref.where('category', '==', this.firestore.doc(`categories/${category}`).ref))
+                .valueChanges({ idField: 'id' });
         } else {
             return this.firestore
-                .collection('products')
-                .snapshotChanges().pipe(map(items => items.map(item => {
-                    const data = item.payload.doc.data();
-                    return { id: item.payload.doc.id, ...data } as Product;
-                })));
+                .collection<Product>('products')
+                .valueChanges({ idField: 'id' });
         }
     }
 
-    public show(id: string): Observable<Product> {
-        return this.firestore.collection('products').doc(id).get().pipe(
-            map(payload => {
-                if (!payload.exists) { return null }
-                const data = payload.data() as Product;
-                return { id: payload.id, ...data };
+    public show(url: string): Observable<Product> {
+        return this.firestore.collection<Product>('products', ref => ref.where('url', '==', url))
+            .valueChanges({ idField: 'id' })
+            .pipe(map(x => {
+                if (x.length < 0) return null;
+                else return x[0];
             }));
     }
 

@@ -10,26 +10,24 @@
         img
             border-radius: 50%
     .list-items
-        &:before
-            bottom: 100%
-            left: 50%
-            border: solid transparent
-            content: ''
-            height: 0
-            width: 0
-            position: absolute
-            pointer-events: none
-            border-color: rgba(231, 76, 60, 0)
-            border-bottom-color: #e74c3c
-            border-width: 10px
-            margin-left: -10px
         li
             border-top: 1px solid #891d1d
             cursor: pointer
             &:first-child
                 border: none
+                &:before
+                    bottom: 100%
+                    left: 47%
+                    border: 10px solid rgba(231, 76, 60, 0)
+                    content: ''
+                    position: absolute
+                    pointer-events: none
+                    border-bottom-color: #e74c3c
+            a
+                height: 70px
+                align-items: center
             &:hover
                 background-color: #FF7364
-
-
+                &:before
+                    border-bottom-color: #FF7364
 

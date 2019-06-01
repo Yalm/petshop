@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-cart',
@@ -10,13 +11,28 @@ import { CartItem } from 'src/app/models/CartItem.model';
 export class CartComponent implements OnInit {
 
 
-    constructor(private shoppingCartService: ShoppingCartService) { }
+    constructor(public shoppingCartService: ShoppingCartService) { }
 
     ngOnInit() {
     }
 
     deleteItem(id: string) {
-        this.shoppingCartService.delete(id).then();
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '¡Sí, bórralo!'
+        }).then((result) => {
+            if (result.value) {
+                this.shoppingCartService.delete(id).then();
+                Swal.fire(
+                    'Eliminado',
+                    'Su archivo ha sido eliminado.',
+                    'success'
+                )
+            }
+        });
     }
 
     updateItem(items: CartItem[], btn: any) {

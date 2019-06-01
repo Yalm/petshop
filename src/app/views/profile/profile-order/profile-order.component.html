@@ -7,7 +7,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let order of orders" class="text-center">
+        <tr *ngFor="let order of orders | async" class="text-center">
             <th scope="row">
                 <a class="text-decoration-none" [routerLink]="['/profile/orders',order.id]">{{order.id}}</a>
             </th>

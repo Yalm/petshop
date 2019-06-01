@@ -1,14 +1,14 @@
 <app-breadcrumb title="Pago" [image]="null" subTitle="Pago"></app-breadcrumb>
-<div class="container">
-    <div class="row pb-5 d-flex justify-content-center" *ngIf="shoppingCartService.cart$ | async as cart">
+<div class="container" *ngIf="shoppingCartService.cart$ | async as cart">
+    <form [formGroup]="form" class="row pb-5 d-flex justify-content-center">
         <ng-container *ngIf="!order;else orderTemplate">
             <div class="col-xl-8 col-lg-7">
                 <h2>Infomarción extra</h2>
                 <p>Si desea dejarnos un comentario acerca de su pedido, por favor, escríbalo a continuación</p>
                 <div class="form-group">
-                    <label for="txtPlus">Infomarción extra de pedido (optional)</label>
-                    <textarea [disabled]="loading" class="form-control" id="txtPlus" rows="5"
-                        [value]="plus_info"></textarea>
+                    <label for="txt_plus">Infomarción extra de pedido (optional)</label>
+                    <textarea formControlName="plus_info" class="form-control" id="txt_plus"
+                        rows="5"></textarea>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-11 order-details border-primary">
@@ -37,13 +37,13 @@
                     </tfoot>
                 </table>
                 <div class="custom-control custom-radio mt-3">
-                    <input type="radio" class="custom-control-input" id="customCheck1" checked>
+                    <input formControlName="method" type="radio" class="custom-control-input" id="customCheck1" value="credit_card">
                     <label class="custom-control-label" for="customCheck1">Tarjeta de crédito o débito | Visa,
                         Mastercard y
                         más!</label>
                 </div>
                 <hr>
-                <button type="button" (click)="openCulqui(cart.totalCart())" [disabled]="loading"
+                <button type="submit" (click)="openCulqui(cart.totalCart())" [disabled]="loading || form.invalid"
                     class="button-petshop text-center text-white position-relative w-100">{{ loading ? 'Cargando...':'Finalizar'}}</button>
             </div>
         </ng-container>
@@ -95,5 +95,5 @@
                 </table>
             </div>
         </ng-template>
-    </div>
+    </form>
 </div>
