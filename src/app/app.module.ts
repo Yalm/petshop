@@ -8,11 +8,12 @@ import { HomeComponent } from './views/home/home.component';
 import { ShopComponent } from './views/shop/shop.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-import { AuthModule } from './views/auth/auth.module';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthModule } from './views/auth/auth.module';
 
 import { ProfileModule } from './views/profile/profile.module';
 import { ProductComponent } from './components/product/product.component';
@@ -50,13 +51,14 @@ import { ContactComponent } from './views/contact/contact.component';
     imports: [
         BrowserModule,
         AngularFireModule.initializeApp(environment.firebase),
+        SharedModule,
+        AngularFireAuthModule,
+        AngularFirestoreModule,
         AuthModule,
         ProfileModule,
         AppRoutingModule,
-        AngularFirestoreModule,
         HttpClientModule,
         NgbModule,
-        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -9,7 +9,7 @@
                 </ol>
             </nav>
             <p class="pt-md-5 mt-5">Por favor ingrese la dirección de correo electrónico que usó para registrarse. Recibirá un enlace temporal para restablecer su contraseña.</p>
-            <form [formGroup]="sendEmailForm" (ngSubmit)="sendEmail(myForm)" novalidate>
+            <form [formGroup]="sendEmailForm" (ngSubmit)="sendEmail()" novalidate>
                 <div class="form-group">
                     <label for="email" class="font-weight-bold">Dirección de correo electrónico (requerido)</label>
                     <input type="email" class="form-control" id="email" formControlName="email" [class.is-invalid]="sendEmailForm.get('email').invalid && sendEmailForm.get('email').touched">
