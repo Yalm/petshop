@@ -22,7 +22,6 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.routerSubscription = this.route.queryParams.subscribe(params => {
             if (params.category) {
                 if(this.subscription) this.subscription.unsubscribe();
-                console.log(params.category);
                 this.getProducts(params.category);
             }
         });
