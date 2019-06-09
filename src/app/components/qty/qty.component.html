@@ -17,5 +17,5 @@
     </span>
     <button *ngIf="btn" type="button" [disabled]="product.stock < 1 || loading"
         class="button-petshop text-center text-white position-relative ml-3"
-        (click)="addCartProduct()">{{ product.stock > 1 ? 'Agregar al carrito':'Agotado'}}</button>
+        (click)="addCartProduct()">{{ product.stock > 0 ? 'Agregar al carrito':'Agotado'}}</button>
 </div>

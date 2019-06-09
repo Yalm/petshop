@@ -1,15 +1,14 @@
-<div class="container-fluid">
-    <div class="product row mb-3">
-        <div class="col-12 product-img mb-2">
-            <a [routerLink]="['/p',product.url]"><img [src]="product.cover" [alt]="product.name" class="img-fluid"></a>
-        </div>
-        <div class="col-12">
-            <a class="product-category text-decoration-none text-primary" href="/">{{ product.category.name }}</a>
-            <h6 class="product-title"><a  class="text-decoration-none text-dark" [routerLink]="['/p',product.url]">{{product.name}}</a></h6>
-            <div class="product-detail__price d-flex text-primary">
-                <span class="product-price">S/{{ product.price | number: '1.2-2' }}</span>
-                <span class="add-product c-p" (click)="addCartProduct()">Agregar al carrito</span>
-            </div>
+<div class="product row mb-3">
+    <div class="col-12 product-img mb-2">
+        <a [routerLink]="['/p',product.url]"><img [src]="product.cover" [alt]="product.name" class="img-fluid"></a>
+    </div>
+    <div class="col-12">
+        <a class="product-category text-decoration-none text-primary text-capitalize" routerLink="/" [queryParams]="{ category: product.category.id}">{{ product.category.id }}</a>
+        <h6 class="product-title"><a  class="text-decoration-none text-dark" [routerLink]="['/p',product.url]">{{product.name}}</a></h6>
+        <div class="product-detail__price d-flex text-primary">
+            <span class="product-price">S/{{ product.price | number: '1.2-2' }}</span>
+            <span class="add-product c-p" (click)="addCartProduct()">Agregar al carrito</span>
         </div>
     </div>
 </div>
+

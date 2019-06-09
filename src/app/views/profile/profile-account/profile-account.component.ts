@@ -7,7 +7,7 @@ import { AuthService } from '../../auth/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { Customer } from '../../auth/models/customer';
 import { AngularFirestore } from '@angular/fire/firestore';
-import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-profile-account',
@@ -20,6 +20,7 @@ export class ProfileAccountComponent implements OnInit {
     public documents: Observable<IdentificationDocument[]>;
 
     constructor(private document: DocumentService,
+        private snackBar: MatSnackBar,
         private userService: UserService,
         private firestore: AngularFirestore,
         private auth: AuthService) { }
@@ -42,11 +43,7 @@ export class ProfileAccountComponent implements OnInit {
         let data: Customer = this.form.value;
         data.document_id = this.firestore.doc(`documents/${data.document_id}`).ref;
         this.userService.edit(data).then(() => {
-            Swal.fire(
-                'Actualizado',
-                'Su información ha sido actualizado.',
-                'success'
-            );
+            this.snackBar.open('Su información ha sido actualizado', 'Ok');
         });
     }
 

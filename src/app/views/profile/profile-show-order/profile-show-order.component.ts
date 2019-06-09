@@ -20,6 +20,7 @@ export class ProfileShowOrderComponent implements OnInit {
             if (param.id) {
                 this.orderService.show(param.id).subscribe(response => {
                     this.order = response;
+                    this.order.id = param.id;
                 },err => {
                     this.router.navigateByUrl('404', { skipLocationChange: true });
                 })

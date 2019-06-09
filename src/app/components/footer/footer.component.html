@@ -1,4 +1,4 @@
-<footer class="footer bg-primary">
+<footer class="footer bg-primary d-md-block d-none">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -7,7 +7,7 @@
                     mascotas a través de sistemas preventivos, emergentes y de medicina interna para así mejorar la
                     salud de las personas incrementando la relación Humano-Animal.</p>
                 <i class="footer-icon">
-                    <svg width="22" height="22" viewBox="0 0 20 20"xmlns="http://www.w3.org/2000/svg">
+                    <svg width="22" height="22" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M11,10h2.6l0.4-3H11V5.3c0-0.9,0.2-1.5,1.5-1.5H14V1.1c-0.3,0-1-0.1-2.1-0.1C9.6,1,8,2.4,8,5v2H5.5v3H8v8h3V10z">
                         </path>
@@ -18,7 +18,8 @@
                 <h6 class="title-footer pb-4">Categorías</h6>
                 <ul class="menu-items-footer list-unstyled">
                     <li *ngFor="let category of categories">
-                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop" [queryParams]="{ category: category.id}">{{category.id}}</a>
+                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop"
+                            [queryParams]="{ category: category.id}">{{category.id}}</a>
                     </li>
                 </ul>
             </div>
@@ -42,3 +43,19 @@
         </div>
     </div>
 </footer>
+<nav mat-tab-nav-bar mat-align-tabs="center" headerPosition="below" class="border-bottom-0 border-top d-md-none fixed-bottom position-fixed bg-white">
+    <a mat-tab-link routerLink="/" class="flex-column text-decoration-none">
+        <mat-icon>home</mat-icon>
+        <span>Inicio</span>
+    </a>
+
+    <a mat-tab-link routerLink="/shop" class="flex-column text-decoration-none">
+        <mat-icon>shopping_basket</mat-icon>
+        <span>Tienda</span>
+    </a>
+
+    <a mat-tab-link routerLink="/profile" class="flex-column text-decoration-none">
+        <mat-icon>account_circle</mat-icon>
+        <span>Cuenta</span>
+    </a>
+</nav>

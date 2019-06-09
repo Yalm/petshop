@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 })
 export class ProfileOrderComponent implements OnInit {
 
-    public orders: Observable< Order[]>;
+    public order: Observable< Order[]>;
 
     constructor(private orderService: OrderService) { }
 
     ngOnInit() {
-        this.orders = this.orderService.index();
+        this.order = this.orderService.index();
     }
 }

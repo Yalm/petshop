@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/core';
 import { Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-header',
@@ -14,10 +15,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public home: boolean;
     public position: boolean;
     public search: boolean;
+    classFixed: string;
 
     private subscriptionRouter: Subscription;
 
     constructor(private router: Router,
+        @Inject(DOCUMENT) document,
         public auth: AuthService,
         public shoppingCartService: ShoppingCartService) { }
 
@@ -31,17 +34,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 }
             }
         );
+    }
 
-        const NAV = document.getElementById('nav_petshop').classList;
-        window.onscroll = () => {
-            const SCROLL = document.scrollingElement.scrollTop;
-            if (SCROLL > 500) {
-                NAV.add('fixed-top');
-                NAV.add('scroll-header');
-            } else {
-                NAV.remove('fixed-top');
-                NAV.remove('scroll-header');
-            }
+    @HostListener('window:scroll', ['$event'])
+    onWindowScroll(e) {
+        if (window.pageYOffset > 400) {
+            this.classFixed = 'scroll-header fixed-top';
+        } else {
+            this.classFixed = '';
         }
     }
 

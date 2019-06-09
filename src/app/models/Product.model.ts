@@ -7,9 +7,9 @@ export interface Product {
     readonly price: number;
     readonly cover: string;
     readonly url: string;
-    readonly stock: number;
+    stock: number;
     readonly description: string;
     readonly short_description: string;
-    category: Category;
+    readonly category: Category;
     readonly color: Color;
 }

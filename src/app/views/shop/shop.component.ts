@@ -14,6 +14,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     public products: Product[];
     private subscription: Subscription;
     private routerSubscription: Subscription;
+    public category: string;
 
     constructor(private productService: ProductService,
         private route: ActivatedRoute) { }
@@ -21,7 +22,8 @@ export class ShopComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.routerSubscription = this.route.queryParams.subscribe(params => {
             if (params.category) {
-                if(this.subscription) this.subscription.unsubscribe();
+                this.category = params.category;
+                if (this.subscription) this.subscription.unsubscribe();
                 this.getProducts(params.category);
             }
         });

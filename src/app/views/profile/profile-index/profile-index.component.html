@@ -4,7 +4,7 @@
             <ng-container *ngIf="auth.customer$ | async as customer">
                 <div class="profile">
                     <div class="avatar mb-5">
-                        <img [src]="customer.photoURL" [alt]="customer.name" class="img-fluid">
+                        <img fallback-src [src]="customer.photoURL" [alt]="customer.name" class="img-fluid">
                     </div>
                     <ul class="list-unstyled list-items bg-primary position-relative text-center mb-0 font-weight-bold">
                         <li>

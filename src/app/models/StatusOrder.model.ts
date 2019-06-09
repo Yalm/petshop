@@ -1,4 +1,4 @@
 export interface StatusOrder {
-    readonly id: number;
+    readonly id: string;
     readonly name: number;
 }

@@ -2,27 +2,26 @@ import { CartItem } from './CartItem.model';
 
 export class ShoppingCart {
     constructor(
-        public id: string,
-        public items?: CartItem[],
+        public items: CartItem[],
     ) { }
 
-    public add({ cover, id, name, price, quantity, stock, url }: CartItem): string {
+    public add({ cover, id, name, price, quantity, stock, url }: CartItem): void {
         const index: number = this.itemIndexOf(id);
-        const cartItem = this.items[index];
+        let cartItem = this.items[index];
 
         if (index < 0) {
             const ITEM: CartItem = { cover, id, name, price, quantity, stock, url } as CartItem;
             this.items.unshift(ITEM);
-            return 'add';
-        } else if (cartItem.quantity == cartItem.stock) {
-            return null;
+        } else if (cartItem.quantity == cartItem.stock && cartItem.stock == stock) {
+            return;
         } else {
+            cartItem.stock = cartItem.stock != stock ? stock: cartItem.stock;
+
             cartItem.quantity += quantity;
             if (cartItem.quantity > cartItem.stock) {
                 cartItem.quantity = cartItem.stock;
             }
         }
-        return 'update';
     }
 
     public totalCart(): number {

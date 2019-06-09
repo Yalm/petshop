@@ -2,7 +2,7 @@
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
-                <img [src]="customer.photoURL || 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'" class="img-fluid rounded-circle" [alt]="customer.name">
+                <img [src]="customer.photoURL || 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'" fallback-src class="img-fluid rounded-circle" [alt]="customer.name">
             </a>
         </li>
         <ng-template #login>
@@ -18,16 +18,8 @@
         </li>
     </ul>
 </nav>
-<nav class="header-section2" id="nav_petshop" [class.text-home]="home && !position">
+<nav class="header-section2 {{classFixed}}" [class.text-home]="home && !position">
     <ul class="menu-header2 d-flex align-items-center list-unstyled container mb-0">
-        <li class="icon-menu-he d-md-none px-3">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18" viewBox="0 0 50 50">
-                <rect y="3" width="50" height="2" fill="#5e5e5e"/>
-                <rect y="17" width="50" height="2" fill="#5e5e5e"/>
-                <rect y="31" width="50" height="2" fill="#5e5e5e"/>
-                <rect y="45" width="50" height="2" fill="#5e5e5e"/>
-            </svg>
-        </li>
         <li class="logo px-3">
             <a routerLink="/"><img src="assets/img/logo.png" alt="logo"></a>
         </li>
@@ -44,16 +36,12 @@
                         <path d="M7,7H6V6H7Zm7-1H13V7h1ZM7,4H6V5H7Zm7,0H13V5h1Z" fill="#5e5e5e"></path>
                     </svg>
                 </span>
-                <ng-container *ngIf="shoppingCartService.cart$ | async as cart; else cart_empty">
+                <ng-container *ngIf="shoppingCartService.cart$ | async as cart">
                     <span class="cart-total mx-lg-2">S/ {{cart.totalCart() | number: '1.2-2' }}</span>
                     <span class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
                 </ng-container>
-                <ng-template #cart_empty>
-                    <span class="cart-total mx-lg-2">S/ 0.00</span>
-                    <span class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">0</span>
-                </ng-template>
             </a>
-            <span class="icon_search-he" [className]="home ? 'pl-2' : 'd-md-none'">
+            <span class="icon_search-he" [className]="home ? 'pl-2 c-p' : 'd-md-none'">
                 <svg (click)="search = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
                     <path d="M11.5,2.46a6,6,0,0,0-4.56,9.89l-3.3,3.3.71.71,3.3-3.3A6,6,0,1,0,11.5,2.46Zm0,11a5,5,0,1,1,5-5A5,5,0,0,1,11.5,13.46Z" fill="#5e5e5e"></path>
                 </svg>

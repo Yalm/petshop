@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
-import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-cart',
@@ -11,27 +11,15 @@ import Swal from 'sweetalert2';
 export class CartComponent implements OnInit {
 
 
-    constructor(public shoppingCartService: ShoppingCartService) { }
+    constructor(public shoppingCartService: ShoppingCartService,
+        private snackBar: MatSnackBar) { }
 
     ngOnInit() {
     }
 
     deleteItem(id: string) {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '¡Sí, bórralo!'
-        }).then((result) => {
-            if (result.value) {
-                this.shoppingCartService.delete(id).then();
-                Swal.fire(
-                    'Eliminado',
-                    'Su archivo ha sido eliminado.',
-                    'success'
-                )
-            }
+        this.shoppingCartService.delete(id).then(() => {
+            this.snackBar.open('Su producto ha sido eliminado.', 'Ok');
         });
     }
 

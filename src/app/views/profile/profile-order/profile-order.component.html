@@ -1,4 +1,5 @@
-<table class="table table-striped" *ngIf="(orders | async)?.length > 0;else empty">
+<ng-container  *ngIf="(order | async) as orders;else empty">
+<table class="table table-striped" *ngIf="orders.length > 0;else empty">
     <thead>
         <tr class="text-center">
             <th scope="col">id</th>
@@ -16,6 +17,7 @@
         </tr>
     </tbody>
 </table>
+</ng-container>
 <ng-template #empty>
     <div class="d-flex flex-column justify-content-center text-center mt-2">
         <svg viewBox="0 -12 512.00032 512" width="100pt" height="100pt" class="d-block" xmlns="http://www.w3.org/2000/svg">

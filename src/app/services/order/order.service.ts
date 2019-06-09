@@ -6,6 +6,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 
 @Injectable({
     providedIn: 'root'
@@ -23,28 +24,21 @@ export class OrderService {
     public index(): Observable<Order[]> {
         return this.afAuth.user.pipe(switchMap(user => {
             return this.firestore
-                .collection('orders', ref => ref.where('customer', '==', this.firestore.doc(`customers/${user.uid}`).ref))
-                .snapshotChanges().pipe(map(items => items.map(item => {
-                    const data = item.payload.doc.data();
-                    return { id: item.payload.doc.id, ...data } as Order;
-                })));
+                .collection<Order>('orders', ref => ref.where('customer', '==', this.firestore.doc(`customers/${user.uid}`).ref))
+                .valueChanges({ idField: 'id' });
         }));
     }
 
     public show(id: string): Observable<Order> {
-        return this.order.doc(id).get().pipe(map(payload => {
-            if(!payload.exists) return null;
-            const data = payload.data();
-            return { id: payload.id, ...data } as Order;
-        }));
+        return this.order.doc<Order>(id).valueChanges();
     }
 
     public store(culqi_token: string, plus_info?: string): Observable<Order> {
-        const cart_id: string = localStorage.getItem('cart_id');
+        const cart: ShoppingCart = JSON.parse(localStorage.getItem('myCart'));
         return this.afAuth.idToken
             .pipe(switchMap(tokenUser => {
                 return this.http.post<Order>(`https://us-central1-${environment.firebase.projectId}.cloudfunctions.net/order`,
-                    { culqi_token, cart_id, plus_info }, {
+                    { culqi_token, items: cart.items , plus_info }, {
                         headers: {
                             Authorization: `Bearer ${tokenUser}`
                         }

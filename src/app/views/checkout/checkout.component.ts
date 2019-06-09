@@ -46,6 +46,7 @@ export class CheckoutComponent implements OnInit {
         this.loading = true;
         this.orderService.store(this.token, this.form.get('plus_info').value).subscribe(data => {
             this.loading = false;
+            this.shoppingCartService.update([]);
             this.order = data;
         }, () => {
             this.loading = false;

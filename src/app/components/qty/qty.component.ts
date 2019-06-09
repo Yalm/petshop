@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
-import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-qty',
@@ -16,7 +16,9 @@ export class QtyComponent {
     @Input() quantity: number = 1;
     public loading: boolean;
 
-    constructor(private shoppingCartService: ShoppingCartService) { }
+    constructor(private shoppingCartService: ShoppingCartService,
+        private snackBar: MatSnackBar,
+        ) { }
 
     quantityUp(): void {
         if (this.quantity >= this.product.stock) {
@@ -40,11 +42,7 @@ export class QtyComponent {
         this.loading = true;
         this.shoppingCartService.add({ ...this.product, quantity: this.quantity })
             .then(() => {
-                Swal.fire(
-                    'Agregado',
-                    'Su producto ha sido agregado.',
-                    'success'
-                )
+                this.snackBar.open('Su producto ha sido agregado.', 'Ok');
                 this.loading = false;
             });
     }

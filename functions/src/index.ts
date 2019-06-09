@@ -3,8 +3,8 @@ import { https } from 'firebase-functions';
 // import { environment } from './environments/environment';
 import { auth, db } from './db/index';
 // import { setApiKey, send } from '@sendgrid/mail';
-import { ShoppingCart } from './models/ShoppingCart.model';
 import { firestore as field } from 'firebase-admin';
+import { CartItem } from './models/CartItem.model';
 
 const cors = require('cors')({ origin: true });
 
@@ -44,16 +44,11 @@ export const order = https.onRequest(async (req, res) => {
             return;
         }
 
-        const cart = await db.collection('carts').doc(req.body.cart_id).get();
-        if (!cart.exists) {
-            res.status(422).json({ name: 'cart_id', msg: 'element does not exist' });
-            return;
-        }
+        const items: CartItem[] = req.body.items;
+        let total = 0;
 
-        const SHOPPING_CART: ShoppingCart = { id: cart.id, total: 0, ...cart.data() } as any;
-
-        for (const item of SHOPPING_CART.items) {
-            SHOPPING_CART.total += item.price * item.quantity;
+        for (const item of items) {
+            total += item.price * item.quantity;
         }
 
         try {
@@ -75,31 +70,27 @@ export const order = https.onRequest(async (req, res) => {
                 plus_info: req.body.plus_info || '',
                 state: db.doc('states/4'),
                 created_at: field.FieldValue.serverTimestamp(),
-                products: SHOPPING_CART.items,
+                products: items,
                 payment: {
-                    amount: SHOPPING_CART.total,
+                    amount: total,
                     payment_type: db.doc('paymentTypes/1')
                 }
             });
 
             const batch = db.batch();
 
-            for (const product of SHOPPING_CART.items) {
+            for (const product of items) {
                 batch.update(db.doc(`products/${product.id}`), {
                     stock: product.stock - product.quantity
                 });
             }
 
-            batch.update(db.doc(`carts/${SHOPPING_CART.id}`), {
-                items: []
-            });
-
             await batch.commit();
 
             res.status(200).json({
                 id: ORDER.id,
-                total: SHOPPING_CART.total,
-                products: SHOPPING_CART.items,
+                total,
+                products: items,
                 state: '4'
             });
 
@@ -132,8 +123,13 @@ function validDataOrder(data: any): any[] {
     if (!data.culqi_token) {
         ARRAY_ERROR.push({ name: 'culqi_token', msg: 'this field is required.' });
     }
-    if (!data.cart_id) {
-        ARRAY_ERROR.push({ name: 'cart_id', msg: 'this field is required.' });
+
+    if (!data.items) {
+        ARRAY_ERROR.push({ name: 'items', msg: 'this field is required.' });
+    }
+
+    if (!Array.isArray(data.items)) {
+        ARRAY_ERROR.push({ name: 'items', msg: 'this field must be colección.' });
     }
     return ARRAY_ERROR;
 }

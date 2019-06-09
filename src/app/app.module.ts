@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,11 +24,12 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { QtyComponent } from './components/qty/qty.component';
 import { CartComponent } from './views/cart/cart.component';
 import { CheckoutComponent } from './views/checkout/checkout.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from './modules/shared.module';
 import { AboutComponent } from './views/about/about.component';
 import { ServicesComponent } from './views/services/services.component';
 import { ContactComponent } from './views/contact/contact.component';
+import { MaterialModule } from './modules/material.module';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 @NgModule({
     declarations: [
@@ -49,8 +50,9 @@ import { ContactComponent } from './views/contact/contact.component';
         ContactComponent
     ],
     imports: [
-        BrowserModule,
+        BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebase),
+        MaterialModule,
         SharedModule,
         AngularFireAuthModule,
         AngularFirestoreModule,
@@ -58,7 +60,7 @@ import { ContactComponent } from './views/contact/contact.component';
         ProfileModule,
         AppRoutingModule,
         HttpClientModule,
-        NgbModule,
+        MatCarouselModule
     ],
     providers: [],
     bootstrap: [AppComponent]
