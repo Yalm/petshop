@@ -22,6 +22,7 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
+                        "aot": true,
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"
@@ -138,6 +139,7 @@
                         "main": "projects/admin/src/main.ts",
                         "polyfills": "projects/admin/src/polyfills.ts",
                         "tsConfig": "projects/admin/tsconfig.app.json",
+                        "aot": true,
                         "assets": [
                             "projects/admin/src/favicon.ico",
                             "projects/admin/src/assets"

@@ -1,0 +1,33 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /customers/{customer} {
+      allow read;
+      allow update: if request.auth.uid == resource.data.uid;
+    }
+
+    match /products/{product} {
+      allow read;
+    }
+
+    match /categories/{category} {
+      allow read;
+    }
+
+    match /users/{user} {
+      allow read: if request.auth.uid == user || getRole('admin');
+    }
+
+    match /documents/{document} {
+      allow read;
+    }
+
+    match /orders/{order} {
+    	allow read: if path('/databases/(default)/documents/customers/' + request.auth.uid) == resource.data.customer;
+    }
+
+    function getRole(role) {
+    	return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles[role]
+  	}
+
+  }
+}
