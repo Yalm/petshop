@@ -1,0 +1,33 @@
+<mat-toolbar color="primary" class="py-2 header">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-1 d-flex justify-content-center">
+                <img src="assets/img/logo.png" alt="logo" class="img-fluid">
+            </div>
+            <div class="col-11">
+                <div class="nav-top d-flex justify-content-between">
+                    <h6 class="title">Tablero Pet Shop</h6>
+                    <div class="nav-actions d-flex align-items-center" *ngIf="auth.user$ | async as user">
+                        <mat-icon matBadge="0" matBadgeColor="warn" class="mr-3">notifications</mat-icon>
+                        <img fallback-src [src]="user.claims.picture" [alt]="user.claims.name" width="28" height="28"
+                            class="rounded">
+                    </div>
+                </div>
+                <ul class="nav-bottom d-flex list-unstyled mb-0">
+                    <li class="mr-3">
+                        <a routerLink="/" routerLinkActive="active" class="links d-flex align-items-center">
+                            <mat-icon class="mr-2">home</mat-icon>
+                            <span class="pt-1">Inicio</span>
+                        </a>
+                    </li>
+                    <li class="d-flex align-items-center mr-3">
+                        <a routerLink="/products" class="links d-flex align-items-center">
+                            <mat-icon class="mr-2">store</mat-icon>
+                            <span class="pt-1">Catalogo</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

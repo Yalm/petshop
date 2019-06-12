@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree, CanActivateChild } from '@angular/router';
 import { Observable } from 'rxjs';
-import { take, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Injectable({
@@ -12,8 +12,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     constructor(private auth: AuthService, private router: Router) { }
     canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
         return this.auth.user$.pipe(
-            take(1),
-            map(user => user && user.roles.admin ? true : false),
+            map(user => user && user.claims.roles.admin ? true : false),
             tap(isAdmin => {
                 if (!isAdmin) {
                     console.error('Access denied - Admins only')
@@ -24,18 +23,28 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
         return this.auth.user$.pipe(
-            take(1),
             map(user => {
-                if (user && user.roles.admin || user && user.roles.editor) {
+                if (!user) {
+                    return this.returnUrlTreeLogin(state);
+                }
+
+                if (!user.claims.roles) {
+                    return this.returnUrlTreeLogin(state);
+                }
+                if (user.claims.roles.admin || user.claims.roles.editor) {
                     return true;
                 } else {
-                    return this.router.createUrlTree(['/login'], {
-                        queryParams: {
-                            return: state.url
-                        }
-                    });
+                    return this.returnUrlTreeLogin(state);
                 }
             })
         );
+    }
+
+    private returnUrlTreeLogin(state: RouterStateSnapshot): UrlTree {
+        return this.router.createUrlTree(['/login'], {
+            queryParams: {
+                return: state.url
+            }
+        });
     }
 }

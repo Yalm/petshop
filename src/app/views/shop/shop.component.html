@@ -1,6 +1,6 @@
-<app-breadcrumb [title]="category || 'Productos'" [subTitle]="category || 'Productos'"></app-breadcrumb>
+<app-breadcrumb title="Productos" subTitle="Productos"></app-breadcrumb>
 <div class="container">
     <div class="row">
-        <app-product *ngFor="let product of products" class="col-md-4 col-6" [product]="product"></app-product>
+        <app-product *ngFor="let product of products$ | async " class="col-md-4 col-6" [product]="product"></app-product>
     </div>
 </div>

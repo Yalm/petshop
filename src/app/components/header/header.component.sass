@@ -32,6 +32,7 @@
                 fill: #5e5e5e !important
     .menu-header2
         li
+            z-index: 1
             a
                 color: #5e5e5e
                 font-weight: 600
@@ -39,6 +40,19 @@
                 padding: 10px 0
                 &:hover
                     color: $primary
+            &.mega-menu
+                a
+                    z-index: 1
+                .menu-content
+                    position: absolute
+                    display: none
+                    top: 0
+                    padding-top: 60px
+                    &:hover
+                        display: flex
+                &:hover
+                    .menu-content
+                        display: flex
         .cart-short-view
             .count-cart
                 min-width: 22px

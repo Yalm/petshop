@@ -1,43 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/app/models/Product.model';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-shop',
     templateUrl: './shop.component.html',
     styleUrls: ['./shop.component.sass']
 })
-export class ShopComponent implements OnInit, OnDestroy {
+export class ShopComponent implements OnInit {
 
-    public products: Product[];
-    private subscription: Subscription;
-    private routerSubscription: Subscription;
-    public category: string;
+    products$: Observable<Product[]>;
 
     constructor(private productService: ProductService,
+        private router: Router,
         private route: ActivatedRoute) { }
 
     ngOnInit() {
-        this.routerSubscription = this.route.queryParams.subscribe(params => {
-            if (params.category) {
-                this.category = params.category;
-                if (this.subscription) this.subscription.unsubscribe();
-                this.getProducts(params.category);
-            }
-        });
-        this.getProducts();
+        this.products$ = this.route.queryParams.pipe(
+            switchMap(params => this.productService.index(params.category,params.color))
+        );
     }
 
-    getProducts(category?: string) {
-        this.subscription = this.productService.index()
-            .subscribe(response => this.products = response);
-    }
-
-    ngOnDestroy() {
-        this.routerSubscription.unsubscribe();
-        this.subscription.unsubscribe();
+    add() {
+        this.router.navigate(['/shop'], { queryParams: { color: 'blanco' }, queryParamsHandling: 'merge' });
     }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/Category.model';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-footer',
@@ -9,13 +10,13 @@ import { Category } from 'src/app/models/Category.model';
 })
 export class FooterComponent implements OnInit {
 
-    public year: number = new Date().getFullYear();
-    public categories: Category[];
+    year: number = new Date().getFullYear();
+    categories: Observable<Category[]>;
 
     constructor(private category: CategoryService) { }
 
     ngOnInit() {
-        this.category.index().subscribe(data => this.categories = data);
+        this.categories = this.category.index();
     }
 
 }

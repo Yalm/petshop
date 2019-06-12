@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy, Inject, HostListener } from '@angular/cor
 import { Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { Category } from 'functions/src/models/Category.model';
+import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
     selector: 'app-header',
@@ -16,17 +18,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public position: boolean;
     public search: boolean;
     classFixed: string;
+    categories$: Observable<Category[]>;
 
-    private subscriptionRouter: Subscription;
+    private subscription: Subscription;
 
     constructor(private router: Router,
         @Inject(DOCUMENT) document,
         public auth: AuthService,
+        private categoryService: CategoryService,
         public shoppingCartService: ShoppingCartService) { }
 
     ngOnInit() {
 
-        this.subscriptionRouter = this.router.events.subscribe(
+        this.subscription = this.router.events.subscribe(
             (event: any) => {
                 if (event instanceof RoutesRecognized) {
                     this.home = event.state.root.firstChild.data.headerDisabled ? true : false;
@@ -34,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 }
             }
         );
+        this.categories$ = this.categoryService.index();
     }
 
     @HostListener('window:scroll', ['$event'])
@@ -46,7 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscriptionRouter.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
 }

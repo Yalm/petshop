@@ -1,0 +1,12 @@
+<ul class="list-unstyled bg-white mb-0 menu d-flex justify-content-start">
+    <li class="text-capitalize items" *ngFor="let item of data | async">
+        <p class="text-primary font-weight-bold">{{item.name}}</p>
+        <ul class="list-unstyled mb-0 list-items">
+            <li *ngFor="let category of item.categories" class="items-list">
+                <a class="text-decoration-none text-dark d-block" routerLink="/shop"
+                    [queryParams]="{ category: category.path}">{{category.name}}</a>
+            </li>
+        </ul>
+    </li>
+    <img src="assets/img/menu-bg.jpg" alt="menu pet shop" class="position-absolute h-100 bg-menu">
+</ul>

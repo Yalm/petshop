@@ -1,4 +1,4 @@
-import { https } from 'firebase-functions';
+import { https, firestore } from 'firebase-functions';
 // import axios from 'axios';
 // import { environment } from './environments/environment';
 import { auth, db } from './db/index';
@@ -21,6 +21,10 @@ const cors = require('cors')({ origin: true });
 //         substitutions: { name: 'renzo' }
 //     })
 // });
+export const roles = firestore.document('users/{userId}').onCreate((snap, context) => {
+    const data = snap.data();
+    return auth.setCustomUserClaims(snap.id, { roles: data ? data.roles : null });
+});
 
 export const order = https.onRequest(async (req, res) => {
 

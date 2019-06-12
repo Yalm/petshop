@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     load = false;
     form: FormGroup;
     returnUrl: string;
-    messageBannedUser: boolean;
     private subscription: Subscription;
 
     constructor(public auth: AuthService,
@@ -38,18 +37,16 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.load = false;
             this.router.navigateByUrl(this.returnUrl);
         }).catch(err => {
+            this.load = false;
             this.errorsShow(err);
         });
     }
 
     googleSignIn() {
         this.auth.googleSignIn().then(() => {
-            console.log('paso');
             this.router.navigateByUrl(this.returnUrl);
         }).catch(err => {
-            console.log(err);
             if (err.code != "auth/popup-closed-by-user") {
-                console.log(err);
                 this.errorsShow(err);
             }
         });
@@ -58,16 +55,28 @@ export class LoginComponent implements OnInit, OnDestroy {
     private errorsShow(err: any): void {
         switch (err.code) {
             case 'auth/user-not-found':
-                this.form.controls['email'].setErrors({ 'not-found': true });
+                this.snackBar.open('Dirección de correo electrónico  y/o contraseña incorrecta.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
             case 'auth/wrong-password':
-                this.form.controls['email'].setErrors({ 'not-found': true });
+                this.snackBar.open('Dirección de correo electrónico  y/o contraseña incorrecta.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
             case 'auth/user-disabled':
-                this.messageBannedUser = true;
+                this.snackBar.open('Su cuenta ha sido suspendida. Póngase en contacto con el administrador.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
             default:
-                this.snackBar.open('Usuario no encontrado.', 'Ok');
+                this.snackBar.open('Usuario no encontrado.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
         }
     }

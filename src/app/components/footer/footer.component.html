@@ -17,9 +17,9 @@
             <div class="col-md-3 categories-sect">
                 <h6 class="title-footer pb-4">Categorías</h6>
                 <ul class="menu-items-footer list-unstyled">
-                    <li *ngFor="let category of categories">
+                    <li *ngFor="let category of categories | async">
                         <a class="item-link text-decoration-none text-capitalize" routerLink="/shop"
-                            [queryParams]="{ category: category.id}">{{category.id}}</a>
+                            [queryParams]="{ category: category.path}">{{category.name}}</a>
                     </li>
                 </ul>
             </div>

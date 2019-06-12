@@ -1,7 +1,11 @@
 service cloud.firestore {
   match /databases/{database}/documents {
+    match /carts/{cart} {
+      allow read,create,update;
+    }
+
     match /customers/{customer} {
-      allow read;
+      allow read: if request.auth.uid == customer;
       allow update: if request.auth.uid == resource.data.uid;
     }
 
@@ -14,7 +18,8 @@ service cloud.firestore {
     }
 
     match /users/{user} {
-      allow read: if request.auth.uid == user || getRole('admin');
+      allow read: if request.auth.uid == user;
+      allow update: if request.auth.uid == resource.data.uid;
     }
 
     match /documents/{document} {
@@ -25,9 +30,9 @@ service cloud.firestore {
     	allow read: if path('/databases/(default)/documents/customers/' + request.auth.uid) == resource.data.customer;
     }
 
-    function getRole(role) {
-    	return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles[role]
-  	}
+  	// function getRole(role) {
+  	// return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles[role]
+  	// }
 
   }
 }

@@ -30,6 +30,7 @@ import { ServicesComponent } from './views/services/services.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { MaterialModule } from './modules/material.module';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
         CheckoutComponent,
         AboutComponent,
         ServicesComponent,
-        ContactComponent
+        ContactComponent,
+        MegaMenuComponent
     ],
     imports: [
         BrowserAnimationsModule,

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../../models/User.model';
 
@@ -12,46 +12,50 @@ import { User } from '../../models/User.model';
 })
 export class AuthService {
 
-    public user$: Observable<User>;
+    public user$: Observable<auth.IdTokenResult>;
 
     constructor(
         private afAuth: AngularFireAuth,
         private afs: AngularFirestore,
         private router: Router,
     ) {
-        this.user$ = this.afAuth.authState
-            .pipe(
-                switchMap(user => {
-                    if (user) {
-                        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-                    } else {
-                        return of(null);
-                    }
-                })
-            );
+        this.user$ = this.afAuth.authState.pipe(
+            switchMap(user => {
+                if (user) {
+                    return from(user.getIdTokenResult());
+                } else {
+                    return of(null);
+                }
+            })
+        );
     }
 
     public async googleSignIn() {
         const provider = new auth.GoogleAuthProvider();
         const credential = await this.afAuth.auth.signInWithPopup(provider);
-        console.log('xd');
-        const user = await this.user$.toPromise();
-        if (user) {
-            return this.updateCustomerData(credential.user);
-        } else {
+        const user = await this.afAuth.auth.currentUser.getIdTokenResult();
+
+        if(!user.claims.roles) {
             await this.afAuth.auth.signOut();
-            throw { code: 'auth/user-not-found' };
+            throw { code: 'auth/popup-user-not-found' };
+        }
+
+        if (user.claims.roles.admin || user.claims.roles.editor) {
+            return this.updateCustomerData(credential.user);
         }
     }
 
     public async defaultSignIn(data) {
         const credential = await this.afAuth.auth.signInWithEmailAndPassword(data.email, data.password);
-        const user = await this.user$.toPromise();
-        if (user) {
-            return credential;
-        } else {
+        const user = await this.afAuth.auth.currentUser.getIdTokenResult();
+
+        if(!user.claims.roles) {
             await this.afAuth.auth.signOut();
             throw { code: 'auth/user-not-found' };
+        }
+
+        if (user) {
+            return credential;
         }
     }
 

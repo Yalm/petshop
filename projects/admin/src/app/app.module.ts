@@ -17,6 +17,7 @@ import { SharedModule } from './modules/shared.module';
 
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
+import { HeaderComponent } from './components/header/header.component';
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -27,7 +28,8 @@ registerLocaleData(localeEsAr, 'es-Ar');
         LoginComponent,
         WelcomeComponent,
         AuthComponent,
-        DashboardComponent
+        DashboardComponent,
+        HeaderComponent
     ],
     imports: [
         BrowserAnimationsModule,

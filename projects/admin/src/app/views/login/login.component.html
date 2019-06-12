@@ -1,16 +1,18 @@
 <div class="container mt-5">
     <form class="row justify-content-center" (ngSubmit)="login()" [formGroup]="form">
-        <div class="col-lg-4 d-xl-flex d-none bg-primary align-items-center flex-column info-login text-white justify-content-center">
+        <div
+            class="col-lg-4 d-xl-flex d-none bg-primary align-items-center flex-column info-login text-white justify-content-center">
             <img src="assets/img/logo.png" alt="logo" class="img-fluid">
             <h4 class="h4 pt-2">Pet Shop</h4>
-            <p class="pt-4">Proporcionamos servicios integrales de la más alta calidad para las mascotas a través de sistemas
+            <p class="pt-4">Proporcionamos servicios integrales de la más alta calidad para las mascotas a través de
+                sistemas
                 preventivos, emergentes y de medicina interna para así mejorar la salud de las personas incrementando la
                 relación Humano-Animal.</p>
         </div>
         <mat-card class="col-xl-4 col-lg-5 col-md-7 col-11 card-petshop" [class.load]="load">
             <mat-progress-bar mode="indeterminate" *ngIf="load" color="warn" class="spinner"></mat-progress-bar>
             <mat-card-header class="text-center">
-                <mat-card-title>Ingrese a su cuenta</mat-card-title>
+                <mat-card-title class="mat-h4">Ingrese a su cuenta</mat-card-title>
             </mat-card-header>
 
             <mat-card-content class="d-flex align-items-center flex-column">
@@ -30,7 +32,7 @@
                             <path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z" />
                             <path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z" />
                         </svg>
-                        <span>Iniciar sesión con google</span>
+                        <span class="mat-h4 m-0">Iniciar sesión con google</span>
                     </div>
                 </button>
                 <span class="or my-4">or</span>
