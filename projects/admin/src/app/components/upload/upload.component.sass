@@ -1,0 +1,37 @@
+.upload
+    min-height: 210px
+    border-radius: 7.5px
+    border: dashed 2px var(--primary)
+    background-color: transparent
+    cursor: pointer
+    .input-file
+        opacity: 0
+    .empty-file
+        p
+            font-size: 18px
+            color: #9b9b9b
+        span
+            color: var(--primary)
+            font-weight: 600
+    .files
+        padding: 54px 54px
+        img
+            border-radius: 20px
+        .file-preview
+            margin: 16px
+            width: 120px
+            height: 120px
+            z-index: 1
+            .file-content
+                z-index: 1
+                margin: 0 1em
+                background-color: rgba(255, 255, 255, 0.4)
+            .btn-delete
+                position: absolute
+                bottom: -29px
+                cursor: pointer
+            .filename
+                border-radius: 3px
+                z-index: 1
+                overflow: hidden
+                text-overflow: ellipsis

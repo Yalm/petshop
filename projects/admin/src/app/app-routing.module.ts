@@ -12,7 +12,11 @@ const routes: Routes = [
     {
         path: '', component: DashboardComponent, canActivate: [AuthGuard],
         children: [
-            { path: '', component: WelcomeComponent, pathMatch: 'full' }
+            { path: '', component: WelcomeComponent, pathMatch: 'full' },
+            {
+                path: 'products',
+                loadChildren: './views/product/product.module#ProductModule'
+            }
         ]
     },
     {

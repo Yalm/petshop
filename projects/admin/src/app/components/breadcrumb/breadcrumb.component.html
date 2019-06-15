@@ -1,0 +1,14 @@
+<mat-toolbar class="bread pl-4" [color]="darkTheme ?  'primary':null" *ngIf="data">
+    <div class="d-flex align-items-center">
+        <a mat-icon-button *ngIf="data.back;else icon" class="mr-3" aria-label="Atras" [routerLink]="data.back">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+        <ng-template #icon>
+            <mat-icon aria-label="Editar" class="mr-3">{{data.icon || 'home'}}</mat-icon>
+        </ng-template>
+        <div class="description">
+            <h2>{{data.name || 'Inicio'}}</h2>
+            <p class="mt-1 mb-0" *ngIf="data.text">{{data.text}}</p>
+        </div>
+    </div>
+</mat-toolbar>

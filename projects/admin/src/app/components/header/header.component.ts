@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
+    @Input() darkTheme: boolean;
+    @Output() activeDark = new EventEmitter();
+
     constructor(public auth: AuthService) { }
 
-    ngOnInit() {
-        // this.auth.user$.subscribe(data => {
-        //     console.log(data);
-        // })
-    }
+    ngOnInit() { }
+
 
 }

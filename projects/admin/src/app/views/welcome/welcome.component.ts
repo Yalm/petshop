@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-welcome',
@@ -8,11 +7,8 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class WelcomeComponent implements OnInit {
 
-    constructor(private auth: AuthService) { }
+    constructor() { }
 
     ngOnInit() {
-    }
-    salir() {
-        this.auth.signOut();
     }
 }

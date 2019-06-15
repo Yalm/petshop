@@ -1,32 +1,49 @@
-<mat-toolbar color="primary" class="py-2 header">
+<mat-toolbar [color]="darkTheme ? null: 'primary'" class="pt-2 pb-0 header">
     <div class="container-fluid p-0">
         <div class="row">
-            <div class="col-1 d-flex justify-content-center">
-                <img src="assets/img/logo.png" alt="logo" class="img-fluid">
+            <div class="col-3 col-xl-1 col-sm-2 d-flex justify-content-center align-items-center">
+                <img src="assets/img/logo.png" alt="logo" width="70" height="70">
             </div>
-            <div class="col-11">
-                <div class="nav-top d-flex justify-content-between">
-                    <h6 class="title">Tablero Pet Shop</h6>
+            <div class="col-9 col-xl-11 col-sm-10">
+                <div class="nav-top d-flex justify-content-sm-between justify-content-end">
+                    <h6 class="title d-none d-sm-block">Pet Shop</h6>
                     <div class="nav-actions d-flex align-items-center" *ngIf="auth.user$ | async as user">
-                        <mat-icon matBadge="0" matBadgeColor="warn" class="mr-3">notifications</mat-icon>
-                        <img fallback-src [src]="user.claims.picture" [alt]="user.claims.name" width="28" height="28"
-                            class="rounded">
+                        <button mat-icon-button aria-label="notifications" class="mr-3">
+                            <mat-icon matBadge="0" matBadgeColor="warn">notifications</mat-icon>
+                        </button>
+                        <button mat-button class="p-0" [matMenuTriggerFor]="menu">
+                            <img fallback-src [src]="user.claims.picture" [alt]="user.claims.name" width="28"
+                                height="28" class="rounded">
+                            <mat-icon aria-hidden="false" aria-label="Info">more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <a mat-menu-item routerLink="/">
+                                <mat-icon>account_circle</mat-icon>
+                                Perfil
+                            </a>
+                            <button mat-menu-item (click)="activeDark.emit(!darkTheme)">
+                                <mat-icon>brightness_4</mat-icon>
+                                Tema oscuro: {{ darkTheme ? 'Activado': 'Desactivado' }}
+                            </button>
+                            <button mat-menu-item (click)="auth.signOut()">
+                                <mat-icon>exit_to_app</mat-icon>
+                                Salir
+                            </button>
+                        </mat-menu>
                     </div>
                 </div>
-                <ul class="nav-bottom d-flex list-unstyled mb-0">
-                    <li class="mr-3">
-                        <a routerLink="/" routerLinkActive="active" class="links d-flex align-items-center">
-                            <mat-icon class="mr-2">home</mat-icon>
-                            <span class="pt-1">Inicio</span>
-                        </a>
-                    </li>
-                    <li class="d-flex align-items-center mr-3">
-                        <a routerLink="/products" class="links d-flex align-items-center">
-                            <mat-icon class="mr-2">store</mat-icon>
-                            <span class="pt-1">Catalogo</span>
-                        </a>
-                    </li>
-                </ul>
+                <nav mat-tab-nav-bar class="nav-bottom"  [color]="darkTheme ? null: 'accent'">
+                    <a mat-tab-link routerLink="/" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact:
+                        true}" [active]="rla.isActive" class="links d-flex align-items-center">
+                        <mat-icon class="mr-1">home</mat-icon>
+                        <span class="pt-1">Inicio</span>
+                    </a>
+                    <a mat-tab-link routerLink="/products" routerLinkActive #rla2="routerLinkActive"
+                        [active]="rla2.isActive" class="links d-flex align-items-center">
+                        <mat-icon class="mr-1">store</mat-icon>
+                        <span class="pt-1">Catalogo</span>
+                    </a>
+                </nav>
             </div>
         </div>
     </div>

@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
 })
 export class InvalidMessageDirective implements OnInit, OnDestroy {
     @Input() appInvalidMessage: string;
+    @Input() name: string;
     control: AbstractControl;
     controlSubscription: Subscription;
 
@@ -22,18 +23,22 @@ export class InvalidMessageDirective implements OnInit, OnDestroy {
         this._el.nativeElement.innerText = this.getErrorMessage();
 
         this.controlSubscription = this.control.statusChanges
-        .pipe(
-            filter(x => x == 'INVALID')
-        ).subscribe(() => {
-            this._el.nativeElement.innerText = this.getErrorMessage();
-        })
+            .pipe(
+                filter(x => x == 'INVALID')
+            ).subscribe(() => {
+                this._el.nativeElement.innerText = this.getErrorMessage();
+            })
 
     }
 
     private getErrorMessage(): string {
-        return this.control.hasError('required') ? 'Debes introducir un valor.' :
+        const nameControl: string = this.name || this.appInvalidMessage;
+        return this.control.hasError('required') ? `El campo ${nameControl} es obligatorio.` :
             this.control.hasError('not-found') ? 'Dirección de correo electrónico  y/o contraseña incorrecta.' :
-            this.control.hasError('email') ? 'No es un correo electrónico válido' : '';
+                this.control.hasError('minlength') ? `El campo ${nameControl} debe tener menos de ${this.control.getError('minlength').requiredLength} caracteres.` :
+                    this.control.hasError('min') ? `El tamaño de ${nameControl} debe ser de al menos ${this.control.getError('min').min}.` :
+                        this.control.hasError('unique') ? `El campo ${nameControl} ya ha sido registrado.` :
+                            this.control.hasError('email') ? 'No es un correo electrónico válido.' : '';
     }
 
     get form() { return this._fg.control }

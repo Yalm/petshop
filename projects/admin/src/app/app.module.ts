@@ -10,14 +10,15 @@ import { WelcomeComponent } from './views/welcome/welcome.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { SharedModule } from './modules/shared.module';
-
+import { HeaderComponent } from './components/header/header.component';
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
-import { HeaderComponent } from './components/header/header.component';
+
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 registerLocaleData(localeEsAr, 'es-Ar');
 
@@ -38,6 +39,7 @@ registerLocaleData(localeEsAr, 'es-Ar');
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
+        AngularFireStorageModule
     ],
     providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],
     bootstrap: [AppComponent]

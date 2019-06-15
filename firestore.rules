@@ -1,25 +1,25 @@
+rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /carts/{cart} {
-      allow read,create,update;
-    }
 
-    match /customers/{customer} {
-      allow read: if request.auth.uid == customer;
-      allow update: if request.auth.uid == resource.data.uid;
+    match /customers/{id} {
+      allow read: if request.auth.uid == id;
+      allow update: if request.auth.uid == id;
+      allow create: if request.auth.uid == id;
     }
 
     match /products/{product} {
       allow read;
     }
 
-    match /categories/{category} {
-      allow read;
+    match /{path=**}/categories/{id} {
+       allow read;
     }
 
-    match /users/{user} {
-      allow read: if request.auth.uid == user;
-      allow update: if request.auth.uid == resource.data.uid;
+    match /users/{id} {
+      allow read: if request.auth.uid == id;
+      allow update: if request.auth.uid == id
     }
 
     match /documents/{document} {
@@ -29,10 +29,6 @@ service cloud.firestore {
     match /orders/{order} {
     	allow read: if path('/databases/(default)/documents/customers/' + request.auth.uid) == resource.data.customer;
     }
-
-  	// function getRole(role) {
-  	// return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles[role]
-  	// }
 
   }
 }
