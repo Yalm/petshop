@@ -15,8 +15,8 @@ export class ProductComponent implements OnInit {
     constructor(private shoppingCartService: ShoppingCartService,
         private snackBar: MatSnackBar
     ) { }
-    ngOnInit() {
-    }
+
+    ngOnInit() {}
 
     addCartProduct() {
         if (this.product.stock > 0) {

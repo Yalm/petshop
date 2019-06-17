@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Category } from 'src/app/models/Category.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class CategoryService {
 
     constructor(private firestore: AngularFirestore) { }
 
-    public index(): Observable<any> {
+    public index(): Observable<Category[]> {
         return this.firestore
             .collectionGroup('categories')
             .snapshotChanges()

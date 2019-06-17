@@ -1,39 +1,43 @@
-<ng-container *ngIf="product">
-    <div class="bread-crumb d-md-block d-none">
-        <ul class="d-flex container list-unstyled">
-            <li><a routerLink="/">Inicio</a></li>
-            <li><a routerLink="/shop" [queryParams]="{ category: product.category.id}"
-                    class="text-capitalize">{{product.category.id}}</a></li>
-            <li class="name-product">{{product.name}}</li>
-        </ul>
-    </div>
-    <div class="container pt-4">
-        <div class="row">
-            <div class="col-md-6 pb-3">
-                <img [src]="product.cover" [alt]="product.name" class="img-fluid">
-            </div>
-            <div class="col-md-6">
-                <h2 class="pt-2">{{product.name}}</h2>
-                <h5>S/ {{product.price | number: '1.2-2' }}</h5>
-                <p>{{product.short_description}}</p>
-                <app-qty [product]="product"></app-qty>
-            </div>
+<ng-container *ngIf="product$ | async as product">
+    <ng-container *ngIf="product.category | docCategory | async as category">
+        <div class="bread-crumb d-md-block d-none">
+            <ul class="d-flex container list-unstyled">
+                <li><a routerLink="/" class="text-decoration-none">Inicio</a></li>
+                <li>
+                    <a routerLink="/shop" [queryParams]="{ category: category.path}"
+                        class="text-capitalize text-decoration-none">{{category.name }}</a>
+                </li>
+                <li class="name-product">{{product.name}}</li>
+            </ul>
+        </div>
+        <div class="container pt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6 pb-3">
+                    <img [src]="product.cover" [alt]="product.name" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h2 class="pt-2">{{product.name}}</h2>
+                    <h5>S/ {{product.price | number: '1.2-2' }}</h5>
+                    <p>{{product.short_description}}</p>
+                    <app-qty [product]="product"></app-qty>
+                </div>
 
-            <mat-tab-group mat-align-tabs="center" class="w-100 pt-3">
-                <mat-tab label="Descripción" class="pt-5">
-                    <p class="m-0">{{product.description}}</p>
-                </mat-tab>
-                <mat-tab label="Información Adicional">
-                    <div class="aditional_information-color">
-                        <span>Color:</span>
-                        <span class="ml-2">{{product.color.id}}</span>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-            <div class="col-12 text-center pb-md-5 pb-2">
-                <strong>SKU: {{product.id}}</strong>
-                <span class="ml-5">Categoría: <a class="text-capitalize">{{product.category.id}}</a></span>
+                <mat-tab-group mat-align-tabs="center" class="w-100 pt-3">
+                    <mat-tab label="Descripción" class="pt-5">
+                        <p class="m-0">{{product.description}}</p>
+                    </mat-tab>
+                    <mat-tab label="Información Adicional">
+                        <div class="aditional_information-color" *ngIf="product.color">
+                            <span>Color:</span>
+                            <span class="ml-2">{{product.color.name}}</span>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+                <div class="col-12 text-center pb-md-5 pb-2">
+                    <strong>SKU: {{product.id}}</strong>
+                    <span class="ml-5">Categoría: <a class="text-capitalize">{{category.name}}</a></span>
+                </div>
             </div>
         </div>
-    </div>
+    </ng-container>
 </ng-container>

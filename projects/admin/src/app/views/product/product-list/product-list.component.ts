@@ -1,26 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
-
-export interface User {
-    name: string;
-    nationality: string;
-    type_doc: string;
-    num_doc: number;
-    num_legacy: number;
-}
-
-const ELEMENT_DATA: User[] = [
-    { name: 'Hydrogen', nationality: 'Brasil', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Helium', nationality: 'Canada', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Lithium', nationality: 'Venezuela', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Beryllium', nationality: 'Paraguay', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Boron', nationality: 'Ecuador', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Carbon', nationality: 'Chile', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Nitrogen', nationality: 'Perú', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Oxygen', nationality: 'Argentina', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Fluorine', nationality: 'Bolivia', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 },
-    { name: 'Neon', nationality: 'Mexico', type_doc: 'D.N.I', num_doc: 74998182, num_legacy: 34568 }
-];
+import { MatSort, MatPaginator } from '@angular/material';
+import { FirestoreDataSource } from './product-list-datasource';
+import { Product } from 'src/app/models/Product.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -30,15 +12,16 @@ const ELEMENT_DATA: User[] = [
 })
 export class ProductListComponent implements OnInit {
 
-    displayedColumns: string[] = ['show', 'cover', 'name', 'price', 'stock', 'actions'];
-    dataSource = new MatTableDataSource(ELEMENT_DATA);
+    displayedColumns: string[] = ['show', 'name', 'price', 'stock', 'actions'];
+    dataSource: FirestoreDataSource<Product>;
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    constructor() { }
+
+    constructor(private afs: AngularFirestore) { }
 
     ngOnInit() {
-        this.dataSource.sort = this.sort;
+        this.dataSource = new FirestoreDataSource(this.paginator, this.afs, 'products',this.sort);
     }
 
     applyFilter(filterValue: string) {

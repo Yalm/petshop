@@ -14,6 +14,7 @@ export class QtyComponent {
     @Input() product: CartItem;
     @Input() btn: boolean = true;
     @Input() quantity: number = 1;
+
     public loading: boolean;
 
     constructor(private shoppingCartService: ShoppingCartService,
@@ -40,6 +41,7 @@ export class QtyComponent {
 
     addCartProduct(): void {
         this.loading = true;
+
         this.shoppingCartService.add({ ...this.product, quantity: this.quantity })
             .then(() => {
                 this.snackBar.open('Su producto ha sido agregado.', 'Ok');

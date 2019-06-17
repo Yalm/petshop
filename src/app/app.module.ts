@@ -31,6 +31,8 @@ import { ContactComponent } from './views/contact/contact.component';
 import { MaterialModule } from './modules/material.module';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DocPipe } from './pipes/doc.pipe';
 
 @NgModule({
     declarations: [
@@ -49,7 +51,8 @@ import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
         AboutComponent,
         ServicesComponent,
         ContactComponent,
-        MegaMenuComponent
+        MegaMenuComponent,
+        DocPipe
     ],
     imports: [
         BrowserAnimationsModule,
@@ -62,7 +65,8 @@ import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
         ProfileModule,
         AppRoutingModule,
         HttpClientModule,
-        MatCarouselModule
+        MatCarouselModule,
+        AngularFireStorageModule
     ],
     providers: [],
     bootstrap: [AppComponent]

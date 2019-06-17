@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { map, tap, filter, switchMap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 
 @Injectable({
@@ -14,19 +14,13 @@ export class ProductService {
 
     constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { }
 
-    public index(category?: string, color?: string): Observable<Product[]> {
+    public index(): Observable<Product[]> {
         return this.firestore.collection<Product>('products').valueChanges({ idField: 'id' })
     }
 
-    public show(url: string): Observable<Product> {
-        return this.firestore.collection<Product>('products', ref => ref.where('url', '==', url))
-            .valueChanges({ idField: 'id' })
-            .pipe(
-                map(x => {
-                    if (x.length < 0) return null;
-                    else return x[0];
-                })
-            );
+    public show(id: string): Observable<Product> {
+        return this.firestore.collection('products').doc<Product>(id)
+            .valueChanges();
     }
 
     public store(data: any): Observable<AngularFireUploadTask | UploadTaskSnapshot> {
