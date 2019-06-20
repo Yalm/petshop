@@ -18,6 +18,8 @@ import { SharedModule } from './modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
+import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
 
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 registerLocaleData(localeEsAr, 'es-Ar');
@@ -41,7 +43,13 @@ registerLocaleData(localeEsAr, 'es-Ar');
         AngularFirestoreModule,
         AngularFireStorageModule
     ],
-    providers: [{ provide: LOCALE_ID, useValue: 'es-Ar' }],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'es-Ar' },
+        {
+            provide: MatPaginatorIntl,
+            useClass: MatPaginatorIntlCustom
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
