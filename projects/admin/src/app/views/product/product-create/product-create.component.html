@@ -36,14 +36,14 @@
 
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Categoría</mat-label>
-                        <mat-select placeholder="Categoría" formControlName="category" required>
+                        <mat-select placeholder="Categoría" formControlName="category_id" required>
                             <mat-optgroup *ngFor="let category of categories | async" [label]="category.name | titlecase">
-                                <mat-option *ngFor="let subCategory of category.categories" [value]="subCategory.path">
+                                <mat-option *ngFor="let subCategory of category.categories" [value]="subCategory.id">
                                     {{subCategory.name}}
                                 </mat-option>
                             </mat-optgroup>
                         </mat-select>
-                        <mat-error appInvalidMessage="category"></mat-error>
+                        <mat-error appInvalidMessage="category_id"></mat-error>
                     </mat-form-field>
 
                 </div>
@@ -59,10 +59,10 @@
                 <div class="p-4">
                     <mat-form-field class="w-100 mb-2" appearance="outline">
                         <mat-label>Color</mat-label>
-                        <mat-select placeholder="Color" formControlName="color" >
-                            <mat-option *ngFor="let color of colors | async" [value]=" 'colors/' + color.id" >{{color.name}}</mat-option>
+                        <mat-select placeholder="Color" formControlName="color_id" >
+                            <mat-option *ngFor="let color of colors | async" [value]="color.id" >{{color.name}}</mat-option>
                         </mat-select>
-                        <mat-error appInvalidMessage="color"></mat-error>
+                        <mat-error appInvalidMessage="color_id"></mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="w-100" appearance="outline">

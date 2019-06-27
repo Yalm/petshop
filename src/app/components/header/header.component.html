@@ -2,7 +2,7 @@
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
-                <img [src]="customer.photoURL || 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png'"
+                <img [src]="customer.avatar"
                     fallback-src class="img-fluid rounded-circle" [alt]="customer.name">
             </a>
         </li>

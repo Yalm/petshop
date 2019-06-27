@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { IdentificationDocument } from 'src/app/models/IdentificationDocument.model';
 import { AuthService } from '../../auth/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { Customer } from '../../auth/models/customer';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -22,16 +20,14 @@ export class ProfileAccountComponent implements OnInit {
     constructor(private document: DocumentService,
         private snackBar: MatSnackBar,
         private userService: UserService,
-        private firestore: AngularFirestore,
         private auth: AuthService) { }
 
     ngOnInit() {
-        this.auth.customer$.subscribe(user => {
+        this.auth.me().subscribe(user => {
             this.form = new FormGroup({
-                uid: new FormControl(user.uid, [Validators.required]),
-                displayName: new FormControl(user.displayName, [Validators.required]),
+                name: new FormControl(user.name, [Validators.required]),
                 surnames: new FormControl(user.surnames, [Validators.required]),
-                document_id: new FormControl(user.document_id ? user.document_id.id : null, [Validators.required]),
+                document_id: new FormControl(user.document_id, [Validators.required]),
                 document_number: new FormControl(user.document_number, [Validators.required]),
                 phone: new FormControl(user.phone, [Validators.required]),
             });
@@ -40,9 +36,7 @@ export class ProfileAccountComponent implements OnInit {
     }
 
     public edit() {
-        let data: Customer = this.form.value;
-        data.document_id = this.firestore.doc(`documents/${data.document_id}`).ref;
-        this.userService.edit(data).then(() => {
+        this.userService.edit(this.form.value).subscribe(() => {
             this.snackBar.open('Su información ha sido actualizado', 'Ok');
         });
     }

@@ -2,9 +2,9 @@
     <h2 class="h2 mb-3">
         Pedido # {{order.id}}
         <span
-            class="text-{{ order.state.id | stateOrder: true }} h6 border border-{{ order.state.id | stateOrder: true }} rounded p-2 ml-2">{{ order.state.id | stateOrder }}</span>
+            class="text-{{ order.state.id | stateOrder: true }} h6 border border-{{ order.state.id  | stateOrder: true }} rounded p-2 ml-2">{{ order.state.id  | stateOrder }}</span>
     </h2>
-    <span>{{order.created_at.toDate() | date:'medium'}}</span>
+    <span>{{order.created_at | date:'medium'}}</span>
     <h5 class="h5 mt-4">Artículos ordenados</h5>
     <table class="table">
         <thead>

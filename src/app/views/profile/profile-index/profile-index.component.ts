@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile-index',
@@ -8,7 +9,13 @@ import { AuthService } from '../../auth/services/auth/auth.service';
 })
 export class ProfileIndexComponent implements OnInit {
 
-    constructor(public auth: AuthService) { }
+    constructor(public auth: AuthService, private router: Router) { }
 
     ngOnInit() { }
+
+    logout(): void {
+        this.auth.signOut().subscribe(() => {
+            this.router.navigateByUrl('/');
+        });
+    }
 }

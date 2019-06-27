@@ -9,7 +9,7 @@ import { CheckLoginGuard } from './guards/auth/check-login.guard';
 export const AuthRoutingModule: Routes = [
     { path: 'register', component: RegisterComponent, canActivate: [CheckLoginGuard] },
     { path: 'login', component: LoginComponent, canActivate: [CheckLoginGuard] },
-    { path: 'reset', component: ResetComponent },
-    { path: 'password/reset', component: EmailComponent },
+    { path: 'password/reset', component: ResetComponent, canActivate: [CheckLoginGuard] },
+    { path: 'password/email', component: EmailComponent, canActivate: [CheckLoginGuard] }
 ];
 

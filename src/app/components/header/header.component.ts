@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
-import { Subscription, Observable } from 'rxjs';
-import { Category } from 'functions/src/models/Category.model';
+import { Observable } from 'rxjs';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { Category } from 'src/app/models/Category.model';
 
 @Component({
     selector: 'app-header',
@@ -13,9 +13,9 @@ import { CategoryService } from 'src/app/services/category/category.service';
 })
 export class HeaderComponent implements OnInit {
 
-    public home: boolean;
-    public position: boolean;
-    public search: boolean;
+    home: boolean;
+    position: boolean;
+    search: boolean;
     categories$: Observable<Category[]>;
 
     constructor(private router: Router,

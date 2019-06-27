@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { IdentificationDocument } from 'src/app/models/IdentificationDocument.model';
+import { HttpClient } from '@angular/common/http';
+import { Pagination } from 'src/app/models/Pagination.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DocumentService {
 
-    constructor(private firestore: AngularFirestore) { }
+    constructor(private http: HttpClient) { }
 
-    public index(): Observable<IdentificationDocument[]> {
-        return this.firestore
-            .collection<IdentificationDocument>('documents')
-            .valueChanges({idField: 'id'});
+    public index(page: number = 1): Observable<IdentificationDocument[]> {
+        return this.http.get<Pagination<IdentificationDocument>>(`documents?page=${page}`)
+            .pipe(
+                map(response => response.data)
+            );
     }
 }

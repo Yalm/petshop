@@ -10,5 +10,5 @@ export interface Order {
     readonly products: CartItem[]
     readonly plus_info?: string;
     readonly payment?: Payment;
-    readonly created_at: any;
+    readonly created_at: string;
 }

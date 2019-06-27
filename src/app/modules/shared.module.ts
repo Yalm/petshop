@@ -4,12 +4,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FallbackSrcDirective } from '../directives/fallback-src/fallback-src.directive';
 import { InvalidMessageDirective } from '../directives/invalid-message/invalid-message.directive';
 import { StateOrderPipe } from '../pipes/state-order.pipe';
+import { MaterialModule } from './material.module';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        MaterialModule,
     ],
     declarations: [
         FallbackSrcDirective,
@@ -19,6 +21,7 @@ import { StateOrderPipe } from '../pipes/state-order.pipe';
     exports: [
         ReactiveFormsModule,
         FormsModule,
+        MaterialModule,
         FallbackSrcDirective,
         InvalidMessageDirective,
         StateOrderPipe

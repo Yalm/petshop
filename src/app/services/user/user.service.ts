@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Customer } from 'src/app/views/auth/models/customer';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
 
-    constructor(private firestore: AngularFirestore,
-        private afAuth: AngularFireAuth, ) {
-    }
+    constructor(private http: HttpClient) {}
 
-    public edit(data: Customer): Promise<void> {
-        return this.firestore.doc(`customers/${data.uid}`).update(data);
+    public edit(data: Customer): Observable<Customer> {
+        return this.http.put<Customer>(`customers/${data.id}`, data);
     }
 }

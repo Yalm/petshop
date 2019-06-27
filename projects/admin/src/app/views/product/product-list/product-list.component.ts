@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator } from '@angular/material';
-import { FirestoreDataSource } from './product-list-datasource';
 import { Product } from 'src/app/models/Product.model';
-import { AngularFirestore } from '@angular/fire/firestore';
-
+import { PetDataSource } from '../../../shared/class/pet-datasource';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-product-list',
@@ -13,15 +12,15 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class ProductListComponent implements OnInit {
 
     displayedColumns: string[] = ['show', 'name', 'price', 'stock', 'actions'];
-    dataSource: FirestoreDataSource<Product>;
+    dataSource: PetDataSource<Product[]>;
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    constructor(private afs: AngularFirestore) { }
+    constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.dataSource = new FirestoreDataSource(this.paginator, this.afs, 'products',this.sort);
+        this.dataSource = new PetDataSource(this.paginator, 'products', this.sort, this.http);
     }
 
     applyFilter(filterValue: string) {

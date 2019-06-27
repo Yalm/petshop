@@ -5,12 +5,10 @@
         </a>
     </div>
     <div class="col-12">
-        <ng-container *ngIf="product.category | docCategory | async as category">
-            <a class="product-category text-decoration-none text-primary text-capitalize" routerLink="/"
-                [queryParams]="{ category: category.path }">
-                {{ category.name }}
-            </a>
-        </ng-container>
+        <a class="product-category text-decoration-none text-primary" routerLink="/"
+            [queryParams]="{ category: product.category.id }">
+            {{ product.category.name }}
+        </a>
 
         <h6 class="product-title"><a class="text-decoration-none text-dark"
                 [routerLink]="['/p',product.url]">{{product.name}}</a></h6>

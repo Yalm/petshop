@@ -7,10 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { LoginComponent } from './views/login/login.component';
 import { WelcomeComponent } from './views/welcome/welcome.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
@@ -22,7 +18,10 @@ import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
 
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
-registerLocaleData(localeEsAr, 'es-Ar');
+registerLocaleData(localeEsAr, 'es-PE');
+import { Ng2UiAuthModule } from 'ng2-ui-auth';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiInterceptor } from 'src/app/interceptors/api.interceptor';
 
 @NgModule({
     declarations: [
@@ -38,16 +37,18 @@ registerLocaleData(localeEsAr, 'es-Ar');
         BrowserAnimationsModule,
         AppRoutingModule,
         SharedModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        AngularFireStorageModule
+        Ng2UiAuthModule.forRoot({ providers: environment.providers, loginUrl: environment.loginUrl})
     ],
     providers: [
-        { provide: LOCALE_ID, useValue: 'es-Ar' },
+        { provide: LOCALE_ID, useValue: 'es-PE' },
         {
             provide: MatPaginatorIntl,
             useClass: MatPaginatorIntlCustom
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiInterceptor,
+            multi: true,
         }
     ],
     bootstrap: [AppComponent]

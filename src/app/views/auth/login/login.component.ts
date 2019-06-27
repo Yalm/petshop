@@ -1,83 +1,70 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { AuthService } from '../services/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit,OnDestroy {
+export class LoginComponent implements OnInit {
 
-    public email = new FormControl('', [Validators.required, Validators.email]);
-    public password = new FormControl('', [Validators.required]);
-    public loginForm: FormGroup;
+    public form: FormGroup;
     private returnUrl: string;
-    public messageBannedUser: boolean;
 
-    private subscription: Subscription;
-
-    constructor(public auth: AuthService,
+    constructor(private auth: AuthService,
         private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
         private router: Router) { }
 
     ngOnInit() {
-        this.createForm();
-        this.subscription = this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/profile');
+        this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/profile');
+        this.form = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+        });
     }
 
     login(): void {
-        this.auth.defaultSignIn(this.email.value, this.password.value).then(data => {
+        this.auth.defaultSignIn(this.form.value).subscribe(response => {
+            this.auth.setToken(response.access_token);
             this.router.navigateByUrl(this.returnUrl);
-        }).catch(err => {
-            this.errorsShow(err);
+        }, response => {
+            this.errorsShow(response.error);
         });
     }
 
     googleSignIn(): void {
-        this.auth.googleSignIn().then(() => {
-            this.router.navigateByUrl(this.returnUrl);
-        }).catch(err => {
-            if (err.code != "auth/popup-closed-by-user") {
-                this.errorsShow(err);
-            }
-        });
+        this.auth.googleSignIn()
+            .subscribe(response => {
+                this.auth.setToken(response.access_token);
+                this.router.navigateByUrl(this.returnUrl);
+            }, response => {
+                this.errorsShow(response.error);
+            });
     }
 
     private errorsShow(err: any): void {
+        if (!err) {
+            return;
+        }
         switch (err.code) {
             case 'auth/user-not-found':
-                this.loginForm.controls['email'].setErrors({ 'not-found': true });
-                break;
-            case 'auth/wrong-password':
-                this.loginForm.controls['email'].setErrors({ 'not-found': true });
+                this.snackBar.open('Dirección de correo electrónico  y/o contraseña incorrecta.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
             case 'auth/user-disabled':
-                this.messageBannedUser = true;
+                this.snackBar.open('Su cuenta ha sido suspendida. Póngase en contacto con el administrador.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
                 break;
             default:
                 break;
         }
     }
-
-    getErrorMessage() {
-        return this.password.hasError('required') ? 'Debes introducir un valor' :
-            this.email.hasError('required') ? 'Debes introducir un valor' :
-                this.email.hasError('not-found') ? 'Dirección de correo electrónico  y/o contraseña incorrecta.' :
-                    this.email.hasError('email') ? 'No es un correo electrónico válido' : '';
-    }
-
-    private createForm() {
-        this.loginForm = new FormGroup({
-            email: this.email,
-            password: this.password
-        });
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
-
 }

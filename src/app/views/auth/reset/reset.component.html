@@ -1,3 +1,45 @@
-<p>
-  reset works!
-</p>
+<div class="container email pt-md-5 pb-5">
+    <div class="row d-flex justify-content-center text-center pt-5 pb-2">
+        <div class="col-lg-5 col-md-7">
+            <h1 class="title">Restablecer la contraseña</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb d-flex justify-content-center">
+                    <li class="breadcrumb-item"><a class="text-decoration-none" routerLink="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Restablecer la contraseña</li>
+                </ol>
+            </nav>
+            <p class="pt-md-5 mt-5">Por favor ingrese la dirección de correo electrónico que usó para registrarse.</p>
+            <form [formGroup]="form" (ngSubmit)="reset()" novalidate>
+
+                <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Dirección de correo electrónico</mat-label>
+                    <input matInput #email maxlength="191" formControlName="email"
+                        placeholder="Dirección de correo electrónico" name="email" required>
+                    <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="email"></mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Constraseña</mat-label>
+                    <input type="password" matInput #password maxlength="191" formControlName="password"
+                        placeholder="Contraseña" name="email" required>
+                    <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="password"></mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Confirmar constraseña</mat-label>
+                    <input type="password" matInput #password_confirmation maxlength="191"
+                        formControlName="password_confirmation" placeholder="Confirmar contraseña"
+                        name="password_confirmation" required>
+                    <mat-hint align="end">{{password_confirmation.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="password_confirmation"></mat-error>
+                </mat-form-field>
+
+                <button type="submit" [disabled]="form.invalid"
+                    class="button-petshop text-center text-white position-relative w-100 mt-2">Restablecer la
+                    contraseña</button>
+            </form>
+        </div>
+    </div>
+</div>

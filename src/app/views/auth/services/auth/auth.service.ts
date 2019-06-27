@@ -1,97 +1,74 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { auth } from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { AuthService as ng2Auth, SharedService, LocalService, OauthService } from 'ng2-ui-auth';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { TokenResponse } from 'src/app/models/TokenResponse.model';
 import { Customer } from '../../models/customer';
+import { tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+
+export class AuthService extends ng2Auth {
 
     public customer$: Observable<Customer>;
+    private authState = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-    constructor(
-        private afAuth: AngularFireAuth,
-        private afs: AngularFirestore,
-        private router: Router,
-    ) {
-        this.customer$ = this.afAuth.authState
-        .pipe(
+    constructor(shared: SharedService,
+        local: LocalService,
+        oauth: OauthService,
+        private http: HttpClient) {
+        super(shared, local, oauth);
+        this.customer$ = this.authState.asObservable().pipe(
             switchMap(customer => {
                 if (customer) {
-                    return this.afs.doc<Customer>(`customers/${customer.uid}`).valueChanges();
+                    return of<Customer>(this.getPayload());
                 } else {
                     return of(null);
                 }
             })
         );
     }
-    public async googleSignIn() {
-        const provider = new auth.GoogleAuthProvider();
-        const credential = await this.afAuth.auth.signInWithPopup(provider);
-        return this.updateCustomerData(credential.user);
+
+    sendPasswordResetEmail(email: string): Observable<string> {
+        return this.http.post<string>('auth/customer/password/email', { email });
     }
 
-    public async defaultSignIn(email: string, password: string) {
-        const credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-        return credential;
+    reset(data: object): Observable<TokenResponse> {
+        return this.http.post<TokenResponse>('auth/customer/password/reset', data)
+            .pipe(
+                tap(() => this.authState.next(true))
+            );
     }
 
-    public async doRegister(email: string, password: string, name: string): Promise<void> {
-        const credential = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-        const data: Customer = {
-            email,
-            displayName: name,
-            uid: credential.user.uid
-        };
-        await this.sendSignInLinkToEmail();
-        await this.afAuth.auth.signOut();
-        return this.updateCustomerData(data);
+    googleSignIn(): Observable<TokenResponse> {
+        return this.authenticate<TokenResponse>('google')
+            .pipe(
+                tap(() => this.authState.next(true))
+            );
     }
 
-    public isSignInWithEmailLink(emailLink: string): boolean {
-        return this.afAuth.auth.isSignInWithEmailLink(emailLink);
+    defaultSignIn(loginData: { email: string; password: string }): Observable<TokenResponse> {
+        return this.login<TokenResponse>(loginData, 'auth/customer/login')
+            .pipe(
+                tap(() => this.authState.next(true))
+            );
     }
 
-    public async signInWithEmailLink(name: string, email: string, emailLink: string): Promise<void> {
-        const credential = await this.afAuth.auth.signInWithEmailLink(email, emailLink);
-        const data: Customer = {
-            email,
-            displayName: name,
-            uid: credential.user.uid
-        };
-        return this.updateCustomerData(data);
+    register(registerData: { name: string; email: string; password: string; password_confirmation: string }): Observable<void> {
+        return this.signup(registerData, 'auth/customer/register');
     }
 
-    public async signOut() {
-        await this.afAuth.auth.signOut();
-        return this.router.navigate(['/']);
+    signOut(): Observable<void> {
+        return this.http.get<void>('auth/customer/logout')
+            .pipe(
+                tap(() => this.authState.next(false)),
+                tap(() => this.removeToken())
+            );
     }
 
-    public async sendPasswordResetEmail(email: string): Promise<void> {
-        return this.afAuth.auth.sendPasswordResetEmail(email);
-    }
-
-    private sendSignInLinkToEmail(): Promise<void> {
-        const actionCodeSettings = {
-            url: `http://${window.location.hostname}:4200/login`,
-            handleCodeInApp: true
-        };
-        return this.afAuth.auth.currentUser.sendEmailVerification(actionCodeSettings);
-    }
-
-    private updateCustomerData({ uid, email, displayName, photoURL }: Customer) {
-        const customerRef: AngularFirestoreDocument<Customer> = this.afs.doc(`customers/${uid}`);
-        const data = {
-            uid,
-            email,
-            displayName,
-            photoURL: photoURL || ''
-        }
-        return customerRef.set(data, { merge: true });
+    me(): Observable<Customer> {
+        return this.http.get<Customer>('auth/customer/me');
     }
 }

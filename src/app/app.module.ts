@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,11 +8,8 @@ import { HomeComponent } from './views/home/home.component';
 import { ShopComponent } from './views/shop/shop.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthModule } from './views/auth/auth.module';
 
 import { ProfileModule } from './views/profile/profile.module';
@@ -28,11 +25,16 @@ import { SharedModule } from './modules/shared.module';
 import { AboutComponent } from './views/about/about.component';
 import { ServicesComponent } from './views/services/services.component';
 import { ContactComponent } from './views/contact/contact.component';
-import { MaterialModule } from './modules/material.module';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { DocPipe } from './pipes/doc.pipe';
+
+// importar locales
+import localeEsAr from '@angular/common/locales/es-AR';
+import { registerLocaleData } from '@angular/common';
+// registrar los locales con el nombre que quieras utilizar a la hora de proveer
+registerLocaleData(localeEsAr, 'es-PE');
+import { Ng2UiAuthModule } from 'ng2-ui-auth';
+import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
     declarations: [
@@ -51,24 +53,24 @@ import { DocPipe } from './pipes/doc.pipe';
         AboutComponent,
         ServicesComponent,
         ContactComponent,
-        MegaMenuComponent,
-        DocPipe
+        MegaMenuComponent
     ],
     imports: [
         BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        MaterialModule,
         SharedModule,
-        AngularFireAuthModule,
-        AngularFirestoreModule,
         AuthModule,
         ProfileModule,
         AppRoutingModule,
         HttpClientModule,
         MatCarouselModule,
-        AngularFireStorageModule
+        Ng2UiAuthModule.forRoot({ providers: environment.providers })
     ],
-    providers: [],
+    providers: [{ provide: LOCALE_ID, useValue: 'es-PE' },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ApiInterceptor,
+        multi: true,
+    }],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

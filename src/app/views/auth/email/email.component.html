@@ -8,18 +8,29 @@
                     <li class="breadcrumb-item active" aria-current="page">Olvidaste tu contraseña</li>
                 </ol>
             </nav>
-            <p class="pt-md-5 mt-5">Por favor ingrese la dirección de correo electrónico que usó para registrarse. Recibirá un enlace temporal para restablecer su contraseña.</p>
-            <form [formGroup]="sendEmailForm" (ngSubmit)="sendEmail()" novalidate>
-                <div class="form-group">
-                    <label for="email" class="font-weight-bold">Dirección de correo electrónico (requerido)</label>
-                    <input type="email" class="form-control" id="email" formControlName="email" [class.is-invalid]="sendEmailForm.get('email').invalid && sendEmailForm.get('email').touched">
-                    <div class="invalid-feedback" *ngIf="sendEmailForm.get('email').invalid && sendEmailForm.get('email').touched">{{getErrorMessage()}}</div>
-                </div>
-                <button type="submit" [disabled]="sendEmailForm.invalid" class="button-petshop text-center text-white position-relative w-100">Enviar enlace de restablecimiento</button>
+            <p class="pt-md-5 mt-5">Por favor ingrese la dirección de correo electrónico que usó para registrarse.
+                Recibirá un enlace temporal para restablecer su contraseña.</p>
+            <form [formGroup]="form" (ngSubmit)="sendEmail()" novalidate>
+
+                <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Dirección de correo electrónico</mat-label>
+                    <input matInput #email maxlength="191" formControlName="email"
+                        placeholder="Dirección de correo electrónico" name="email" required>
+                    <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="email"></mat-error>
+                </mat-form-field>
+
+                <button type="submit" [disabled]="form.invalid"
+                    class="button-petshop text-center text-white position-relative w-100">Enviar enlace de
+                    restablecimiento</button>
                 <div class="elements text-left pt-3">
-                    <a routerLink="/login" class="link-login d-flex align-items-center text-decoration-none text-primary">
-                        <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175" width="10"><path d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225
-                        c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z" fill="#da573e"></path></svg>
+                    <a routerLink="/login"
+                        class="link-login d-flex align-items-center text-decoration-none text-primary">
+                        <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 477.175 477.175" width="10">
+                            <path d="M145.188,238.575l215.5-215.5c5.3-5.3,5.3-13.8,0-19.1s-13.8-5.3-19.1,0l-225.1,225.1c-5.3,5.3-5.3,13.8,0,19.1l225.1,225
+                        c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4c5.3-5.3,5.3-13.8,0-19.1L145.188,238.575z" fill="#da573e">
+                            </path>
+                        </svg>
                         <span class="ml-1">Atrás para iniciar sesión</span>
                     </a>
                 </div>

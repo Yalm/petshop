@@ -10,33 +10,31 @@ import { AuthService } from '../services/auth/auth.service';
 export class EmailComponent implements OnInit {
 
     public email = new FormControl('', [Validators.required, Validators.email]);
-    public sendEmailForm: FormGroup;
+    public form: FormGroup;
 
     constructor(private auth: AuthService) { }
 
     ngOnInit() {
-        this.createForm();
+        this.form = new FormGroup({
+            email: new FormControl(null, [Validators.required, Validators.email]),
+        });
     }
 
     sendEmail() {
-        this.auth.sendPasswordResetEmail(this.email.value).then( data =>
-            console.log('success')
-        ).catch(err => {
-            if(err.code == 'auth/user-not-found') {
-                this.email.setErrors({ 'not-found': true });
-            }
+        this.auth.sendPasswordResetEmail(this.form.value.email).subscribe(response => {
+            console.log(response)
+        }, response => {
+            this.errorsShow(response.error);
         });
     }
 
-    getErrorMessage() {
-        return this.email.hasError('required') ? 'Debes introducir un valor' :
-        this.email.hasError('not-found') ? 'No podemos encontrar ningún usuario con ese correo electrónico.' :
-            this.email.hasError('email') ? 'No es un correo electrónico válido' : '';
-    }
+    private errorsShow(err: any): void {
+        if (!err) {
+            return;
+        }
 
-    private createForm() {
-        this.sendEmailForm = new FormGroup({
-            email: this.email
-        });
+        if (err.email) {
+            this.form.get('email').setErrors({ 'exists': true });
+        }
     }
 }

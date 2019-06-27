@@ -3,7 +3,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/app/models/Product.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap} from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-shop',
@@ -19,7 +19,7 @@ export class ShopComponent implements OnInit {
 
     ngOnInit() {
         this.products$ = this.route.queryParams.pipe(
-            switchMap(params => this.productService.index(params.category,params.color))
+            switchMap(params => this.productService.index(params.category, params.color,params.page))
         );
     }
 }

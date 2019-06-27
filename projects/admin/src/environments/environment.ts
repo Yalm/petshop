@@ -11,6 +11,14 @@ export const environment = {
         projectId: "yalm-94feb",
         storageBucket: "yalm-94feb.appspot.com",
         messagingSenderId: "433637944143"
+    },
+    apiUrl: 'http://localhost:8000/api',
+    loginUrl: 'auth/user/login',
+    providers: {
+        google: {
+            clientId: '433637944143-h21kc94j9hnlm38nd5b5f1mpp8q3fbcd.apps.googleusercontent.com',
+            url: 'auth/user/google/login',
+        }
     }
 };
 

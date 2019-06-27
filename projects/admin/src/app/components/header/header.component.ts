@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { User } from '../../models/User.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -10,10 +12,18 @@ export class HeaderComponent implements OnInit {
 
     @Input() darkTheme: boolean;
     @Output() activeDark = new EventEmitter();
+    user: User;
 
-    constructor(public auth: AuthService) { }
+    constructor(public auth: AuthService,
+        private router: Router) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.user = this.auth.getPayload();
+    }
 
-
+    logout() {
+        this.auth.logout().subscribe(() => {
+            this.router.navigateByUrl('/login');
+        });
+    }
 }

@@ -1,12 +1,10 @@
-import { DocumentReference } from '@angular/fire/firestore';
-
 export  interface Customer {
-    uid: string,
+    id: string,
     email:string,
-    photoURL?: string,
-    displayName?: string,
+    avatar?: string,
+    name: string,
     surnames?: string,
-    document_id?: DocumentReference,
+    document_id?: number,
     document_number?: number,
     phone?: number,
 }

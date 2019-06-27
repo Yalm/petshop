@@ -1,14 +1,7 @@
-export interface Roles {
-    subscriber?: boolean;
-    editor?: boolean;
-    admin?: boolean;
-}
-
 export interface User {
     uid: string;
     email: string;
-    photoURL?: string;
-    displayName: string;
+    avatar?: string;
+    name: string;
     phone?: number;
-    roles?: Roles;
 }

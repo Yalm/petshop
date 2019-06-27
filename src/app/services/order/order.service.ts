@@ -1,48 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Order } from 'src/app/models/Order.model';
 import { Observable } from 'rxjs';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { environment } from 'src/environments/environment';
 import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
+import { Pagination } from 'src/app/models/Pagination.model';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OrderService {
 
-    private order: AngularFirestoreCollection;
-
-    constructor(private firestore: AngularFirestore,
-        private afAuth: AngularFireAuth,
-        private http: HttpClient) {
-        this.order = this.firestore.collection('orders');
-    }
+    constructor(private http: HttpClient) {}
 
     public index(): Observable<Order[]> {
-        return this.afAuth.user.pipe(switchMap(user => {
-            return this.firestore
-                .collection<Order>('orders', ref => ref.where('customer', '==', this.firestore.doc(`customers/${user.uid}`).ref))
-                .valueChanges({ idField: 'id' });
-        }));
+        return this.http.get<Pagination<Order>>('orders')
+            .pipe(
+                map(response => response.data)
+            );
     }
 
     public show(id: string): Observable<Order> {
-        return this.order.doc<Order>(id).valueChanges();
+        return this.http.get<Order>(`orders/${id}`)
+            .pipe(
+                map(item => {
+                    item.products.map(x => {
+                        x.quantity = x['pivot']['quantity'];
+                        return x;
+                    })
+                    return item;
+                })
+            );
     }
 
     public store(culqi_token: string, plus_info?: string): Observable<Order> {
         const cart: ShoppingCart = JSON.parse(localStorage.getItem('myCart'));
-        return this.afAuth.idToken
-            .pipe(switchMap(tokenUser => {
-                return this.http.post<Order>(`https://us-central1-${environment.firebase.projectId}.cloudfunctions.net/order`,
-                    { culqi_token, items: cart.items , plus_info }, {
-                        headers: {
-                            Authorization: `Bearer ${tokenUser}`
-                        }
-                    });
-            }));
+        return this.http.post<Order>(`orders`, { culqi_token, items: cart.items, plus_info });
     }
 }

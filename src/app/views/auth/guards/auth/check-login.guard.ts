@@ -9,16 +9,8 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class CheckLoginGuard implements CanActivate {
     constructor(private auth:AuthService,private router:Router){}
-    canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean>
+    canActivate(next: ActivatedRouteSnapshot,state: RouterStateSnapshot): boolean
     {
-        return this.auth.customer$.pipe(
-            take(1),
-            map(user => {
-                if(user){
-                    this.router.navigate(['/']);
-                }
-                return !user;
-            })
-        );
+        return !this.auth.isAuthenticated();
     }
 }

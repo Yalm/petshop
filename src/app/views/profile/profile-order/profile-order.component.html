@@ -12,7 +12,7 @@
             <th scope="row">
                 <a class="text-decoration-none" [routerLink]="['/profile/orders',order.id]">{{order.id}}</a>
             </th>
-            <td>{{order.created_at.toDate() | date:'medium'}}</td>
+            <td>{{order.created_at | date:'medium'}}</td>
             <td>S/ {{order.payment.amount | number: '1.2-2'}}</td>
         </tr>
     </tbody>
