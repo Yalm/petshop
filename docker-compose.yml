@@ -1,0 +1,29 @@
+version: '2'
+services:
+    # Reverse proxy
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
+        ports:
+            - "80:80"
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+    # Sites
+    admin:
+        build:
+            context: .
+            args:
+                env: admin
+        environment:
+            - VIRTUAL_HOST=admin.petshop.com
+        depends_on:
+            - nginx-proxy
+    client:
+        build:
+            context: .
+            args:
+                env: client
+        environment:
+            - VIRTUAL_HOST=petshop.com
+        depends_on:
+            - nginx-proxy
