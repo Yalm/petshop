@@ -14,7 +14,7 @@ class OrderTableSeeder extends Seeder
         factory(App\Order::class, 1000)->create()->each(function (App\Order $order) {
 
             for ($i = 1; $i <= rand(1, 200); $i++) {
-                $order->products()->attach(rand(1, 500), ['quantity' => rand(1, 20)]);
+                $order->products()->attach(rand(1, 100), ['quantity' => rand(1, 20)]);
             }
             factory(App\Payment::class, 1)->create([
                 'order_id' =>  $order->id,

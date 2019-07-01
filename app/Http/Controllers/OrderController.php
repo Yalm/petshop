@@ -21,7 +21,7 @@ class OrderController extends Controller
             $orders = Order::latest()->paginate(10);
         } else {
             $orders = Order::latest()
-                ->where('customer_id', Auth::payload()->get('sub'))
+                ->where('customer_id', Auth::user()->getJWTIdentifier())
                 ->with('payment')
                 ->paginate($request->query('results', 10));
         }
@@ -34,7 +34,7 @@ class OrderController extends Controller
 
         if (Auth::guard('user')->check()) {
             return response()->json($order);
-        } else if ($order->customer_id == Auth::payload()->get('sub')) {
+        } else if ($order->customer_id == Auth::user()->getJWTIdentifier()) {
             return response()->json($order);
         }
         return response()->json(['error' => 'not found.'], 404);
@@ -43,6 +43,8 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        // DB::enableQueryLog();
+        // dd(DB::getQueryLog());
         $this->validate($request, [
             'culqi_token' => 'required|string',
             'plus_info' => 'nullable|string|min:6',
@@ -52,10 +54,11 @@ class OrderController extends Controller
         ]);
 
         $order = Order::create([
-            'customer_id' => Auth::payload()->get('sub'),
+            'customer_id' => Auth::user()->getJWTIdentifier(),
             'plus_info' => $request->input('plus_info'),
             'state_id' => 4
         ]);
+
         dispatch(new OrderJob($order, $request->input('culqi_token'), $request->input('items')));
         return response()->json($order);
     }
