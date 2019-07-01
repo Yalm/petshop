@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -37,10 +36,15 @@ $router->group(['prefix' => 'api/auth/user'], function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('categories', 'CategoryController@index');
     $router->get('colors', 'ColorController@index');
+    $router->put('customers/{id}', 'CustomerController@update');
     $router->get('documents', 'DocumentController@index');
+
     $router->get('orders', 'OrderController@index');
+    $router->post('orders', 'OrderController@store');
     $router->get('orders/{id}', 'OrderController@show');
+
     $router->get('products', 'ProductController@index');
     $router->get('products/{url}', 'ProductController@show');
+    $router->put('products/{id}', 'ProductController@update');
     $router->post('products', 'ProductController@store');
 });

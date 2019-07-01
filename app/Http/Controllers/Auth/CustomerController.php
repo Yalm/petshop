@@ -62,7 +62,7 @@ class CustomerController extends Controller
             ->stateless()
             ->user();
 
-        $customer = Customer::firstOrCreate(
+        $customer = Customer::updateOrCreate(
             ['email' => $oauth->getEmail()],
             ['name' => $oauth->getName(), 'avatar' => $oauth->getAvatar()]
         );

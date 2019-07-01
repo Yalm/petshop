@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $guarded = [];
+    protected $guarded =[];
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
     public function category()
     {
@@ -20,7 +23,7 @@ class Product extends Model
 
     public function scopePrice($query, $min_price, $max_price)
     {
-        if ($min_price && $max_price && $min_price != 'undefined')
+        if ($min_price && $max_price)
             return $query->where('price', '>=', $min_price)
                 ->where('price', '<=', $max_price);
     }
@@ -32,15 +35,15 @@ class Product extends Model
 
     public function scopeCategory($query, $s)
     {
-        if ($s != 'false' && $s != 'null' && $s && $s != 'undefined')
-            return $query->where('category_id', $s);
+        if ($s)
+            return $query->whereHas('category', function ($q) use ($s) {
+                $q->where('name', $s);
+            });
     }
 
     public function scopeSearch($query, $s)
     {
-        if ($s != 'false' && $s != 'null' && $s != 'undefined' && $s)
-            return $query->where('name', 'LIKE', "%$s%")
-                ->orWhere('price', 'LIKE', "%$s%")
-                ->orWhere('stock', 'LIKE', "%$s%");
+        if ($s)
+            return $query->where('name', 'LIKE', "%$s%");
     }
 }

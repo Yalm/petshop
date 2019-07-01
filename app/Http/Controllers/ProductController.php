@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -15,10 +16,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = Product::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
-            ->search($request->query('search', null))
-            ->category($request->query('category', null))
+            ->search($request->query('search'))
+            ->category($request->query('category'))
             ->with('category')
-            ->paginate($request->query('results', 10));
+            ->paginate($request->query('results', 9));
 
         return response()->json($products);
     }
@@ -32,6 +33,8 @@ class ProductController extends Controller
             'stock' => 'nullable|numeric|between:0,32767',
             'short_description' => 'required|max:400',
             'description' => 'required',
+            'category_id' => 'required|numeric',
+            'color_id' => 'numeric',
             'cover' => 'required|image'
         ]);
 
@@ -44,16 +47,41 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function show(Request $request, $url)
+    public function show($url)
     {
         $product = Product::where('url', $url)
+            ->orWhere('id', $url)
             ->with(['category', 'color'])
             ->firstOrFail();
+
         return response()->json($product);
     }
 
     public function update(Request $request, $id)
-    { }
+    {
+        error_log($request->input('name'));
+        $this->validate($request, [
+            'name' => "required|max:300|unique:products,name,$id",
+            'price' => 'required|numeric|between:3,99999999.99',
+            'stock' => 'required|numeric|between:0,32767',
+            'category_id' => 'required|numeric',
+            'color_id' => 'numeric',
+            'short_description' => 'required|max:400',
+            'description' => 'required|string'
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        if ($request->hasFile('cover')) {
+            Storage::delete($product->cover);
+            $request->merge(['cover' => $request->file('cover')->store('products')]);
+        }
+
+        $request->merge(['url' => substr(str_slug($request->input('name')), 0, 191)]);
+
+        $product->update($request->all());
+        return response()->json($product);
+    }
 
     public function destroy($id)
     { }

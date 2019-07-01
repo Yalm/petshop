@@ -27,7 +27,7 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'avatar'
+        'name', 'avatar','document_id', 'document_number', 'surnames','phone'
     ];
 
     /**
@@ -36,7 +36,7 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at'
+        'password', 'created_at', 'updated_at'
     ];
 
     public function getJWTIdentifier()

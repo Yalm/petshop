@@ -7,11 +7,11 @@ use DB;
 
 class Order extends Model
 {
-    protected $guarded = [];
+    protected $guarded =[];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_details')->withTimestamps()->withPivot(['quantity']);
+        return $this->belongsToMany(Product::class, 'order_details')->withPivot('quantity');
     }
 
     public function customer()

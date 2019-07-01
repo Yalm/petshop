@@ -78,7 +78,6 @@ $app->routeMiddleware([
 |
 */
 $app->register(App\Providers\EventServiceProvider::class);
-$app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Laravel\Socialite\SocialiteServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
@@ -101,7 +100,6 @@ $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
 $app->configure('services');
 $app->configure('auth');
 $app->configure('filesystems');
-
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
