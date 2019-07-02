@@ -57,7 +57,6 @@ class ProductController extends Controller
                 ->firstOrFail();
         } else {
             $product = Product::where('url', $url)
-                ->orWhere('id', $url)
                 ->with(['category', 'color'])
                 ->firstOrFail();
         }
