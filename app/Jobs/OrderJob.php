@@ -9,19 +9,21 @@ use App\Payment;
 
 class OrderJob extends Job
 {
-    protected $culqi_token;
-    protected $items;
-    protected $order;
+    private $order;
+    private $token;
+    private $items;
+    private $email;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Order $order, string $culqi_token, array $items)
+    public function __construct(Order $order, Array $data)
     {
-        $this->$culqi_token = $culqi_token;
-        $this->$order = $order;
-        $this->$items = $items;
+        $this->order = $order;
+        $this->token = $data['culqi_token'];
+        $this->items = $data['items'];
+        $this->email = $data['email'];
     }
     /**
      * Execute the job.
@@ -39,15 +41,17 @@ class OrderJob extends Job
                     'capture' => true,
                     'currency_code' => 'PEN',
                     'description' => 'Ventas en línea petShop',
-                    'email' => $this->order->customer()->email,
+                    'email' => $this->email,
                     'installments' => 0,
-                    'source_id' => $this->culqi_token
+                    'source_id' => $this->token
                 )
             );
         } catch (\Exception $e) {
             $this->order->update([
-                'state_id' => 5
+                'state_id' => 5,
+                'plus_info' => $e->getMessage()
             ]);
+            return;
         }
 
         Payment::create([
@@ -79,6 +83,8 @@ class OrderJob extends Job
             $product->quantity = $this->items[$key]['quantity'];
             $total += $product->price * $product->quantity;
         }
+        $products->total = $total;
+
         return $products;
     }
 }

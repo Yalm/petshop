@@ -22,7 +22,7 @@ class CustomerController extends Controller
             $customer = Auth::user()->update($request->all());
             return response()->json($customer);
         } else {
-            $customer = Auth::user()->update($request->all());
+            $customer = Auth::user()->update($request->except(['email']));
             return response()->json($customer);
         }
     }

@@ -27,7 +27,7 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
      * @var array
      */
     protected $fillable = [
-        'name', 'avatar','document_id', 'document_number', 'surnames','phone'
+        'name', 'avatar','email','document_id', 'document_number', 'surnames','phone'
     ];
 
     /**

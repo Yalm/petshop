@@ -47,6 +47,7 @@ class OrderController extends Controller
         // dd(DB::getQueryLog());
         $this->validate($request, [
             'culqi_token' => 'required|string',
+            'email' => 'required|email',
             'plus_info' => 'nullable|string|min:6',
             'items' => 'required',
             'items.*.id' => 'required|numeric',
@@ -59,7 +60,7 @@ class OrderController extends Controller
             'state_id' => 4
         ]);
 
-        dispatch(new OrderJob($order, $request->input('culqi_token'), $request->input('items')));
+        dispatch(new OrderJob($order, $request->all()));
         return response()->json($order);
     }
 
