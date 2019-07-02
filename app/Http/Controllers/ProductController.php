@@ -47,13 +47,20 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function show($url)
+    public function show(Request $request, $url)
     {
-        $product = Product::where('url', $url)
-            ->orWhere('id', $url)
-            ->with(['category', 'color'])
-            ->firstOrFail();
+        $product = null;
 
+        if ($request->query('id')) {
+            $product = Product::where('id', $url)
+                ->with(['category', 'color'])
+                ->firstOrFail();
+        } else {
+            $product = Product::where('url', $url)
+                ->orWhere('id', $url)
+                ->with(['category', 'color'])
+                ->firstOrFail();
+        }
         return response()->json($product);
     }
 
