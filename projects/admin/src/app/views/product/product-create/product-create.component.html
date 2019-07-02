@@ -1,5 +1,5 @@
 <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="store()" [formGroup]="form" [class.load]="loading">
-    <mat-progress-bar mode="determinate" [value]="progress" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
     <mat-card-content>
         <mat-tab-group>
 
@@ -76,5 +76,5 @@
         </mat-tab-group>
     </mat-card-content>
 </mat-card>
-<button type="button"  (click)="store()" mat-raised-button
+<button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button
     class="position-absolute link-new">Guardar</button>

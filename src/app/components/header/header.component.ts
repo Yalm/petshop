@@ -5,6 +5,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-car
 import { Observable } from 'rxjs';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Category } from 'src/app/models/Category.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
 
     home: boolean;
     position: boolean;
-    search: boolean;
+    form: FormGroup;
+    searchActive: boolean;
     categories$: Observable<Category[]>;
 
     constructor(private router: Router,
@@ -32,7 +34,19 @@ export class HeaderComponent implements OnInit {
                 }
             }
         );
+
+        this.form = new FormGroup({
+            search: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        });
+
         this.categories$ = this.categoryService.index();
+    }
+
+    search() {
+        if (this.form.valid) {
+            const search = this.form.value.search.trim().toLowerCase();
+            this.router.navigate(['/shop'], { queryParams: { search: search }, queryParamsHandling: 'merge' });
+        }
     }
 
 }

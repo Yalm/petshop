@@ -5,19 +5,18 @@ export class ShoppingCart {
         public items: CartItem[],
     ) { }
 
-    public add({ cover, id, name, price, quantity, stock, url }: CartItem): void {
-        const index: number = this.itemIndexOf(id);
+    public add(item: CartItem): void {
+        const index: number = this.itemIndexOf(item.id);
         let cartItem = this.items[index];
 
         if (index < 0) {
-            const ITEM: CartItem = { cover, id, name, price, quantity, stock, url } as CartItem;
-            this.items.unshift(ITEM);
-        } else if (cartItem.quantity == cartItem.stock && cartItem.stock == stock) {
+            this.items.unshift(item);
+        } else if (cartItem.quantity == cartItem.stock && cartItem.stock == item.stock) {
             return;
         } else {
-            cartItem.stock = cartItem.stock != stock ? stock: cartItem.stock;
+            cartItem.stock = cartItem.stock != item.stock ? item.stock : cartItem.stock;
 
-            cartItem.quantity += quantity;
+            cartItem.quantity += item.quantity;
             if (cartItem.quantity > cartItem.stock) {
                 cartItem.quantity = cartItem.stock;
             }

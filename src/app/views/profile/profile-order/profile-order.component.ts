@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { OrderService } from 'src/app/services/order/order.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Order } from 'src/app/models/Order.model';
-import { Observable } from 'rxjs';
+import { MatPaginator } from '@angular/material';
+import { PetDataSource } from 'projects/admin/src/app/shared/class/pet-datasource';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-profile-order',
@@ -10,11 +11,13 @@ import { Observable } from 'rxjs';
 })
 export class ProfileOrderComponent implements OnInit {
 
-    public order: Observable< Order[]>;
+    dataSource: PetDataSource<Order[]>;
+    displayedColumns: string[] = ['id', 'created_at', 'amount'];
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    constructor(private orderService: OrderService) { }
+    constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.order = this.orderService.index();
+        this.dataSource = new PetDataSource(this.paginator, 'orders',this.http);
     }
 }

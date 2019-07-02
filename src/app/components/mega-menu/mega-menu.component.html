@@ -3,7 +3,7 @@
         <p class="text-primary font-weight-bold">{{item.name}}</p>
         <div *ngFor="let category of item.categories" class="list-items">
             <a class="text-decoration-none text-dark items-list" routerLink="/shop"
-                [queryParams]="{ category: category.id}">{{category.name}}</a>
+                [queryParams]="{ category: category.name}">{{category.name}}</a>
         </div>
     </li>
     <img src="assets/img/menu-bg.jpg" alt="menu pet shop" class="position-absolute h-100 bg-menu">

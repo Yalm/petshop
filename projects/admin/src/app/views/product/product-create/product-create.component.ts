@@ -18,7 +18,6 @@ export class ProductCreateComponent implements OnInit {
     form: FormGroup;
     categories: Observable<Category[]>;
     colors: Observable<Color[]>;
-    progress: number;
     loading: boolean;
 
     constructor(public categoryService: CategoryService,
@@ -45,7 +44,6 @@ export class ProductCreateComponent implements OnInit {
     store() {
         this.loading = true;
         this.productService.store(this.form.value).subscribe((data) => {
-            this.progress = 0;
             this.loading = false;
             this.snackBar.open('Producto creado.', 'OK');
             this.form.reset();

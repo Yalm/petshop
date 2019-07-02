@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     img_default: 'https://i.stack.imgur.com/l60Hf.png',
     cuqli: {
-        public_key: 'pk_test_3h54x8PMEbZy9YxS',
+        public_key: 'pk_test_wvFSgWHdepztNJFh',
         logo: 'assets/img/logo.png',
     },
     apiUrl: 'http://localhost:8000/api',

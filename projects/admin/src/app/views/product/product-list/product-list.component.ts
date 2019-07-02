@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductListComponent implements OnInit {
 
-    displayedColumns: string[] = ['show', 'name', 'price', 'stock', 'actions'];
+    displayedColumns: string[] = ['name', 'price', 'stock', 'actions'];
     dataSource: PetDataSource<Product[]>;
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.dataSource = new PetDataSource(this.paginator, 'products', this.sort, this.http);
+        this.dataSource = new PetDataSource(this.paginator, 'products', this.http, this.sort);
     }
 
     applyFilter(filterValue: string) {

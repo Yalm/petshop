@@ -5,11 +5,15 @@ import {
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
-    MatPaginatorModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatCheckboxModule,
-    MatSelectModule
+    MatRadioModule,
+    MatSelectModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
 } from '@angular/material';
 
 @NgModule({
@@ -22,8 +26,12 @@ import {
         MatPaginatorModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatCheckboxModule,
-        MatSelectModule
+        MatRadioModule,
+        MatSelectModule,
+        MatExpansionModule,
+        MatChipsModule,
+        MatTableModule,
+        MatSortModule
     ],
     exports: [
         MatInputModule,
@@ -33,8 +41,12 @@ import {
         MatPaginatorModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatCheckboxModule,
-        MatSelectModule
+        MatRadioModule,
+        MatSelectModule,
+        MatExpansionModule,
+        MatChipsModule,
+        MatTableModule,
+        MatSortModule
     ],
     declarations: [],
 })

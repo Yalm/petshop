@@ -3,7 +3,7 @@
         <ul class="d-flex container list-unstyled">
             <li><a routerLink="/" class="text-decoration-none">Inicio</a></li>
             <li>
-                <a routerLink="/shop" [queryParams]="{ category: product.category.id}"
+                <a routerLink="/shop" [queryParams]="{ category: product.category.name}"
                     class="text-capitalize text-decoration-none">{{product.category.name }}</a>
             </li>
             <li class="name-product">{{product.name}}</li>

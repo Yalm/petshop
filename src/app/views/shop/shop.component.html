@@ -1,6 +1,55 @@
 <app-breadcrumb title="Productos" subTitle="Productos"></app-breadcrumb>
-<div class="container">
-    <div class="row">
-        <app-product *ngFor="let product of products$ | async " class="col-md-4 col-6" [product]="product"></app-product>
+<div class="container" *ngIf="pagination$ | async as pagination">
+    <div class="row py-4">
+        <mat-accordion class="col-lg-4 col-md-5">
+            <div class="filters px-md-4" *ngIf="filters.length > 0">
+                <h5 class="h5">Filtros</h5>
+                <mat-chip-list aria-label="filter selection" class="ml-2">
+                    <mat-chip *ngFor="let filter of filters;let i = index" (removed)="removeFilter(i)">
+                        {{filter.value}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+
+            <mat-expansion-panel class="shadow-none" [expanded]="true">
+                <mat-expansion-panel-header class="pl-md-4 pl-0">
+                    Categorías
+                </mat-expansion-panel-header>
+
+                <mat-radio-group aria-labelledby="filter-categories" class="d-flex flex-column" color="primary"
+                    (change)="setFilter('category',$event.value)">
+                    <mat-radio-button *ngFor="let category of categories$ | async"
+                        [checked]="isSelected('category',category.name)" [value]="category.name">
+                        {{category.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="shadow-none">
+                <mat-expansion-panel-header class="pl-md-4 pl-0">
+                    Colores
+                </mat-expansion-panel-header>
+
+                <mat-radio-group aria-labelledby="filter-categories" class="d-flex flex-column"
+                    (change)="setFilter('color',$event.value)">
+                    <mat-radio-button *ngFor="let color of colors$ | async" [checked]="isSelected('color',color.name)"
+                        [value]="color.name">
+                        {{color.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+        <div class="col-lg-8 col-md-7">
+            <div class="row">
+                <app-product *ngFor="let product of pagination.data" class="col-lg-4 col-6" [product]="product">
+                </app-product>
+                <mat-paginator [length]="pagination.total" (page)="page($event)"
+                    class="d-flex justify-content-end w-100" [pageSize]="pagination.per_page"
+                    [pageSizeOptions]="[9, 12, 25, 100]">
+                </mat-paginator>
+            </div>
+        </div>
     </div>
 </div>

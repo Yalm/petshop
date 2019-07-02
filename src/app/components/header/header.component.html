@@ -11,7 +11,7 @@
             <li class="px-3"><a class="text-decoration-none" routerLink="/register">Regístrarse</a></li>
         </ng-template>
         <li class="px-3">
-            <span class="icon_search-he" (click)="search = true">
+            <span class="icon_search-he" (click)="searchActive = true">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
                     <path
                         d="M11.5,2.46a6,6,0,0,0-4.56,9.89l-3.3,3.3.71.71,3.3-3.3A6,6,0,1,0,11.5,2.46Zm0,11a5,5,0,1,1,5-5A5,5,0,0,1,11.5,13.46Z">
@@ -51,7 +51,7 @@
                 </ng-container>
             </a>
             <span class="icon_search-he" [className]="home ? 'pl-2 c-p' : 'd-md-none'">
-                <svg (click)="search = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                <svg (click)="searchActive = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 20 20">
                     <path
                         d="M11.5,2.46a6,6,0,0,0-4.56,9.89l-3.3,3.3.71.71,3.3-3.3A6,6,0,1,0,11.5,2.46Zm0,11a5,5,0,1,1,5-5A5,5,0,0,1,11.5,13.46Z"
@@ -62,15 +62,15 @@
     </ul>
 </nav>
 
-<div class="modal-search fixed-top w-100 h-100 p-3" [class.active]="search">
-    <span class="modal-search-close" (click)="search = false">
+<div class="modal-search fixed-top w-100 h-100 p-3" [class.active]="searchActive">
+    <span class="modal-search-close" (click)="searchActive = false">
         <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"></line>
             <line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"></line>
         </svg>
     </span>
-    <form class="modal-search-from">
-        <input type="text" aria-label="search products" name="search" placeholder="Buscar..."
-            class="search-input border-primary" autocomplete="off" [autofocus]="search">
+    <form class="modal-search-from" [formGroup]="form" (ngSubmit)="search()">
+        <input type="text" aria-label="search products" formControlName="search" name="search" placeholder="Buscar..."
+            class="search-input border-primary" autocomplete="off">
     </form>
 </div>

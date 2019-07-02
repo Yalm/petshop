@@ -1,26 +1,39 @@
-<ng-container  *ngIf="(order | async) as orders;else empty">
-<table class="table table-striped" *ngIf="orders.length > 0;else empty">
-    <thead>
-        <tr class="text-center">
-            <th scope="col">id</th>
-            <th scope="col">Fecha de pedido</th>
-            <th scope="col">Monto de su Pedido</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let order of orders" class="text-center">
-            <th scope="row">
-                <a class="text-decoration-none" [routerLink]="['/profile/orders',order.id]">{{order.id}}</a>
-            </th>
-            <td>{{order.created_at | date:'medium'}}</td>
-            <td>S/ {{order.payment.amount | number: '1.2-2'}}</td>
-        </tr>
-    </tbody>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z4 w-100 table-petshop">
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="text-white"> Id </th>
+        <td mat-cell *matCellDef="let element">
+            <a [routerLink]="['/profile/orders',element.id]">{{element.id}}</a>
+        </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef class="text-white"> Fecha de pedido </th>
+        <td mat-cell *matCellDef="let element"> {{element.created_at | date:'medium'}} </td>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell text-white"> Monto de su
+            Pedido
+        </th>
+        <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">
+            S/ {{element.payment?.amount | number: '1.2-2' }} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-</ng-container>
-<ng-template #empty>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" class="pagination-petshop mat-elevation-z4" [pageSize]="5">
+</mat-paginator>
+
+
+<!-- <ng-template #empty>
     <div class="d-flex flex-column justify-content-center text-center mt-2">
-        <svg viewBox="0 -12 512.00032 512" width="100pt" height="100pt" class="d-block" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 -12 512.00032 512" width="100pt" height="100pt" class="d-block"
+            xmlns="http://www.w3.org/2000/svg">
             <path
                 d="m440.929688 375.699219-184.929688 101.546875-184.929688-101.546875v-203.089844l184.929688-101.546875 184.929688 101.546875zm0 0"
                 fill="#ffb954" />
@@ -47,4 +60,4 @@
         <p>Comienza tu experiencia de compra en Pet Sop con los mejores productos, al mejor precio.</p>
         <a class="text-decoration-none" routerLink="/shop">COMPRAR AHORA</a>
     </div>
-</ng-template>
+</ng-template> -->

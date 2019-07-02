@@ -29,7 +29,7 @@ export class UploadComponent implements OnInit, ControlValueAccessor {
 
     async startUpload(files: FileList) {
         if (files && files[0]) {
-            this.files = this.multi ?  this.files : new Array();
+            this.files = this.multi ? this.files : new Array();
             for (let i = 0; i < files.length; i++) {
                 const type = files[i].type.split('/')[0];
                 const data = await this.readUploadedFile(files[i]);
@@ -37,7 +37,7 @@ export class UploadComponent implements OnInit, ControlValueAccessor {
                     this.files.push({ name: files[i].name, data: files[i], url: data });
                     this.onTouch();
                     this.onChange(files[i]);
-                }else {
+                } else {
                     this.onTouch();
                     this.onChange(null);
                 }
@@ -73,9 +73,8 @@ export class UploadComponent implements OnInit, ControlValueAccessor {
         this.onTouch = fn;
     }
 
-    writeValue(value): void {
-        this.files = new Array();
-        this.valueForm = value || '';
+    writeValue(value: string): void {
+        this.files = value ? [{ name: 'portada', url: value }] : [];
     }
 
     setDisabledState(isDisabled: boolean): void {

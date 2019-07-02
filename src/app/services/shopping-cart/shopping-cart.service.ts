@@ -10,7 +10,7 @@ import { CartItem } from 'src/app/models/CartItem.model';
 export class ShoppingCartService {
 
     public cart$ = new ReplaySubject<ShoppingCart>();
-    private cart_init: ShoppingCart;
+    cart_init: ShoppingCart;
 
     constructor() {
         this.getCart();

@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 export const ProductRoutingModule: Routes = [
     {
@@ -16,7 +17,14 @@ export const ProductRoutingModule: Routes = [
             name: 'Nuevo Producto',
             back: '/products',
             text: 'Detalle del producto'
-        },
-
+        }
+    },
+    {
+        path: ':id/edit', component: ProductEditComponent,
+        data: {
+            name: 'Editar Producto',
+            back: '/products',
+            text: 'Detalle del producto'
+        }
     }
 ];

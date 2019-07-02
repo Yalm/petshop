@@ -35,6 +35,8 @@ import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEsAr, 'es-PE');
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { ApiInterceptor } from './interceptors/api.interceptor';
+import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntlCustom } from 'projects/admin/src/app/shared/class/MatPaginatorIntlCustom';
 
 @NgModule({
     declarations: [
@@ -70,6 +72,10 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
         provide: HTTP_INTERCEPTORS,
         useClass: ApiInterceptor,
         multi: true,
+    },
+    {
+        provide: MatPaginatorIntl,
+        useClass: MatPaginatorIntlCustom
     }],
     bootstrap: [AppComponent]
 })

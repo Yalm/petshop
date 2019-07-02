@@ -15,7 +15,7 @@ const routes: Routes = [
             { path: '', component: WelcomeComponent, pathMatch: 'full' },
             {
                 path: 'products',
-                loadChildren: './views/product/product.module#ProductModule'
+                loadChildren: () => import('./views/product/product.module').then(m => m.ProductModule)
             }
         ]
     },

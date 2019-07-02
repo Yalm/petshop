@@ -19,4 +19,18 @@ export class ProductService {
         return this.http.post<Product>('products', form_data);
     }
 
+    public show(id: number): Observable<Product> {
+        return this.http.get<Product>(`products/${id}`);
+    }
+
+    public update(data: any): Observable<Product> {
+        const form_data = new FormData();
+        for (const key in data) {
+            form_data.append(key, data[key]);
+        }
+        form_data.delete('id');
+        form_data.append('_method','PUT');
+        return this.http.post<Product>(`products/${data.id}`, form_data);
+    }
+
 }

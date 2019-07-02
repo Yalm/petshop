@@ -25,6 +25,7 @@ export class ProfileAccountComponent implements OnInit {
     ngOnInit() {
         this.auth.me().subscribe(user => {
             this.form = new FormGroup({
+                id: new FormControl(user.id, [Validators.required]),
                 name: new FormControl(user.name, [Validators.required]),
                 surnames: new FormControl(user.surnames, [Validators.required]),
                 document_id: new FormControl(user.document_id, [Validators.required]),

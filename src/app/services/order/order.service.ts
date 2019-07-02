@@ -3,7 +3,6 @@ import { Order } from 'src/app/models/Order.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ShoppingCart } from 'src/app/models/ShoppingCart.model';
 import { Pagination } from 'src/app/models/Pagination.model';
 
 @Injectable({
@@ -11,7 +10,7 @@ import { Pagination } from 'src/app/models/Pagination.model';
 })
 export class OrderService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
     public index(): Observable<Order[]> {
         return this.http.get<Pagination<Order>>('orders')
@@ -33,8 +32,8 @@ export class OrderService {
             );
     }
 
-    public store(culqi_token: string, plus_info?: string): Observable<Order> {
-        const cart: ShoppingCart = JSON.parse(localStorage.getItem('myCart'));
-        return this.http.post<Order>(`orders`, { culqi_token, items: cart.items, plus_info });
+    public store(data: { culqi_token: string, email: string, items?: any[], plus_info?: string }): Observable<Order> {
+        data.items = JSON.parse(localStorage.getItem('myCart')).items;
+        return this.http.post<Order>(`orders`, data);
     }
 }

@@ -44,7 +44,7 @@ export class QtyComponent {
 
         this.shoppingCartService.add({ ...this.product, quantity: this.quantity })
             .then(() => {
-                this.snackBar.open('Su producto ha sido agregado.', 'Ok');
+                this.snackBar.open('Su producto ha sido agregado.', 'Ok', { duration: 5000 });
                 this.loading = false;
             });
     }

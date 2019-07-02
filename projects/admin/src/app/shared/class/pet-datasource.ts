@@ -1,8 +1,8 @@
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
-import { Observable, merge, Subject } from 'rxjs';
+import { Observable, merge, Subject, of } from 'rxjs';
 import { map, tap, switchMap, startWith } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Pagination } from 'src/app/models/Pagination.model';
 
 interface UpdateDataSource {
@@ -17,8 +17,8 @@ export class PetDataSource<T> extends DataSource<T> {
 
     constructor(private paginator: MatPaginator,
         private collection: string,
-        private sort: MatSort,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private sort?: MatSort) {
         super();
     }
 
@@ -28,7 +28,7 @@ export class PetDataSource<T> extends DataSource<T> {
      * @returns A stream of the items to be rendered.
      */
     connect(): Observable<T[]> {
-        return merge(this.paginator.page, this.update.asObservable(), this.sort.sortChange)
+        return merge(this.paginator.page, this.update.asObservable(), this.sort ? this.sort.sortChange : of(null))
             .pipe(
                 startWith({}),
                 switchMap(() => this.getData())
@@ -40,7 +40,16 @@ export class PetDataSource<T> extends DataSource<T> {
     }
 
     private getData(): Observable<T[]> {
-        return this.http.get<Pagination<T>>(`${this.collection}?page=${this.paginator.pageIndex + 1}&results=${this.paginator.pageSize}&sort=${this.sort.active}&order=${this.sort.direction || 'asc'}`)
+        let params = new HttpParams();
+        params = params.append('page', (this.paginator.pageIndex + 1).toString());
+        params = params.append('results', this.paginator.pageSize.toString());
+
+        if (this.sort) {
+            params = params.append('sort', this.sort.active);
+            params = params.append('order', this.sort.direction || 'asc');
+        }
+
+        return this.http.get<Pagination<T>>(this.collection, { params })
             .pipe(
                 tap(response => {
                     this.paginator.length = response.total;

@@ -16,12 +16,12 @@ export class ProductComponent implements OnInit {
         private snackBar: MatSnackBar
     ) { }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     addCartProduct() {
         if (this.product.stock > 0) {
             this.shoppingCartService.add({ ...this.product, quantity: 1 });
-            this.snackBar.open('Su producto ha sido agregado.', 'Ok');
+            this.snackBar.open('Su producto ha sido agregado.', 'Ok', { duration: 5000 });
         }
     }
 }
