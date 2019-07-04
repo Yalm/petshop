@@ -50,12 +50,11 @@ class CustomerController extends Controller
 
     public function social($provider, Request $request)
     {
-        $request->merge(['provider' => $provider]);
-        $request->merge(['code' => $request->input('oauthData.code')]);
+        $request->merge(['provider' => $provider], ['code' => $request->input('oauthData.code')]);
 
         $this->validate($request, [
             'provider' => 'required|ends_with:google',
-            'code' => 'required',
+            'code' => 'required'
         ]);
 
         $oauth = Socialite::driver($provider)

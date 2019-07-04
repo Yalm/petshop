@@ -35,7 +35,14 @@ class UserController extends Controller
 
     public function social($provider, Request $request)
     {
+        $request->merge(['provider' => $provider]);
         $request->merge(['code' => $request->input('oauthData.code')]);
+
+        $this->validate($request, [
+            'provider' => 'required|ends_with:google',
+            'code' => 'required'
+        ]);
+
         $oauth = Socialite::driver($provider)
             ->stateless()
             ->user();

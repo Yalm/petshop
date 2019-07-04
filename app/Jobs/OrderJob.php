@@ -9,21 +9,19 @@ use App\Payment;
 
 class OrderJob extends Job
 {
-    private $order;
-    private $token;
-    private $items;
-    private $email;
+    protected $data;
+    protected $plus_info;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Order $order, Array $data)
+    public function __construct(Array $data)
     {
-        $this->order = $order;
-        $this->token = $data['culqi_token'];
-        $this->items = $data['items'];
-        $this->email = $data['email'];
+        $this->data = $data;
+        if (array_key_exists('plus_info', $this->data)) {
+            $this->plus_info = $this->data['plus_info'];
+        }
     }
     /**
      * Execute the job.
@@ -41,21 +39,28 @@ class OrderJob extends Job
                     'capture' => true,
                     'currency_code' => 'PEN',
                     'description' => 'Ventas en línea petShop',
-                    'email' => $this->email,
+                    'email' => $this->data['email'],
                     'installments' => 0,
-                    'source_id' => $this->token
+                    'source_id' => $this->data['culqi_token']
                 )
             );
         } catch (\Exception $e) {
-            $this->order->update([
+            Order::create([
                 'state_id' => 5,
+                'customer_id' => $this->data['customer_id'],
                 'plus_info' => $e->getMessage()
             ]);
             return;
         }
 
+        $order = Order::create([
+            'customer_id' => $this->data['customer_id'],
+            'plus_info' => $this->plus_info,
+            'state_id' => 4
+        ]);
+
         Payment::create([
-            'order_id' => $this->order->id,
+            'order_id' => $order->id,
             'amount' => $items->total,
             'reference_code' => $culqiSuccess->reference_code,
             'payment_type_id' => 1,
@@ -63,7 +68,7 @@ class OrderJob extends Job
 
         foreach ($items as $product) {
             $product->decrement('stock', $product->quantity);
-            $this->order->products()->attach($product->id, ['quantity' => $product->quantity]);
+            $order->products()->attach($product->id, ['quantity' => $product->quantity]);
         }
     }
 
@@ -73,14 +78,14 @@ class OrderJob extends Job
             function ($item) {
                 return $item['id'];
             },
-            $this->items
+            $this->data['items']
         );
         $products = Product::findMany($ids);
         $total = 0;
 
         foreach ($products as $product) {
-            $key = array_search($product->id, array_column($this->items, 'id'));
-            $product->quantity = $this->items[$key]['quantity'];
+            $key = array_search($product->id, array_column($this->data['items'], 'id'));
+            $product->quantity = $this->data['items'][$key]['quantity'];
             $total += $product->price * $product->quantity;
         }
         $products->total = $total;

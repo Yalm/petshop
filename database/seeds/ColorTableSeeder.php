@@ -11,6 +11,8 @@ class ColorTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Color::class,100)->create();
+        if (env('APP_DEBUG')) {
+            factory(App\Color::class,100)->create();
+        }
     }
 }

@@ -53,15 +53,11 @@ class OrderController extends Controller
             'items.*.id' => 'required|numeric',
             'items.*.quantity' => 'required|numeric'
         ]);
+        $request->merge(['customer_id' => Auth::user()->getJWTIdentifier()]);
 
-        $order = Order::create([
-            'customer_id' => Auth::user()->getJWTIdentifier(),
-            'plus_info' => $request->input('plus_info'),
-            'state_id' => 4
-        ]);
+        dispatch(new OrderJob($request->all()));
 
-        dispatch(new OrderJob($order, $request->all()));
-        return response()->json($order);
+        return response()->json(['success' => 'Successfully']);
     }
 
     public function update(Request $request, $id)

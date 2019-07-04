@@ -35,6 +35,8 @@ $router->group(['prefix' => 'api/auth/user'], function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('categories', 'CategoryController@index');
+    $router->post('categories', 'CategoryController@store');
+
     $router->get('colors', 'ColorController@index');
     $router->put('customers/{id}', 'CustomerController@update');
     $router->get('documents', 'DocumentController@index');

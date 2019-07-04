@@ -65,7 +65,6 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        error_log($request->input('name'));
         $this->validate($request, [
             'name' => "required|max:300|unique:products,name,$id",
             'price' => 'required|numeric|between:3,99999999.99',
