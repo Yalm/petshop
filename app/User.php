@@ -43,4 +43,12 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
             'avatar' => $this->avatar
         ];
     }
+
+    public function scopeSearch($query, $s)
+    {
+        if ($s)
+            return $query->where('name', 'LIKE', "%$s%")
+            ->orWhere('surnames', 'LIKE', "%$s%")
+            ->orWhere('email', 'LIKE', "%$s%");
+    }
 }

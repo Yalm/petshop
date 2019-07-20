@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\ActiveScope;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -27,7 +28,7 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
      * @var array
      */
     protected $fillable = [
-        'name', 'avatar','email','document_id', 'document_number', 'surnames','phone'
+        'name', 'avatar', 'email', 'document_id', 'document_number', 'surnames', 'phone'
     ];
 
     /**
@@ -60,5 +61,24 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
     public function sendEmailVerificationNotification()
     {
         $this->notify(new CustomerVerifyEmailNotification());
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function scopeSearch($query, $s)
+    {
+        if ($s)
+            return $query->where('name', 'LIKE', "%$s%")
+                ->orWhere('email', 'LIKE', "%$s%")
+                ->orWhere('surnames', 'LIKE', "%$s%");
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
     }
 }

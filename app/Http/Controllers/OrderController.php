@@ -11,21 +11,33 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:customer', ['only' => ['index', 'show', 'store']]);
+        $this->middleware('auth:customer', ['only' => ['store']]);
+        $this->middleware('auth:user', ['only' => ['update', 'count']]);
     }
 
     public function index(Request $request)
     {
         $orders = [];
         if (Auth::guard('user')->check()) {
-            $orders = Order::latest()->paginate(10);
-        } else {
+            $orders = Order::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
+                ->search($request->query('search'))
+                ->with(['payment', 'customer','state'])
+                ->paginate($request->query('results', 9));
+
+            return response()->json($orders);
+        } else if (Auth::check()) {
             $orders = Order::latest()
                 ->where('customer_id', Auth::user()->getJWTIdentifier())
                 ->with('payment')
                 ->paginate($request->query('results', 10));
+            return response()->json($orders);
         }
-        return response()->json($orders);
+        return response()
+            ->json([
+                'success' => false,
+                'status' => 401,
+                'message' => 'Unauthorized'
+            ], 401);
     }
 
     public function show($id)
@@ -61,8 +73,18 @@ class OrderController extends Controller
     }
 
     public function update(Request $request, $id)
-    { }
+    {
+        $this->validate($request, [
+            'state_id' => 'required|number|exists:states,id',
+        ]);
+        $order = Order::findOrFail($id);
+        $order->update($request->only(['state_id']));
+        return response()->json($order);
+    }
 
-    public function destroy($id)
-    { }
+    public function count()
+    {
+        $orders = Order::count();
+        return response()->json($orders);
+    }
 }

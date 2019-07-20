@@ -46,7 +46,7 @@ class UserController extends Controller
         $oauth = Socialite::driver($provider)
             ->stateless()
             ->user();
-        $user = User::where('email', '=', $oauth->getEmail())->firstOrFail();
+        $user = User::where('email', $oauth->getEmail())->firstOrFail();
         $token = Auth::guard('user')->fromUser($user);
         return $this->respondWithToken($token);
     }

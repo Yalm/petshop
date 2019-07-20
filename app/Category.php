@@ -2,18 +2,19 @@
 
 namespace App;
 
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $guarded =[];
+    protected $guarded = [];
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
     protected $hidden = [
-        'parent_id', 'created_at', 'updated_at'
+        'created_at', 'updated_at', 'actived'
     ];
 
 
@@ -36,5 +37,11 @@ class Category extends Model
     {
         if ($s)
             return $query->where('name', 'LIKE', "%$s%");
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
     }
 }

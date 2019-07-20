@@ -53,10 +53,12 @@ class ProductController extends Controller
 
         if ($request->query('id')) {
             $product = Product::where('id', $url)
+                ->where('actived', true)
                 ->with(['category', 'color'])
                 ->firstOrFail();
         } else {
             $product = Product::where('url', $url)
+                ->where('actived', true)
                 ->with(['category', 'color'])
                 ->firstOrFail();
         }
@@ -89,5 +91,21 @@ class ProductController extends Controller
     }
 
     public function destroy($id)
-    { }
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->orders()->count() > 0) {
+            $product->update(['actived' => false]);
+            return response()->json($product);
+        }
+        Storage::delete($product->cover);
+        $product->delete();
+        return response()->json($product);
+    }
+
+    public function count()
+    {
+        $products = Product::count();
+        return response()->json($products);
+    }
 }

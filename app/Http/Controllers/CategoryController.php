@@ -4,24 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:user', ['except' => ['index']]);
+    }
 
     public function index(Request $request)
     {
-        $categories = [];
-        if (Auth::guard('user')->check()) {
-            $categories = Category::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
-                ->search($request->query('search'))
-                ->paginate($request->query('results', 10));
-        } else {
-            $categories = Category::where('parent_id', null)
-                ->with('categories')
-                ->paginate();
-        }
-
+        $categories = Category::latest()
+            ->search($request->query('search'))
+            ->get();
         return response()->json($categories);
     }
 
@@ -29,32 +24,57 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:191|unique:categories,name',
-            'category_id' => 'numeric|exists:categories,id',
+            'parent_id' => 'numeric|exists:categories,id',
         ]);
 
-        $category = Category::create($request->all());
+        $category = Category::create($request->only(['name', 'parent_id']));
         return response()->json($category);
     }
 
     public function show($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::where('id', $id)
+            ->where('actived', true)
+            ->with(['categories' => function ($query) {
+                $query->where('actived', true);
+            }])->firstOrFail();
+
         return response()->json($category);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => "required|max:300|unique:products,name,$id",
-            'category_id' => 'numeric|exists:categories,id'
+            'name' => "required|max:191|unique:categories,name,$id",
+            'parent_id' => 'nullable|numeric|exists:categories,id',
+            'categories.*' => 'numeric|exists:categories,id'
         ]);
         $category = Category::findOrFail($id);
-        $category->categories();
-        $category->update($request->all());
+
+        Category::where('parent_id', $id)->update(['parent_id' => null]);
+        if (!$request->input('parent_id')) {
+            Category::whereIn('id', $request->input('categories'))->update(['parent_id' => $id]);
+        }
+
+        $category->update($request->only(['name', 'parent_id']));
 
         return response()->json($category);
     }
 
     public function destroy($id)
-    { }
+    {
+        $category = Category::findOrFail($id);
+
+        if ($category->products()->count() > 0) {
+            $category->update(['actived' => false]);
+            return response()->json($category);
+        } else if ($category->categories()->count() > 0) {
+            $category->update(['actived' => false]);
+            Category::where('parent_id', $id)->update(['actived' => false]);
+            return response()->json($category);
+        }
+
+        $category->delete();
+        return response()->json($category);
+    }
 }

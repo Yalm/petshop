@@ -8,25 +8,74 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:user', ['except' => ['update']]);
+    }
 
-    public function index()
-    { }
+    public function index(Request $request)
+    {
+        $customers = Customer::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
+            ->search($request->query('search'))
+            ->withCount('orders')
+            ->paginate($request->query('results', 9));
 
-
-    public function store(Request $request)
-    { }
+        return response()->json($customers);
+    }
 
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'max:191|required',
+            'surnames' => 'max:191|string',
+            'document_id' => 'numeric|exists:documents,id',
+            'document_number' => 'string|max:20',
+            'email' => "required|email|max:191|unique:customers,email,$id",
+            'password' => 'min:6|max:191'
+        ]);
+
         if (Auth::guard('user')->check()) {
-            $customer = Auth::user()->update($request->all());
+            $customer = Customer::findOrFail($id);
+            $customer->update($request->all());
+
             return response()->json($customer);
-        } else {
+        } else if (Auth::check()) {
             $customer = Auth::user()->update($request->except(['email']));
             return response()->json($customer);
         }
+
+        return response()
+            ->json([
+                'success' => false,
+                'status' => 401,
+                'message' => 'Unauthorized'
+            ], 401);
+    }
+
+    public function show($id)
+    {
+        $customer = Customer::where('id', $id)
+            ->with(['orders.payment.paymentType', 'orders.state'])
+            ->firstOrFail();
+        return response()->json($customer);
     }
 
     public function destroy($id)
-    { }
+    {
+        $customer = Customer::findOrFail($id);
+
+        if ($customer->orders()->count() > 0) {
+            $customer->update(['actived' => false]);
+            return response()->json($customer);
+        }
+
+        $customer->delete();
+        return response()->json($customer);
+    }
+
+    public function count()
+    {
+        $customers = Customer::count();
+        return response()->json($customers);
+    }
 }

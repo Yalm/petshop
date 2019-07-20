@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -45,5 +46,11 @@ class Product extends Model
     {
         if ($s)
             return $query->where('name', 'LIKE', "%$s%");
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new ActiveScope);
     }
 }

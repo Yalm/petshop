@@ -22,6 +22,7 @@ class CreateTableProducts extends Migration
             $table->text('description')->nullable();
             $table->string('url',191)->unique();
             $table->string('short_description',400)->nullable();
+            $table->boolean('actived')->default(true);
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');

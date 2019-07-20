@@ -16,7 +16,7 @@ class CreateTableColors extends Migration
         Schema::create('colors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 191)->unique();
-            $table->string('hex', 191)->unique();
+            $table->boolean('actived')->default(true);
             $table->timestamps();
         });
     }

@@ -35,18 +35,40 @@ $router->group(['prefix' => 'api/auth/user'], function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('categories', 'CategoryController@index');
+    $router->get('categories/{id}', 'CategoryController@show');
     $router->post('categories', 'CategoryController@store');
+    $router->put('categories/{id}', 'CategoryController@update');
+    $router->delete('categories/{id}', 'CategoryController@destroy');
 
     $router->get('colors', 'ColorController@index');
+    $router->post('colors', 'ColorController@store');
+    $router->put('colors/{id}', 'ColorController@update');
+    $router->delete('colors/{id}', 'ColorController@destroy');
+
+    $router->get('customers', 'CustomerController@index');
+    $router->get('customers/{id}', 'CustomerController@show');
     $router->put('customers/{id}', 'CustomerController@update');
+    $router->delete('customers/{id}', 'CustomerController@destroy');
+    $router->get('customers/count', 'CustomerController@count');
+
     $router->get('documents', 'DocumentController@index');
 
     $router->get('orders', 'OrderController@index');
     $router->post('orders', 'OrderController@store');
     $router->get('orders/{id}', 'OrderController@show');
+    $router->put('orders/{id}', 'OrderController@update');
+    $router->get('orders/count', 'OrderController@count');
+
+    $router->get('users', 'UserController@index');
+    $router->get('users/{id}', 'UserController@show');
+    $router->post('users', 'UserController@store');
+    $router->put('users/{id}', 'UserController@update');
+    $router->delete('users/{id}', 'UserController@destroy');
 
     $router->get('products', 'ProductController@index');
     $router->get('products/{url}', 'ProductController@show');
     $router->put('products/{id}', 'ProductController@update');
     $router->post('products', 'ProductController@store');
+    $router->delete('products/{id}', 'ProductController@destroy');
+    $router->get('products/count', 'ProductController@count');
 });
