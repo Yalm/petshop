@@ -14,8 +14,8 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ProfileAccountComponent implements OnInit {
 
-    public form: FormGroup;
-    public documents: Observable<IdentificationDocument[]>;
+    form: FormGroup;
+    documents: Observable<IdentificationDocument[]>;
 
     constructor(private document: DocumentService,
         private snackBar: MatSnackBar,
@@ -23,14 +23,14 @@ export class ProfileAccountComponent implements OnInit {
         private auth: AuthService) { }
 
     ngOnInit() {
-        this.auth.me().subscribe(user => {
+        this.auth.me().subscribe(customer => {
             this.form = new FormGroup({
-                id: new FormControl(user.id, [Validators.required]),
-                name: new FormControl(user.name, [Validators.required]),
-                surnames: new FormControl(user.surnames, [Validators.required]),
-                document_id: new FormControl(user.document_id, [Validators.required]),
-                document_number: new FormControl(user.document_number, [Validators.required]),
-                phone: new FormControl(user.phone, [Validators.required]),
+                id: new FormControl(customer.id, [Validators.required]),
+                name: new FormControl(customer.name, [Validators.required]),
+                surnames: new FormControl(customer.surnames, [Validators.required]),
+                document_id: new FormControl(customer.document_id, [Validators.required]),
+                document_number: new FormControl(customer.document_number, [Validators.required]),
+                phone: new FormControl(customer.phone, [Validators.required]),
             });
         });
         this.documents = this.document.index();

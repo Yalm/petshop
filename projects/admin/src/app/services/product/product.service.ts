@@ -20,7 +20,7 @@ export class ProductService {
     }
 
     public show(id: number): Observable<Product> {
-        return this.http.get<Product>(`products/${id}`);
+        return this.http.get<Product>(`products/${id}?id=true`);
     }
 
     public update(data: any): Observable<Product> {
@@ -33,4 +33,7 @@ export class ProductService {
         return this.http.post<Product>(`products/${data.id}`, form_data);
     }
 
+    public count(): Observable<number> {
+        return this.http.get<number>('products/count');
+    }
 }

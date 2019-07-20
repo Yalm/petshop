@@ -5,10 +5,9 @@ import { registerLocaleData } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { LoginComponent } from './views/login/login.component';
+import { LoginComponent } from './views/auth/login/login.component';
 import { WelcomeComponent } from './views/welcome/welcome.component';
 import { environment } from '../environments/environment';
-import { AuthComponent } from './layouts/auth/auth.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { SharedModule } from './modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -22,6 +21,10 @@ registerLocaleData(localeEsAr, 'es-PE');
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from 'src/app/interceptors/api.interceptor';
+import { CatalogComponent } from './views/catalog/catalog.component';
+import { AuthComponent } from './layouts/auth/auth.component';
+import { ResetComponent } from './views/auth/reset/reset.component';
+import { EmailComponent } from './views/auth/email/email.component';
 
 @NgModule({
     declarations: [
@@ -29,9 +32,12 @@ import { ApiInterceptor } from 'src/app/interceptors/api.interceptor';
         PageNotFoundComponent,
         LoginComponent,
         WelcomeComponent,
-        AuthComponent,
         DashboardComponent,
-        HeaderComponent
+        HeaderComponent,
+        CatalogComponent,
+        AuthComponent,
+        ResetComponent,
+        EmailComponent
     ],
     imports: [
         BrowserAnimationsModule,

@@ -1,0 +1,27 @@
+<ng-container *ngIf="form">
+    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" [class.load]="loading">
+        <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
+        <mat-card-content>
+            <mat-tab-group>
+
+                <mat-tab label="Información basica *">
+                    <div class="p-4">
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Productos">
+                    <div class="p-4">
+
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Pago">
+                    <div class="p-4">
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+    <button type="button" [disabled]="form.invalid" (click)="update()" mat-raised-button
+        class="position-absolute link-new">Guardar</button>
+</ng-container>

@@ -1,3 +1,22 @@
-<p>
-  welcome works!
-</p>
+<div class="container mt-n3">
+    <div class="row justify-content-around">
+        <mat-card class="d-flex align-items-center flex-column">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="products" color="primary">apps</mat-icon>
+            Productos {{ countProduct | async }}
+        </mat-card>
+
+
+        <mat-card class="d-flex align-items-center flex-column">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="category" color="primary">style
+            </mat-icon>
+            Categorías {{ countOrder | async }}
+        </mat-card>
+
+
+        <mat-card class="d-flex align-items-center flex-column">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="color" color="primary">color_lens
+            </mat-icon>
+            Colores {{ countCustomer | async }}
+        </mat-card>
+    </div>
+</div>

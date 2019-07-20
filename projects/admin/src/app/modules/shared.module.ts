@@ -7,6 +7,7 @@ import { FallbackSrcDirective } from 'src/app/directives/fallback-src/fallback-s
 import { RouterModule } from '@angular/router';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { UploadComponent } from '../components/upload/upload.component';
+import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete.component';
 
 @NgModule({
     imports: [
@@ -14,13 +15,14 @@ import { UploadComponent } from '../components/upload/upload.component';
         RouterModule,
         MaterialModule,
         ReactiveFormsModule,
-        FormsModule,
+        FormsModule
     ],
     declarations: [
         FallbackSrcDirective,
         InvalidMessageDirective,
         BreadcrumbComponent,
-        UploadComponent
+        UploadComponent,
+        DialogDeleteComponent
     ],
     exports: [
         MaterialModule,
@@ -29,7 +31,8 @@ import { UploadComponent } from '../components/upload/upload.component';
         FallbackSrcDirective,
         InvalidMessageDirective,
         BreadcrumbComponent,
-        UploadComponent
+        UploadComponent,
+        DialogDeleteComponent
     ]
 })
 export class SharedModule { }

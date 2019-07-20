@@ -1,5 +1,6 @@
 export interface Category {
-    readonly id: string;
+    readonly id: number;
     readonly name: string;
-    readonly categories: Category[];
+    readonly parent_id?: number;
+    categories?: Category[];
 }

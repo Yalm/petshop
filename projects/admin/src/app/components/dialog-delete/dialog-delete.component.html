@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>¿Estás seguro?</h1>
+<div mat-dialog-content>
+    <p>¡No podrás revertir esto!</p>
+</div>
+<div mat-dialog-actions class="flex-nowrap">
+    <button mat-button (click)="onNoClick()">No, gracias</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>¡Sí, bórralo!</button>
+</div>

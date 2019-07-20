@@ -37,7 +37,8 @@
                 <a mat-icon-button color="primary" matTooltip="Editar" [routerLink]="['/products',element.id,'edit']">
                     <mat-icon aria-label="Editar">edit</mat-icon>
                 </a>
-                <button mat-icon-button color="primary" class="ml-1" matTooltip="Eliminar">
+                <button mat-icon-button color="primary" class="ml-1" matTooltip="Eliminar"
+                    (click)="destroy(element.id)">
                     <mat-icon aria-label="Eliminar">delete</mat-icon>
                 </button>
             </div>
@@ -47,5 +48,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" class="pagination-petshop" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" class="pagination-petshop" showFirstLastButtons>
+</mat-paginator>
 <a mat-raised-button routerLink="/products/create" class="position-absolute link-new">Añadir nuevo</a>

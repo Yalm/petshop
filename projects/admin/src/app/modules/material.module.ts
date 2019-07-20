@@ -23,7 +23,10 @@ import {
     MatToolbarModule,
     MatBadgeModule,
     MatRippleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatSlideToggleModule
 } from '@angular/material';
 
 @NgModule({
@@ -51,7 +54,10 @@ import {
         MatBadgeModule,
         MatRippleModule,
         MatMenuModule,
-        MatTabsModule
+        MatTabsModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatSlideToggleModule
     ],
     exports: [
         MatInputModule,
@@ -75,7 +81,10 @@ import {
         MatBadgeModule,
         MatRippleModule,
         MatMenuModule,
-        MatTabsModule
+        MatTabsModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatSlideToggleModule
     ],
     declarations: [],
 })

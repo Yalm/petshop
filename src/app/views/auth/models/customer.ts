@@ -1,3 +1,5 @@
+import { Order } from 'src/app/models/Order.model';
+
 export  interface Customer {
     id: string,
     email:string,
@@ -7,4 +9,6 @@ export  interface Customer {
     document_id?: number,
     document_number?: number,
     phone?: number,
+    orders_count?: number
+    orders?: Order[]
 }

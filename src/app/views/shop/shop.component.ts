@@ -3,7 +3,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/app/models/Product.model';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap, map } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Category } from 'src/app/models/Category.model';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Color } from 'src/app/models/Color.model';

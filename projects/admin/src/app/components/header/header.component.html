@@ -12,8 +12,8 @@
                             <mat-icon matBadge="0" matBadgeColor="warn">notifications</mat-icon>
                         </button>
                         <button mat-button class="p-0" [matMenuTriggerFor]="menu">
-                            <img fallback-src [src]="user.avatar" [alt]="user.name" width="28"
-                                height="28" class="rounded">
+                            <img fallback-src [src]="user.avatar" [alt]="user.name" width="28" height="28"
+                                class="rounded">
                             <mat-icon aria-hidden="false" aria-label="Info">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
@@ -32,16 +32,31 @@
                         </mat-menu>
                     </div>
                 </div>
-                <nav mat-tab-nav-bar class="nav-bottom"  [color]="darkTheme ? null: 'accent'">
+                <nav mat-tab-nav-bar class="nav-bottom" [color]="darkTheme ? null: 'accent'">
                     <a mat-tab-link routerLink="/" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact:
                         true}" [active]="rla.isActive" class="links d-flex align-items-center">
                         <mat-icon class="mr-1">home</mat-icon>
                         <span class="pt-1">Inicio</span>
                     </a>
-                    <a mat-tab-link routerLink="/products" routerLinkActive #rla2="routerLinkActive"
+                    <a mat-tab-link routerLink="/catalog" routerLinkActive #rla2="routerLinkActive"
                         [active]="rla2.isActive" class="links d-flex align-items-center">
                         <mat-icon class="mr-1">store</mat-icon>
                         <span class="pt-1">Catalogo</span>
+                    </a>
+                    <a mat-tab-link routerLink="/customers" routerLinkActive #rla3="routerLinkActive"
+                        [active]="rla3.isActive" class="links d-flex align-items-center">
+                        <mat-icon class="mr-1">group</mat-icon>
+                        <span class="pt-1">Clientes</span>
+                    </a>
+                    <a mat-tab-link routerLink="/users" routerLinkActive #rla4="routerLinkActive"
+                        [active]="rla3.isActive" class="links d-flex align-items-center">
+                        <mat-icon class="mr-1">contacts</mat-icon>
+                        <span class="pt-1">Usuarios</span>
+                    </a>
+                    <a mat-tab-link routerLink="/orders" routerLinkActive #rla5="routerLinkActive"
+                        [active]="rla3.isActive" class="links d-flex align-items-center">
+                        <mat-icon class="mr-1">shopping_basket</mat-icon>
+                        <span class="pt-1">Pedidos</span>
                     </a>
                 </nav>
             </div>

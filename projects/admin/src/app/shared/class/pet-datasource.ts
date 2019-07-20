@@ -1,24 +1,25 @@
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
-import { Observable, merge, Subject, of } from 'rxjs';
-import { map, tap, switchMap, startWith } from 'rxjs/operators';
+import { Observable, merge, BehaviorSubject, of, Subject } from 'rxjs';
+import { map, tap, switchMap, filter } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Pagination } from 'src/app/models/Pagination.model';
 
-interface UpdateDataSource {
-    updated: boolean;
-}
-
 export class PetDataSource<T> extends DataSource<T> {
 
-    filter: string;
+    set filter(value: string) {
+        this._filterChange.next(value);
+    }
+
     data: T[];
-    private update = new Subject<UpdateDataSource>();
+    private _filterChange = new BehaviorSubject<string>('');
+    private _destroyItem = new Subject<boolean>();
+
 
     constructor(private paginator: MatPaginator,
         private collection: string,
         private http: HttpClient,
-        private sort?: MatSort) {
+        private sort: MatSort) {
         super();
     }
 
@@ -28,15 +29,18 @@ export class PetDataSource<T> extends DataSource<T> {
      * @returns A stream of the items to be rendered.
      */
     connect(): Observable<T[]> {
-        return merge(this.paginator.page, this.update.asObservable(), this.sort ? this.sort.sortChange : of(null))
+        const dataMutations = [
+            this.paginator.page,
+            this._destroyItem.asObservable(),
+            this._filterChange.asObservable(),
+            this.sort ? this.sort.sortChange : of(null)
+        ];
+
+        return merge(...dataMutations)
             .pipe(
-                startWith({}),
+                filter(data => data != null),
                 switchMap(() => this.getData())
             )
-    }
-
-    updateData(): void {
-        this.update.next({ updated: true });
     }
 
     private getData(): Observable<T[]> {
@@ -47,6 +51,10 @@ export class PetDataSource<T> extends DataSource<T> {
         if (this.sort) {
             params = params.append('sort', this.sort.active);
             params = params.append('order', this.sort.direction || 'asc');
+        }
+
+        if (this._filterChange.value) {
+            params = params.append('search', this._filterChange.value);
         }
 
         return this.http.get<Pagination<T>>(this.collection, { params })
@@ -62,7 +70,13 @@ export class PetDataSource<T> extends DataSource<T> {
      *  Called when the table is being destroyed. Use this function, to clean up
      * any open connections or free any held resources that were set up during connect.
      */
-    disconnect() {
-        this.update.complete();
+    disconnect() { }
+
+    destroy(id: number | string): void {
+        this.http.delete(`${this.collection}/${id}`).subscribe(
+            () => {
+                this._destroyItem.next(true);
+            }
+        )
     }
 }
