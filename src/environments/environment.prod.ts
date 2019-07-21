@@ -5,7 +5,7 @@ export const environment = {
         public_key: 'pk_test_3h54x8PMEbZy9YxS',
         logo: 'assets/img/logo.png',
     },
-    apiUrl: 'http://localhost:8000/api',
+    apiUrl: 'https://petshopj.herokuapp.com/api',
     providers: {
         google: {
             clientId: '433637944143-h21kc94j9hnlm38nd5b5f1mpp8q3fbcd.apps.googleusercontent.com',

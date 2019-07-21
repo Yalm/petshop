@@ -29,7 +29,7 @@ export class ResetComponent implements OnInit {
     }
 
     reset() {
-        this.auth.reset(this.form.value.email).subscribe(response => {
+        this.auth.reset(this.form.value).subscribe(response => {
             this.auth.setToken(response.access_token);
             this.router.navigateByUrl('/');
         }, response => {

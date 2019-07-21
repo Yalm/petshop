@@ -56,8 +56,8 @@ const routes: Routes = [
         path: '', component: AuthComponent, canActivate: [CheckLoginGuard],
         children: [
             { path: 'login', component: LoginComponent },
-            { path: 'password/reset', component: EmailComponent },
-            { path: 'password/email', component: ResetComponent }
+            { path: 'password/reset', component: ResetComponent },
+            { path: 'password/email', component: EmailComponent }
         ]
     },
     { path: '**', component: PageNotFoundComponent }

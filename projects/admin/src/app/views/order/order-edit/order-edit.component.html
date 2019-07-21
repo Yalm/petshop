@@ -41,7 +41,8 @@
                                 <th mat-header-cell *matHeaderCellDef></th>
                                 <td mat-cell *matCellDef="let element">
                                     <a mat-icon-button color="primary" matTooltip="Editar"
-                                        [routerLink]="['/products',element.id,'edit']" [state]="{ back:'/orders/' + order.id + '/edit' }">
+                                        [routerLink]="['/products',element.id,'edit']"
+                                        [state]="{ back:'/orders/' + order.id + '/edit' }">
                                         <mat-icon aria-label="Editar">remove_red_eye</mat-icon>
                                     </a>
                                 </td>
@@ -54,7 +55,7 @@
 
                             <!-- price Column -->
                             <ng-container matColumnDef="price">
-                                <th mat-header-cell *matHeaderCellDef>Monto</th>
+                                <th mat-header-cell *matHeaderCellDef>Precio</th>
                                 <td mat-cell *matCellDef="let element">S/ {{element.price | number: '1.2-2' }}
                                 </td>
                             </ng-container>
@@ -67,8 +68,8 @@
 
                             <!-- total Column -->
                             <ng-container matColumnDef="total">
-                                <th mat-header-cell *matHeaderCellDef>Total</th>
-                                <td mat-cell *matCellDef="let element">S/
+                                <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell">Total</th>
+                                <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">S/
                                     {{element.price * element.pivot.quantity | number: '1.2-2' }} </td>
                             </ng-container>
 

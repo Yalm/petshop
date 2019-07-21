@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../../../services/auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-login',
@@ -42,8 +43,15 @@ export class LoginComponent implements OnInit {
             .subscribe(response => {
                 this.auth.setToken(response.access_token);
                 this.router.navigateByUrl(this.returnUrl);
-            }, response => {
-                this.errorsShow(response.error);
+            }, (response: HttpErrorResponse) => {
+                if (response.status == 404) {
+                    this.snackBar.open('Dirección de correo electrónico  y/o contraseña incorrecta.', '', {
+                        duration: 5000,
+                        panelClass: ['bg-danger', 'text-white']
+                    });
+                } else {
+                    this.errorsShow(response.error);
+                }
             });
     }
 
