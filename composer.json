@@ -6,15 +6,16 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "culqi/culqi-php": "1.3.4",
         "graham-campbell/flysystem": "^5.2",
         "illuminate/mail": "^5.8",
         "illuminate/notifications": "^5.8",
         "laravel/lumen-framework": "5.8.*",
         "laravel/socialite": "^4.1",
         "ramsey/uuid": "^3.8",
+        "superbalist/laravel-google-cloud-storage": "^2.2",
         "tymon/jwt-auth": "^1.0@dev",
-        "vluzrmos/lumen-cors": "2.1.*",
-        "culqi/culqi-php": "1.3.4"
+        "vluzrmos/lumen-cors": "2.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

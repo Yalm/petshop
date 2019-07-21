@@ -12,6 +12,7 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Notifications\UserResetPasswordNotification;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Model implements JWTSubject, AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -23,7 +24,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
      * @var array
      */
     protected $fillable = [
-        'name', 'email','surnames','password','avatar'
+        'name', 'email', 'surnames', 'password', 'avatar'
     ];
 
     /**
@@ -50,6 +51,16 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         ];
     }
 
+    public function getAvatarAttribute($value)
+    {
+        return $value ? Storage::url($value) : null;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = app('hash')->make($value);
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new UserResetPasswordNotification($token));
@@ -59,7 +70,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
     {
         if ($s)
             return $query->where('name', 'LIKE', "%$s%")
-            ->orWhere('surnames', 'LIKE', "%$s%")
-            ->orWhere('email', 'LIKE', "%$s%");
+                ->orWhere('surnames', 'LIKE', "%$s%")
+                ->orWhere('email', 'LIKE', "%$s%");
     }
 }

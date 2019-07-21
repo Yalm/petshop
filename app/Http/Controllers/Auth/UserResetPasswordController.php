@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Passwords\PasswordBrokerManager;
 use Illuminate\Support\Facades\Password;
 
-class ResetPasswordController extends Controller
+class UserResetPasswordController extends Controller
 {
 
     /*
@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
     {
         $this->validate($request, [
             'token' => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|confirmed|min:6|string',
             'email' => 'required|string|email|max:191|exists:users,email'
         ]);
 
@@ -74,6 +74,6 @@ class ResetPasswordController extends Controller
     public function broker()
     {
         $passwordBrokerManager = new PasswordBrokerManager(app());
-        return $passwordBrokerManager->broker();
+        return $passwordBrokerManager->broker('users');
     }
 }

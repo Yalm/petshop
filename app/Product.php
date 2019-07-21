@@ -4,6 +4,7 @@ namespace App;
 
 use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -20,6 +21,11 @@ class Product extends Model
     public function color()
     {
         return $this->belongsTo(Color::class);
+    }
+
+    public function getCoverAttribute($value)
+    {
+        return Storage::url($value);
     }
 
     public function scopePrice($query, $min_price, $max_price)

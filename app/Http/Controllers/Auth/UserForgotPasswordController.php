@@ -42,6 +42,6 @@ class UserForgotPasswordController extends Controller
     public function broker()
     {
         $passwordBrokerManager = new PasswordBrokerManager(app());
-        return $passwordBrokerManager->broker();
+        return $passwordBrokerManager->broker('users');
     }
 }

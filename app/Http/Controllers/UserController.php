@@ -33,12 +33,13 @@ class UserController extends Controller
             'password' => 'required|min:6|max:191'
         ]);
 
-        if ($request->hasFile('avatar')) {
-            $request->merge(['avatar' => $request->file('avatar')->store('users')]);
-        }
-        $request->merge(['password' => app('hash')->make($request->input('password'))]);
+        $data = $request->except('avatar');
 
-        $user = User::create($request->all());
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] =  $request->file('avatar')->store('users');
+        }
+
+        $user = User::create($data);
         return response()->json($user);
     }
 
@@ -52,13 +53,14 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+        $data = $request->except('avatar');
 
         if ($request->hasFile('avatar')) {
-            Storage::delete($user->avatar);
-            $request->merge(['avatar' => $request->file('avatar')->store('users')]);
+            Storage::delete($user->getOriginal('avatar'));
+            $data['avatar'] =  $request->file('avatar')->store('users');
         }
 
-        $user->update($request->all());
+        $user->update($data);
         return response()->json($user);
     }
 
@@ -71,7 +73,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        Storage::delete($user->avatar);
+        Storage::delete($user->getOriginal('avatar'));
         $user->delete();
         return response()->json($user);
     }
@@ -84,11 +86,11 @@ class UserController extends Controller
         ]);
 
         if (app('hash')->check($request->get('current_password'), Auth::guard('user')->user()->password)) {
-            return response()->json(['message' => 'Su contraseña actual no coincide con la contraseña que proporcionó. Inténtalo de nuevo.'],422);
+            return response()->json(['message' => 'Su contraseña actual no coincide con la contraseña que proporcionó. Inténtalo de nuevo.'], 422);
         }
 
-        if(strcmp($request->get('current_password'), $request->get('password')) == 0){
-            return response()->json(['message'=>'La nueva contraseña no puede ser igual a su contraseña actual. Por favor, elija una contraseña diferente.'],422);
+        if (strcmp($request->get('current_password'), $request->get('password')) == 0) {
+            return response()->json(['message' => 'La nueva contraseña no puede ser igual a su contraseña actual. Por favor, elija una contraseña diferente.'], 422);
         }
 
         //Change Password

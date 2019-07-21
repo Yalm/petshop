@@ -39,11 +39,13 @@ class ProductController extends Controller
         ]);
 
         $request->merge([
-            'cover' => $request->file('cover')->store('products'),
             'url' => substr(str_slug($request->input('name')), 0, 191)
         ]);
 
-        $product = Product::create($request->all());
+        $data = $request->except('cover');
+        $data['cover'] = $request->file('cover')->store('products');
+
+        $product = Product::create($data);
         return response()->json($product);
     }
 
@@ -78,15 +80,16 @@ class ProductController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-
-        if ($request->hasFile('cover')) {
-            Storage::delete($product->cover);
-            $request->merge(['cover' => $request->file('cover')->store('products')]);
-        }
-
         $request->merge(['url' => substr(str_slug($request->input('name')), 0, 191)]);
 
-        $product->update($request->all());
+        $data = $request->except('cover');
+
+        if ($request->hasFile('cover')) {
+            Storage::delete($product->getOriginal('cover'));
+            $data['cover'] =  $request->file('cover')->store('products');
+        }
+
+        $product->update($data);
         return response()->json($product);
     }
 
@@ -98,7 +101,7 @@ class ProductController extends Controller
             $product->update(['actived' => false]);
             return response()->json($product);
         }
-        Storage::delete($product->cover);
+        Storage::delete($product->getOriginal('cover'));
         $product->delete();
         return response()->json($product);
     }
