@@ -25,6 +25,8 @@ import { CatalogComponent } from './views/catalog/catalog.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { ResetComponent } from './views/auth/reset/reset.component';
 import { EmailComponent } from './views/auth/email/email.component';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { ProfileComponent } from './views/profile/profile.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +39,8 @@ import { EmailComponent } from './views/auth/email/email.component';
         CatalogComponent,
         AuthComponent,
         ResetComponent,
-        EmailComponent
+        EmailComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -54,7 +57,12 @@ import { EmailComponent } from './views/auth/email/email.component';
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ApiInterceptor,
-            multi: true,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterceptor,
+            multi: true
         }
     ],
     bootstrap: [AppComponent]

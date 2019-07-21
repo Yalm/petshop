@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivationEnd, Router, ActivationStart } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { ActivationEnd, Router, ActivationStart, NavigationStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Breadcrumb } from './Breadcrumb.model';
 
@@ -8,7 +8,7 @@ import { Breadcrumb } from './Breadcrumb.model';
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.sass']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent {
     data: Breadcrumb;
     @Input() darkTheme: boolean;
 
@@ -16,8 +16,9 @@ export class BreadcrumbComponent implements OnInit {
         this.router.events.pipe(
             filter(event => event instanceof ActivationEnd && event.snapshot.children.length == 0),
             map((event: ActivationStart) => {
+                const data = this.router.getCurrentNavigation().extras.state;
                 if (Object.entries(event.snapshot.data).length !== 0 && event.snapshot.data.constructor === Object) {
-                    return event.snapshot.data;
+                    return Object.assign(event.snapshot.data, data);
                 } else {
                     return null;
                 }
@@ -25,12 +26,12 @@ export class BreadcrumbComponent implements OnInit {
         ).subscribe((data: Breadcrumb) => {
             this.data = data;
         })
+
+        // this.router.events.pipe(
+        //     filter(e => e instanceof NavigationStart),
+        //     map(() => this.router.getCurrentNavigation().extras.state)
+        // ).subscribe((data: Breadcrumb) => {
+        //     console.log(data);
+        // })
     }
-
-    ngOnInit() {
-
-
-
-    }
-
 }

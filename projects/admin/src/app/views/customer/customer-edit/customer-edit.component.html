@@ -1,6 +1,5 @@
 <ng-container *ngIf="form">
-    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" [class.load]="loading">
-        <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
+    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
         <mat-card-content>
             <mat-tab-group>
 
@@ -64,7 +63,11 @@
                             <!-- Id Column -->
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef>#</th>
-                                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                                <td mat-cell *matCellDef="let element">
+                                    <a [routerLink]="['/orders',element.id,'edit']"
+                                        [state]="{ back:'/customers/' + form.get('id').value + '/edit' }"
+                                        mat-line>{{element.id}}</a>
+                                </td>
                             </ng-container>
 
                             <!-- amount Column -->

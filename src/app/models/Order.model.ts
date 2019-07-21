@@ -11,4 +11,5 @@ export interface Order {
     readonly plus_info?: string;
     readonly payment?: Payment;
     readonly created_at: string;
+    readonly state_id: number;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { IdentificationDocument } from 'src/app/models/IdentificationDocument.model';
 import { Observable } from 'rxjs';
@@ -17,7 +17,6 @@ import { Order } from 'src/app/models/Order.model';
 export class CustomerEditComponent implements OnInit {
     form: FormGroup;
     documents: Observable<IdentificationDocument[]>;
-    loading: boolean;
     displayedColumns: string[] = ['id', 'amount', 'payment_type', 'state', 'edit'];
     dataSource = new MatTableDataSource<Order>();
 
@@ -45,17 +44,10 @@ export class CustomerEditComponent implements OnInit {
     }
 
     update() {
-        this.loading = true;
         this.customerService.update(this.form.value).subscribe(() => {
-            this.loading = false;
             this.snackBar.open('Cliente editado.', 'OK');
         }, error => {
-            if (error.status == 500) {
-                this.snackBar.open('Oops, ocurrio un error.', '', {
-                    duration: 5000,
-                    panelClass: ['bg-danger', 'text-white']
-                });
-            } else if (error.status == 422) {
+            if (error.status == 422) {
                 this.form.get('email').setErrors({ 'unique': true });
             }
         });

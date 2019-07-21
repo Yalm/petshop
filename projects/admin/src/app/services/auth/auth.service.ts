@@ -15,11 +15,11 @@ export class AuthService extends ng2Auth {
     }
 
     sendPasswordResetEmail(email: string): Observable<string> {
-        return this.http.post<string>('auth/auser/password/email', { email });
+        return this.http.post<string>('auth/user/password/email', { email });
     }
 
     reset(data: object): Observable<TokenResponse> {
-        return this.http.post<TokenResponse>('auth/auser/password/reset', data);
+        return this.http.post<TokenResponse>('auth/user/password/reset', data);
     }
 }
 

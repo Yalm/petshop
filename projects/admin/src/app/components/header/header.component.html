@@ -17,7 +17,7 @@
                             <mat-icon aria-hidden="false" aria-label="Info">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <a mat-menu-item routerLink="/">
+                            <a mat-menu-item routerLink="/profile">
                                 <mat-icon>account_circle</mat-icon>
                                 Perfil
                             </a>
@@ -49,12 +49,12 @@
                         <span class="pt-1">Clientes</span>
                     </a>
                     <a mat-tab-link routerLink="/users" routerLinkActive #rla4="routerLinkActive"
-                        [active]="rla3.isActive" class="links d-flex align-items-center">
+                        [active]="rla4.isActive" class="links d-flex align-items-center">
                         <mat-icon class="mr-1">contacts</mat-icon>
                         <span class="pt-1">Usuarios</span>
                     </a>
                     <a mat-tab-link routerLink="/orders" routerLinkActive #rla5="routerLinkActive"
-                        [active]="rla3.isActive" class="links d-flex align-items-center">
+                        [active]="rla5.isActive" class="links d-flex align-items-center">
                         <mat-icon class="mr-1">shopping_basket</mat-icon>
                         <span class="pt-1">Pedidos</span>
                     </a>

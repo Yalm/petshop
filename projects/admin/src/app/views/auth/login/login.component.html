@@ -1,12 +1,11 @@
 <form (ngSubmit)="login()" [formGroup]="form">
-    <mat-card class="card-petshop" [class.load]="load">
-        <mat-progress-bar mode="indeterminate" *ngIf="load" color="warn" class="spinner"></mat-progress-bar>
+    <mat-card class="card-petshop" appLoader>
         <mat-card-header class="text-center">
             <mat-card-title class="mat-h4">Ingrese a su cuenta</mat-card-title>
         </mat-card-header>
 
         <mat-card-content class="d-flex align-items-center flex-column">
-            <button type="button" class="btn-google my-2 w-100" (click)="googleSignIn()" [disabled]="load">
+            <button type="button" class="btn-google my-2 w-100" (click)="googleSignIn()">
                 <div class="d-flex align-items-center justify-content-center">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 48 48">

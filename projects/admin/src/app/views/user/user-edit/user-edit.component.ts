@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { UserService } from '../../../services/user/user.service';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-user-edit',
@@ -13,7 +14,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class UserEditComponent implements OnInit {
 
     form: FormGroup;
-    loading: boolean;
 
     constructor(private route: ActivatedRoute,
         private snackBar: MatSnackBar,
@@ -35,12 +35,13 @@ export class UserEditComponent implements OnInit {
     }
 
     update() {
-        this.loading = true;
-        this.userService.update(this.form.value).subscribe((data) => {
-            this.loading = false;
+        this.userService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Usuario actualizado.', 'OK');
             this.form.reset();
+        }, (error: HttpErrorResponse) => {
+            if (error.status == 422) {
+                this.form.get('email').setErrors({ 'unique': true });
+            }
         });
     }
-
 }

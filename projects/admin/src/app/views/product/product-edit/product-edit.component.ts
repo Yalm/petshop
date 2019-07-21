@@ -19,7 +19,6 @@ export class ProductEditComponent implements OnInit {
     form: FormGroup;
     categories: Observable<Category[]>;
     colors: Observable<Color[]>;
-    loading: boolean;
 
     constructor(public categoryService: CategoryService,
         public colorService: ColorService,
@@ -48,9 +47,7 @@ export class ProductEditComponent implements OnInit {
     }
 
     edit() {
-        this.loading = true;
         this.productService.update(this.form.value).subscribe(() => {
-            this.loading = false;
             this.snackBar.open('Producto editado.', 'OK');
         });
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-email',
@@ -8,11 +9,10 @@ import { AuthService } from '../services/auth/auth.service';
     styleUrls: ['./email.component.sass']
 })
 export class EmailComponent implements OnInit {
+    form: FormGroup;
 
-    public email = new FormControl('', [Validators.required, Validators.email]);
-    public form: FormGroup;
-
-    constructor(private auth: AuthService) { }
+    constructor(private auth: AuthService,
+        private snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -21,8 +21,8 @@ export class EmailComponent implements OnInit {
     }
 
     sendEmail() {
-        this.auth.sendPasswordResetEmail(this.form.value.email).subscribe(response => {
-            console.log(response)
+        this.auth.sendPasswordResetEmail(this.form.value.email).subscribe(() => {
+            this.snackBar.open('¡Te hemos enviado por correo el enlace para restablecer tu contraseña!', 'OK', { duration: 5000 });
         }, response => {
             this.errorsShow(response.error);
         });

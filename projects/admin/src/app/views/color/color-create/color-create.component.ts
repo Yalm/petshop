@@ -32,12 +32,7 @@ export class ColorCreateComponent implements OnInit {
             () => {
                 this.dialogRef.close(this.form.value);
             }, (error: HttpErrorResponse) => {
-                if (error.status == 500) {
-                    this.snackBar.open('Oops, ocurrio un error.', '', {
-                        duration: 5000,
-                        panelClass: ['bg-danger', 'text-white']
-                    });
-                } else if (error.status == 422) {
+                if (error.status == 422) {
                     this.form.get('name').setErrors({ 'unique': true });
                 }
             }

@@ -1,5 +1,4 @@
-<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="store()" [formGroup]="form" [class.load]="loading">
-    <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="store()" [formGroup]="form" appLoader>
     <mat-card-content>
         <mat-tab-group>
 
@@ -23,7 +22,7 @@
 
                     <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
                         <mat-label>Correo</mat-label>
-                        <input matInput type="email" #email maxlength="10" formControlName="email"
+                        <input matInput type="email" #email maxlength="191" formControlName="email"
                             placeholder="Correo" name="email" required>
                         <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
                         <mat-error appInvalidMessage="email"></mat-error>

@@ -34,6 +34,6 @@ export class ProductService {
     }
 
     public count(): Observable<number> {
-        return this.http.get<number>('products/count');
+        return this.http.get<number>('product/count');
     }
 }

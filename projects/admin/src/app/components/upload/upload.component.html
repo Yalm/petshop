@@ -17,7 +17,7 @@
                     <img [src]="file.url" [alt]="file.name" class="w-100 h-100">
                 </div>
                 <div class="file-content">
-                    <p class="m-0 filename text-center">{{file.name}}</p>
+                    <p class="m-0 filename text-center text-truncate">{{file.name}}</p>
                 </div>
                 <button type="button" (click)="deleteFile(i,$event)"
                     class="btn text-primary p-0 btn-delete">Eliminar archivo</button>

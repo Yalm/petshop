@@ -1,6 +1,5 @@
 <ng-container *ngIf="form">
-    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="edit()" [formGroup]="form" [class.load]="loading">
-        <mat-progress-bar mode="indeterminate" *ngIf="loading" color="warn" class="spinner"></mat-progress-bar>
+    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="edit()" [formGroup]="form" appLoader>
         <mat-card-content>
             <mat-tab-group>
 

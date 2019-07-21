@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { UploadComponent } from '../components/upload/upload.component';
 import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete.component';
+import { LoaderDirective } from '../directives/loader/loader.directive';
+import { LoaderComponent } from '../components/loader/loader.component';
 
 @NgModule({
     imports: [
@@ -22,7 +24,9 @@ import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete
         InvalidMessageDirective,
         BreadcrumbComponent,
         UploadComponent,
-        DialogDeleteComponent
+        DialogDeleteComponent,
+        LoaderDirective,
+        LoaderComponent
     ],
     exports: [
         MaterialModule,
@@ -32,7 +36,7 @@ import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete
         InvalidMessageDirective,
         BreadcrumbComponent,
         UploadComponent,
-        DialogDeleteComponent
-    ]
+        LoaderDirective
+    ], entryComponents: [LoaderComponent, DialogDeleteComponent]
 })
 export class SharedModule { }

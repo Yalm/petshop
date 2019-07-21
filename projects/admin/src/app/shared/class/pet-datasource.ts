@@ -19,7 +19,7 @@ export class PetDataSource<T> extends DataSource<T> {
     constructor(private paginator: MatPaginator,
         private collection: string,
         private http: HttpClient,
-        private sort: MatSort) {
+        private sort?: MatSort) {
         super();
     }
 

@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
 export class CategoryEditComponent implements OnInit {
     form: FormGroup;
     categories$: Observable<Category[]>;
-    loading: boolean;
     isChild: boolean;
 
     constructor(private categoryService: CategoryService,
@@ -75,16 +74,13 @@ export class CategoryEditComponent implements OnInit {
     }
 
     store() {
-        this.loading = true;
         let data = this.form.value;
         if (!this.isChild) {
             data.parent_id = null;
             this.form.get('parent_id').setValue(null);
         }
-
         data.categories = data.categories.map(x => x.id);
         this.categoryService.update(data).subscribe(() => {
-            this.loading = false;
             this.snackBar.open('Categoría actulizada.', 'OK');
         });
     }

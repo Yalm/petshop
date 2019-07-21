@@ -11,7 +11,7 @@ export class OrderService {
     constructor(private http: HttpClient) { }
 
     public index(id: number): Observable<Order[]> {
-        return this.http.get<Order[]>(`orders/${id}`);
+        return this.http.get<Order[]>('orders');
     }
 
     public show(id: number): Observable<Order> {
@@ -23,6 +23,6 @@ export class OrderService {
     }
 
     public count(): Observable<number> {
-        return this.http.get<number>('orders/count');
+        return this.http.get<number>('order/count');
     }
 }

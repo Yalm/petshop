@@ -15,7 +15,7 @@ export class CustomerService {
     }
 
     public count(): Observable<number> {
-        return this.http.get<number>('customers/count');
+        return this.http.get<number>('customer/count');
     }
 
     public update(data: Customer): Observable<Customer> {

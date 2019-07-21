@@ -12,7 +12,6 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class LoginComponent implements OnInit {
 
     hide = true;
-    load = false;
     form: FormGroup;
     returnUrl: string;
 
@@ -30,25 +29,21 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.load = true;
         this.auth.login(this.form.value).subscribe(response => {
             this.auth.setToken(response.access_token);
             this.router.navigateByUrl(this.returnUrl);
         }, response => {
             this.errorsShow(response.error);
-            this.load = false;
         });
     }
 
     googleSignIn() {
-        this.load = true;
         this.auth.authenticate('google')
             .subscribe(response => {
                 this.auth.setToken(response.access_token);
                 this.router.navigateByUrl(this.returnUrl);
             }, response => {
                 this.errorsShow(response.error);
-                this.load = false;
             });
     }
 
