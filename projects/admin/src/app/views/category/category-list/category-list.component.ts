@@ -40,12 +40,6 @@ export class CategoryListComponent implements OnInit {
                 this.categoryService.destroy(id).subscribe(
                     () => {
                         const index = this.dataSource.data.findIndex(x => x.id == id);
-                        if (this.dataSource.data[index].categories.length > 0) {
-                            for (let category of this.dataSource.data[index].categories) {
-                                let childIndex = this.dataSource.data.findIndex(x => x.id == category.id);
-                                this.dataSource.data.splice(childIndex, 1);
-                            }
-                        }
                         this.dataSource.data.splice(index, 1);
                         this.dataSource._updateChangeSubscription();
                     }
