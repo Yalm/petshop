@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
-            ->where('id', '!=', Auth::user()->getJWTIdentifier())
+            ->where('id', '!=', Auth::guard('user')->user()->getJWTIdentifier())
             ->search($request->query('search'))
             ->paginate($request->query('results', 9));
 
@@ -29,7 +29,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'string|max:191|required',
             'surnames' => 'max:191|string',
-            'avatar' => 'image',
             'email' => 'required|email|max:191|unique:users,email',
             'password' => 'required|min:6|max:191'
         ]);
@@ -37,6 +36,7 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $request->merge(['avatar' => $request->file('avatar')->store('users')]);
         }
+        $request->merge(['password' => app('hash')->make($request->input('password'))]);
 
         $user = User::create($request->all());
         return response()->json($user);
@@ -47,33 +47,55 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'string|max:191|required',
             'surnames' => 'max:191|string',
-            'avatar' => 'image',
             'email' => "string|required|email|max:191|unique:users,email,$id",
-            'password' => 'string|min:6|max:191'
+            'password' => 'nullable|string|max:191'
         ]);
 
-        $customer = Customer::findOrFail($id);
+        $user = User::findOrFail($id);
 
         if ($request->hasFile('avatar')) {
-            Storage::delete($customer->avatar);
+            Storage::delete($user->avatar);
             $request->merge(['avatar' => $request->file('avatar')->store('users')]);
         }
 
-        $customer->update($request->all());
-        return response()->json($customer);
+        $user->update($request->all());
+        return response()->json($user);
     }
 
     public function show($id)
     {
-        $customer = Customer::findOrFail($id);
-        return response()->json($customer);
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
 
     public function destroy($id)
     {
-        $customer = Customer::findOrFail($id);
-        Storage::delete($customer->avatar);
-        $customer->delete();
-        return response()->json($customer);
+        $user = User::findOrFail($id);
+        Storage::delete($user->avatar);
+        $user->delete();
+        return response()->json($user);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $this->validate($request, [
+            'current_password' => 'required|string|min:6|max:191',
+            'password' => 'required|string|min:6|max:191|confirmed'
+        ]);
+
+        if (app('hash')->check($request->get('current_password'), Auth::guard('user')->user()->password)) {
+            return response()->json(['message' => 'Su contraseña actual no coincide con la contraseña que proporcionó. Inténtalo de nuevo.'],422);
+        }
+
+        if(strcmp($request->get('current_password'), $request->get('password')) == 0){
+            return response()->json(['message'=>'La nueva contraseña no puede ser igual a su contraseña actual. Por favor, elija una contraseña diferente.'],422);
+        }
+
+        //Change Password
+        Auth::guard('user')->user()->update([
+            ['password' => app('hash')->make($request->input('password'))]
+        ]);
+
+        return response()->json(['success' => 'Contraseña cambiada con éxito!']);
     }
 }

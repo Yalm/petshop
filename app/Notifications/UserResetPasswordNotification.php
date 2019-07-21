@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CustomerResetPasswordNotification extends Notification implements ShouldQueue
+class UserResetPasswordNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $token;
@@ -41,7 +41,7 @@ class CustomerResetPasswordNotification extends Notification implements ShouldQu
             ->subject('Recuperar contraseña')
             ->greeting('Hola!')
             ->line('Usted está recibiendo este correo electrónico porque recibimos una solicitud de restablecimiento de contraseña para su cuenta.')
-            ->action('Restablecer la contraseña', env('CLIENT_URL') . '/password/reset?token=' . $this->token)
+            ->action('Restablecer la contraseña', env('ADMIN_URL') . '/password/reset?token=' . $this->token)
             ->line('Si no solicitó restablecer la contraseña, no se requieren más acciones.')
             ->salutation('Saludos, ' . config('app.name'));
     }

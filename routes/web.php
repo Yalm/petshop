@@ -31,6 +31,9 @@ $router->group(['prefix' => 'api/auth/user'], function () use ($router) {
     $router->get('logout', 'Auth\UserController@logout');
     $router->get('me', 'Auth\UserController@me');
     $router->get('refresh', 'Auth\UserController@refresh');
+
+    $router->post('password/email', 'Auth\UserForgotPasswordController@sendResetLinkEmail');
+    $router->post('password/reset', 'Auth\UserResetPasswordController@reset');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
@@ -49,7 +52,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('customers/{id}', 'CustomerController@show');
     $router->put('customers/{id}', 'CustomerController@update');
     $router->delete('customers/{id}', 'CustomerController@destroy');
-    $router->get('customers/count', 'CustomerController@count');
+    $router->get('customer/count', 'CustomerController@count');
 
     $router->get('documents', 'DocumentController@index');
 
@@ -57,18 +60,21 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('orders', 'OrderController@store');
     $router->get('orders/{id}', 'OrderController@show');
     $router->put('orders/{id}', 'OrderController@update');
-    $router->get('orders/count', 'OrderController@count');
+    $router->get('order/count', 'OrderController@count');
+
+    $router->get('states', 'StateController@index');
 
     $router->get('users', 'UserController@index');
     $router->get('users/{id}', 'UserController@show');
     $router->post('users', 'UserController@store');
     $router->put('users/{id}', 'UserController@update');
     $router->delete('users/{id}', 'UserController@destroy');
+    $router->put('user/password', 'UserController@changePassword');
 
     $router->get('products', 'ProductController@index');
     $router->get('products/{url}', 'ProductController@show');
     $router->put('products/{id}', 'ProductController@update');
     $router->post('products', 'ProductController@store');
     $router->delete('products/{id}', 'ProductController@destroy');
-    $router->get('products/count', 'ProductController@count');
+    $router->get('product/count', 'ProductController@count');
 });

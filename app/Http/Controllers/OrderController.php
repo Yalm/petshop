@@ -42,7 +42,7 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['payment', 'products', 'state'])->findOrFail($id);
+        $order = Order::with(['payment', 'products', 'state','customer'])->findOrFail($id);
 
         if (Auth::guard('user')->check()) {
             return response()->json($order);
@@ -75,7 +75,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'state_id' => 'required|number|exists:states,id',
+            'state_id' => 'required|numeric|exists:states,id',
         ]);
         $order = Order::findOrFail($id);
         $order->update($request->only(['state_id']));
