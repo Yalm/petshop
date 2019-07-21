@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $credentials = $request->only(['email', 'password']);
         if (!$token = Auth::attempt($credentials)) {
             return response()->json(['code' => 'auth/user-not-found'], 401);
-        } else if (!Auth::user()->actived) {
+        } else if (Auth::user()->actived == 0) {
             Auth::logout();
             return response()->json(['code' => 'auth/user-disabled'], 401);
         }
@@ -50,7 +50,8 @@ class CustomerController extends Controller
 
     public function social($provider, Request $request)
     {
-        $request->merge(['provider' => $provider], ['code' => $request->input('oauthData.code')]);
+        $request->merge(['provider' => $provider]);
+        $request->merge(['code' => $request->input('oauthData.code')]);
 
         $this->validate($request, [
             'provider' => 'required|ends_with:google',
@@ -67,7 +68,7 @@ class CustomerController extends Controller
             ['name' => $oauth->getName(), 'avatar' => $oauth->getAvatar()]
         );
 
-        if (!$customer->actived) {
+        if ($customer->actived = 0) {
             return response()->json(['code' => 'auth/user-disabled'], 401);
         }
 

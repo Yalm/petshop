@@ -25,7 +25,7 @@ class UserController extends Controller
         $credentials = $request->only(['email', 'password']);
         if (!$token = Auth::guard('user')->attempt($credentials)) {
             return response()->json(['code' => 'auth/user-not-found'], 401);
-        } else if (!Auth::guard('user')->user()->actived) {
+        } else if (Auth::guard('user')->user()->actived  = 0) {
             Auth::guard('user')->logout();
             return response()->json(['code' => 'auth/user-disabled'], 401);
         }
@@ -48,6 +48,11 @@ class UserController extends Controller
             ->stateless()
             ->user();
         $user = User::where('email', $oauth->getEmail())->firstOrFail();
+
+        if ($user->actived = 0) {
+            return response()->json(['code' => 'auth/user-disabled'], 401);
+        }
+
         $token = Auth::guard('user')->fromUser($user);
         return $this->respondWithToken($token);
     }
