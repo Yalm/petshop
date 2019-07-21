@@ -58,6 +58,7 @@ class CustomerController extends Controller
         ]);
 
         $oauth = Socialite::driver($provider)
+            ->redirectUrl($request->input('authorizationData.redirect_uri'))
             ->stateless()
             ->user();
 

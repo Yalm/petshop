@@ -44,6 +44,7 @@ class UserController extends Controller
         ]);
 
         $oauth = Socialite::driver($provider)
+            ->redirectUrl($request->input('authorizationData.redirect_uri'))
             ->stateless()
             ->user();
         $user = User::where('email', $oauth->getEmail())->firstOrFail();
