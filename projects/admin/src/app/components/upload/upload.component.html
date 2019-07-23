@@ -1,0 +1,28 @@
+<div class="upload w-100 d-flex position-relative">
+    <div class="empty-file d-flex flex-column align-items-center justify-content-center w-100"
+        *ngIf="files.length < 1;else filesShow">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="75"
+            height="80" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+            <path d="M494.7,255C476.85,168.3,400.35,102,306,102c-73.95,0-137.7,40.8-168.3,102C58.65,214.2,0,277.95,0,357
+			c0,84.15,68.85,153,153,153h331.5c71.4,0,127.5-56.1,127.5-127.5C612,316.2,558.45,260.1,494.7,255z M357,331.5v102H255v-102
+            h-76.5L306,204l127.5,127.5H357z" fill="#9b9b9b" />
+        </svg>
+        <p>Arrastra y suelta los archivos aquí o accede al <span (click)="fileInput.click()">buscardor</span></p>
+    </div>
+    <ng-template #filesShow>
+        <div class="files d-flex w-100 flex-wrap">
+            <div class="file-preview d-flex justify-content-center flex-column position-relative"
+                *ngFor="let file of files;let i = index" (click)="$event.stopPropagation()">
+                <div class="image-file position-absolute w-100 h-100 d-flex justify-content-center align-items-center">
+                    <img [src]="file.url" [alt]="file.name" class="w-100 h-100">
+                </div>
+                <div class="file-content">
+                    <p class="m-0 filename text-center text-truncate">{{file.name}}</p>
+                </div>
+                <button type="button" (click)="deleteFile(i,$event)"
+                    class="btn text-primary p-0 btn-delete">Eliminar archivo</button>
+            </div>
+        </div>
+    </ng-template>
+    <input [disabled]="isDisabled" class="input-file position-absolute w-100 h-100" #fileInput type="file" (change)="startUpload($event.target.files)" [multiple]="multi">
+</div>

@@ -1,0 +1,31 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4 p-md-0 mb-3">
+            <ng-container *ngIf="auth.customer$ | async as customer">
+                <div class="profile">
+                    <div class="avatar mb-5">
+                        <img fallback-src [src]="customer.avatar" [alt]="customer.name" class="img-fluid">
+                    </div>
+                    <ul class="list-unstyled list-items bg-primary position-relative text-center mb-0 font-weight-bold">
+                        <li>
+                            <a routerLink="/profile" class="text-white text-decoration-none w-100 d-inline-flex justify-content-center">Inicio</a>
+                        </li>
+                        <li>
+                            <a routerLink="/profile/orders" class="text-white text-decoration-none w-100 d-inline-flex justify-content-center">Pedidos</a>
+                        </li>
+                        <li>
+                            <a routerLink="/profile/account" class="text-white text-decoration-none w-100 d-inline-flex justify-content-center">Detalles de la cuenta</a>
+                        </li>
+                        <li (click)="logout()">
+                            <a class="text-white text-decoration-none w-100 d-inline-flex justify-content-center">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-md-8">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>

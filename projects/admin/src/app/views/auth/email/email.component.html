@@ -1,0 +1,28 @@
+<form (ngSubmit)="sendEmail()" [formGroup]="form">
+    <mat-card class="card-petshop" appLoader>
+        <mat-card-header class="text-center">
+            <mat-card-title class="mat-h4">¿Olvidaste tu contraseña?</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-icon matPrefix>email</mat-icon>
+                <mat-label>Dirección de correo electrónico</mat-label>
+                <input matInput #email maxlength="191" formControlName="email"
+                    placeholder="Dirección de correo electrónico" name="email" required>
+                <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="email"></mat-error>
+            </mat-form-field>
+
+            <a class="my-2" routerLink="/login">Atrás para iniciar sesión</a>
+        </mat-card-content>
+
+        <mat-card-actions class="d-flex justify-content-center">
+            <button mat-raised-button [disabled]="form.invalid" color="primary" class="btn-login" type="submit">
+                Enviar enlace de
+                restablecimiento <mat-icon aria-hidden="false" aria-label="Enviar enlace de
+                    restablecimiento">arrow_right_alt</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

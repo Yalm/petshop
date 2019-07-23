@@ -1,0 +1,10 @@
+<ul class="list-unstyled bg-white mb-0 menu pl-lg-3  pl-0 row justify-content-start">
+    <li class="items col-12 col-md-4 col-lg-4 col-xl-3" *ngFor="let item of data | async">
+        <p class="text-primary font-weight-bold">{{item.name}}</p>
+        <div *ngFor="let category of item.categories" class="list-items">
+            <a class="text-decoration-none text-dark items-list" routerLink="/shop"
+                [queryParams]="{ category: category.name}">{{category.name}}</a>
+        </div>
+    </li>
+    <img src="assets/img/menu-bg.jpg" alt="menu pet shop" class="position-absolute h-100 bg-menu">
+</ul>

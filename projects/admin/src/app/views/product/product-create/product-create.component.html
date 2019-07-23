@@ -1,0 +1,79 @@
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="store()" [formGroup]="form" appLoader>
+    <mat-card-content>
+        <mat-tab-group>
+
+            <mat-tab label="Información basica *">
+                <div class="p-4">
+                    <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 250 caracteres">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput #name maxlength="250" formControlName="name" placeholder="Nombre" name="name"
+                            required>
+                        <mat-hint align="end">{{name.value?.length || 0}}/250</mat-hint>
+                        <mat-error appInvalidMessage="name"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Precio</mat-label>
+                        <input type="number" min="3" formControlName="price" matInput placeholder="Precio" name="price"
+                            required>
+                        <mat-error appInvalidMessage="price"></mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Stock</mat-label>
+                        <input type="number" min="1" formControlName="stock" matInput placeholder="stock" name="stock"
+                            required>
+                        <mat-error appInvalidMessage="stock"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 500 caracteres">
+                        <mat-label>Descripción corta</mat-label>
+                        <textarea matInput #short_description formControlName="short_description"
+                            placeholder="Descripción corta" name="short_description" required></textarea>
+                        <mat-hint align="end">{{short_description.value?.length || 0}}/500</mat-hint>
+                        <mat-error appInvalidMessage="short_description"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Categoría</mat-label>
+                        <mat-select placeholder="Categoría" formControlName="category_id" required>
+                            <mat-optgroup *ngFor="let category of categories | async" [label]="category.name | titlecase">
+                                <mat-option *ngFor="let subCategory of category.categories" [value]="subCategory.id">
+                                    {{subCategory.name}}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                        <mat-error appInvalidMessage="category_id"></mat-error>
+                    </mat-form-field>
+
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Imagen *">
+                <div class="p-4">
+                    <app-upload formControlName="cover"></app-upload>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Información extra">
+                <div class="p-4">
+                    <mat-form-field class="w-100 mb-2" appearance="outline">
+                        <mat-label>Color</mat-label>
+                        <mat-select placeholder="Color" formControlName="color_id" >
+                            <mat-option *ngFor="let color of colors | async" [value]="color.id" >{{color.name}}</mat-option>
+                        </mat-select>
+                        <mat-error appInvalidMessage="color_id"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Descripción</mat-label>
+                        <textarea matInput rows="6" placeholder="Descripción" formControlName="description"
+                            name="description"></textarea>
+                        <mat-error appInvalidMessage="description"></mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
+<button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button
+    class="position-absolute link-new">Guardar</button>

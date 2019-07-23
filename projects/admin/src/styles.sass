@@ -1,0 +1,49 @@
+$primary: #da573e
+
+@import '~bootstrap/scss/bootstrap'
+@import './assets/sass/material'
+
+body
+    background-color: #ecf1f8
+    margin: 0
+    &.dark-theme
+        background-color: #303030
+        .load
+            opacity: 1
+            &::after
+                background-color: rgba(48, 48, 48, 0.6)
+
+button:active,button:focus
+    outline: 0
+a:hover
+    text-decoration: none
+
+.load
+    opacity: 0.6
+    overflow: hidden
+    &::after
+        cursor: default
+        content: ''
+        position: absolute
+        width: 100%
+        height: 100%
+        top: 0
+        left: 0
+        z-index: 2
+    .spinner
+        display: block !important
+        position: absolute
+        top: 0
+        left: 0
+
+.table-petshop
+    border-collapse: collapse
+    overflow: hidden
+    border-top-left-radius: 8px
+    border-top-right-radius: 8px
+.pagination-petshop
+    border-bottom-left-radius: 8px
+    border-bottom-right-radius: 8px
+.link-new
+    top: 140px
+    right: 20px

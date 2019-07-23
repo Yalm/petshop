@@ -1,0 +1,99 @@
+<app-breadcrumb title="Pago" [image]="null" subTitle="Pago"></app-breadcrumb>
+<div class="container" *ngIf="shoppingCartService.cart$ | async as cart">
+    <form [formGroup]="form" class="row pb-5 d-flex justify-content-center">
+        <ng-container *ngIf="!order;else orderTemplate">
+            <div class="col-xl-8 col-lg-7">
+                <h2>Infomarción extra</h2>
+                <p>Si desea dejarnos un comentario acerca de su pedido, por favor, escríbalo a continuación</p>
+                <div class="form-group">
+                    <label for="txt_plus">Infomarción extra de pedido (optional)</label>
+                    <textarea formControlName="plus_info" class="form-control" id="txt_plus"
+                        rows="5"></textarea>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-11 order-details border-primary">
+                <table class="checkout-review-order">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of cart.items">
+                            <td>{{item.name}} x{{item.quantity}}</td>
+                            <td class="text-right">S/{{ (item.price * item.quantity) | number: '1.2-2' }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="cart-subtotal">
+                            <td>Subtotal</td>
+                            <td class="text-right">S/{{cart.totalCart() | number: '1.2-2'}}</td>
+                        </tr>
+                        <tr class="order-total">
+                            <td>Total</td>
+                            <td class="text-right total">S/{{cart.totalCart() | number: '1.2-2' }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="custom-control custom-radio mt-3">
+                    <input formControlName="method" type="radio" class="custom-control-input" id="customCheck1" value="credit_card">
+                    <label class="custom-control-label" for="customCheck1">Tarjeta de crédito o débito | Visa,
+                        Mastercard y
+                        más!</label>
+                </div>
+                <hr>
+                <button type="submit" (click)="openCulqui(cart.totalCart())" [disabled]="loading || form.invalid"
+                    class="button-petshop text-center text-white position-relative w-100">{{ loading ? 'Cargando...':'Finalizar'}}</button>
+            </div>
+        </ng-container>
+        <ng-template #orderTemplate>
+            <div class="col-12">
+                <h2>Gracias. Tu orden ha sido recibida.</h2>
+                <ul class="pt-2 pb-3 list-unstyled">
+                    <li>
+                        <span>Número de orden:</span>
+                        <!-- <strong class="ml-2">{{order.id}}</strong> -->
+                    </li>
+                    <li>
+                        <span>Total:</span>
+                        <strong class="ml-2">S/ {{order.total | number: '1.2-2'}}</strong>
+                    </li>
+                    <li>
+                        <span>Metodo de Pago:</span>
+                        <strong class="ml-2">Tarjeta de credito</strong>
+                    </li>
+                </ul>
+                <h3>Detalles del pedido</h3>
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order.products">
+                            <td>{{item.name}}</td>
+                            <td class="text-right">S/ {{ (item.price * item.quantity) | number: '1.2-2' }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="cart-subtotal font-weight-bold">
+                            <td>Subtotal:</td>
+                            <td class="text-right">S/ {{order.total | number: '1.2-2' }}</td>
+                        </tr>
+                        <tr class="payment-method font-weight-bold">
+                            <td>Metododo de Pago:</td>
+                            <td class="text-right">Tarjeta de credito</td>
+                        </tr>
+                        <tr class="order-total font-weight-bold">
+                            <td>Total:</td>
+                            <td class="text-right total">S/ {{order.total | number: '1.2-2' }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ng-template>
+    </form>
+</div>

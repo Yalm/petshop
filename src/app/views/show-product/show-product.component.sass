@@ -1,0 +1,29 @@
+@import 'src/assets/sass/variables'
+
+.bread-crumb
+    border-bottom: 1px solid #e0e0e0
+    padding: 20px 0
+    li
+        &:first-child::before
+            content: ''
+        &::before
+            content: "/"
+            display: inline-block
+            margin: 0 5px
+            color: inherit
+    .name-product
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        max-width: 500px
+        margin: 0
+        @media only screen and (max-width: 768px)
+            max-width: 250px
+        @media only screen and (max-width: 450px)
+            max-width: 150px
+
+::ng-deep .mat-tab-group
+    .mat-tab-body
+        padding: 15px
+    .mat-tab-label-content
+        font-size: 25px

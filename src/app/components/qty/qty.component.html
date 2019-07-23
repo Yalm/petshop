@@ -1,0 +1,21 @@
+<div class="qty d-flex align-items-center justify-content-end" [ngClass]="{ 'justify-content-md-center': !btn,
+'justify-content-md-start': btn} ">
+    <input type="number" readonly="true" [value]="quantity" class="num-qty" [max]="product.stock" aria-label="num-qty">
+    <span class="input-group-btn-vertical">
+        <button (click)="quantityUp()" class="btn-qty-up" type="button" aria-label="btn-qty-up" [disabled]="loading">
+            <svg width="10" height="10" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <rect x="9" y="1" width="1" height="17"></rect>
+                <rect x="1" y="9" width="17" height="1"></rect>
+            </svg>
+        </button>
+        <button (click)="quantityDown()" class="btn-qty-down" type="button" aria-label="btn-qty-down"
+            [disabled]="loading">
+            <svg width="10" height="10" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <rect height="1" width="18" y="9" x="1"></rect>
+            </svg>
+        </button>
+    </span>
+    <button *ngIf="btn" type="button" [disabled]="product.stock < 1 || loading"
+        class="button-petshop text-center text-white position-relative ml-3"
+        (click)="addCartProduct()">{{ product.stock > 0 ? 'Agregar al carrito':'Agotado'}}</button>
+</div>

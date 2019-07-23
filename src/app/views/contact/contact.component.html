@@ -1,0 +1,38 @@
+<app-breadcrumb title="Contáctenos" subTitle="Contáctenos"></app-breadcrumb>
+<div class="contact">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <form class="col-md-8 col-11 contact-form" (ngSubmit)="sendEmail()" [formGroup]="form">
+                <h2>Escríbenos</h2>
+                <p>A tu disposioción en cualquier momento.</p>
+                <div class="alert alert-success" role="alert" *ngIf="success">
+                   Gracias por contáctarnos.
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputName">Tu Nombre (requerido)</label>
+                        <input type="text" class="form-control" formControlName="name" name="name" id="inputName"
+                            placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Tu Correo (requerido)</label>
+                        <input type="email" class="form-control" formControlName="email" name="email" id="inputEmail"
+                            placeholder="Correo" required>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="inputSubject">Asunto (requerido)</label>
+                        <input type="text" class="form-control" formControlName="subject" name="subject"
+                            id="inputSubject" placeholder="Asunto" required>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="inputMessage">Tu Mensaje (requerido)</label>
+                        <textarea class="form-control" id="inputMessage" formControlName="message" name="message"
+                            rows="5" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="form.invalid"
+                    class="button-petshop text-center text-white position-relative">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
