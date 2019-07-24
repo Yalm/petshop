@@ -28,7 +28,7 @@ export class UserCreateComponent implements OnInit {
 
     store() {
         this.userService.store(this.form.value).subscribe(() => {
-            this.snackBar.open('Usuario creado.', 'OK');
+            this.snackBar.open('Usuario creado.', 'OK', { duration: 5000 });
             this.form.reset();
         }, (error: HttpErrorResponse) => {
             if (error.status == 422) {

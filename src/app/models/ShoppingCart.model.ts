@@ -2,17 +2,18 @@ import { CartItem } from './CartItem.model';
 
 export class ShoppingCart {
     constructor(
-        public items: CartItem[],
+        public items: CartItem[]
     ) { }
 
-    public add(item: CartItem): void {
+    public add(item: CartItem): boolean {
         const index: number = this.itemIndexOf(item.id);
         let cartItem = this.items[index];
 
         if (index < 0) {
             this.items.unshift(item);
+            return true;
         } else if (cartItem.quantity == cartItem.stock && cartItem.stock == item.stock) {
-            return;
+            return false;
         } else {
             cartItem.stock = cartItem.stock != item.stock ? item.stock : cartItem.stock;
 
@@ -20,6 +21,7 @@ export class ShoppingCart {
             if (cartItem.quantity > cartItem.stock) {
                 cartItem.quantity = cartItem.stock;
             }
+            return true;
         }
     }
 
@@ -35,19 +37,14 @@ export class ShoppingCart {
         return quantity;
     }
 
-    public delete(id: string): void {
+    public delete(id: number): void {
         const index = this.items.findIndex(x => x.id == id);
         if (index >= 0) {
             this.items.splice(index, 1);
         }
     }
 
-    private itemIndexOf(id: string): number {
+    private itemIndexOf(id: number): number {
         return this.items.findIndex(x => x.id == id);
-    }
-
-    public convertInJson(id: string): any {
-        const ITEM = this.items.find(x => x.id == id);
-        return ITEM;
     }
 }

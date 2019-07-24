@@ -26,9 +26,9 @@
                     <p class="m-0">{{product.description}}</p>
                 </mat-tab>
                 <mat-tab label="Información Adicional">
-                    <div class="aditional_information-color" *ngIf="product.color">
+                    <div class="aditional_information-color">
                         <span>Color:</span>
-                        <span class="ml-2">{{product.color.name}}</span>
+                        <span class="ml-2">{{product.color?.name}}</span>
                     </div>
                 </mat-tab>
             </mat-tab-group>

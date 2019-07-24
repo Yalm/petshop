@@ -20,13 +20,13 @@ import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
 registerLocaleData(localeEsAr, 'es-PE');
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from 'src/app/interceptors/api.interceptor';
 import { CatalogComponent } from './views/catalog/catalog.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { ResetComponent } from './views/auth/reset/reset.component';
 import { EmailComponent } from './views/auth/email/email.component';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { ProfileComponent } from './views/profile/profile.component';
+import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
     declarations: [

@@ -56,7 +56,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             this.order = data;
             this.order.items = this.shoppingCartService.cart_init.items;
             this.order.total = this.shoppingCartService.cart_init.totalCart();
-            this.shoppingCartService.update([]);
+            this.shoppingCartService.reset();
         }, () => this.loading = false);
     }
 

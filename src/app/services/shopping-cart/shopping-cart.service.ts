@@ -16,46 +16,36 @@ export class ShoppingCartService {
         this.getCart();
     }
 
-    public add(item: CartItem): Promise<void> {
-        this.cart_init.add(item);
-        return this.setNewValue();
+    add(item: CartItem): boolean {
+        const result = this.cart_init.add(item);
+        this.setNewValue();
+        return result;
     }
 
-    public update(items: CartItem[]): Promise<void> {
-        this.cart_init.items = items;
-        return this.setNewValue();
+    update(item: CartItem): void {
+        const index = this.cart_init.items.findIndex(x => x.id == item.id);
+        this.cart_init.items[index] = item;
+        this.setNewValue();
     }
 
-    public delete(id: string): Promise<void> {
+    delete(id: number): void {
         this.cart_init.delete(id);
-        return this.setNewValue();
+        this.setNewValue();
+    }
+
+    reset(): void {
+        this.cart_init.items = [];
+        this.setNewValue();
     }
 
     private getCart(): void {
-        const cart: ShoppingCart = JSON.parse(localStorage.getItem('myCart')) || null;
-        if (cart) {
-            this.cart_init = new ShoppingCart(cart.items);
-            this.cart$.next(this.cart_init);
-        } else {
-            this.cart_init = this.createNewCart();
-            this.cart$.next(this.cart_init);
-        }
+        const items: CartItem[] = JSON.parse(localStorage.getItem('items')) || [];
+        this.cart_init = new ShoppingCart(items);
+        this.cart$.next(this.cart_init);
     }
 
-    private setNewValue(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            try {
-                const CART_ADD = JSON.stringify(this.cart_init);
-                localStorage.setItem('myCart', CART_ADD);
-                this.cart$.next(this.cart_init);
-                resolve();
-            } catch (error) {
-                reject(error);
-            }
-        });
-    }
-
-    private createNewCart(): ShoppingCart {
-        return new ShoppingCart([]);
+    private setNewValue(): void {
+        const CART_ADD = JSON.stringify(this.cart_init.items);
+        localStorage.setItem('items', CART_ADD);
     }
 }

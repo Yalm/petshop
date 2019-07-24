@@ -81,7 +81,7 @@ export class CategoryEditComponent implements OnInit {
         }
         data.categories = data.categories.map(x => x.id);
         this.categoryService.update(data).subscribe(() => {
-            this.snackBar.open('Categoría actulizada.', 'OK');
+            this.snackBar.open('Categoría actulizada.', 'OK', { duration: 5000 });
         });
     }
 

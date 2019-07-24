@@ -42,7 +42,7 @@ export class OrderEditComponent implements OnInit {
 
     update() {
         this.orderService.update(this.form.value).subscribe(() => {
-            this.snackBar.open('Pedido editado.', 'OK');
+            this.snackBar.open('Pedido editado.', 'OK', { duration: 5000 });
         });
     }
 }

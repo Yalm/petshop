@@ -45,7 +45,7 @@ export class CustomerEditComponent implements OnInit {
 
     update() {
         this.customerService.update(this.form.value).subscribe(() => {
-            this.snackBar.open('Cliente editado.', 'OK');
+            this.snackBar.open('Cliente editado.', 'OK', { duration: 5000 });
         }, error => {
             if (error.status == 422) {
                 this.form.get('email').setErrors({ 'unique': true });
