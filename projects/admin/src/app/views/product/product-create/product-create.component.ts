@@ -32,7 +32,7 @@ export class ProductCreateComponent implements OnInit {
             short_description: new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(500)]),
             category_id: new FormControl(null, Validators.required),
             cover: new FormControl(null, Validators.required),
-            description: new FormControl(null, Validators.minLength(10)),
+            description: new FormControl(null, [Validators.required, Validators.minLength(10)]),
             color_id: new FormControl(null)
         });
 

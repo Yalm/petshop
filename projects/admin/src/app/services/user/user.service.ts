@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/User.model';
-import { CreateFormData } from '../../shared/class/CreateFromData';
+import { CreateFormData } from '../../shared/class/CreateFormData';
 
 @Injectable({
     providedIn: 'root'
