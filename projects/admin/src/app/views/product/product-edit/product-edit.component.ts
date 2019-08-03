@@ -38,7 +38,7 @@ export class ProductEditComponent implements OnInit {
                 short_description: new FormControl(product.short_description, [Validators.required, Validators.minLength(5), Validators.maxLength(500)]),
                 category_id: new FormControl(product['category_id'], Validators.required),
                 cover: new FormControl(product.cover, Validators.required),
-                description: new FormControl(product.description, [Validators.required, Validators.minLength(10)]),
+                description: new FormControl(product.description, Validators.minLength(10)),
                 color_id: new FormControl(product['color_id'])
             });
         });

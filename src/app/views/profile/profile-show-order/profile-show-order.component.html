@@ -4,6 +4,9 @@
         <span
             class="text-{{ order.state.id | stateOrder }} h6 border border-{{ order.state.id  | stateOrder }} rounded p-2 ml-2">{{ order.state.name }}</span>
     </h2>
+    <div class="alert alert-danger mt-4" role="alert" *ngIf="order.error_log">
+        {{order.error_log}}
+    </div>
     <span>{{order.created_at | date:'medium'}}</span>
     <h5 class="h5 mt-4">Artículos ordenados</h5>
 </ng-container>

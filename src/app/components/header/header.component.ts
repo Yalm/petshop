@@ -14,8 +14,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
 
-    home: boolean;
-    position: boolean;
+    transparent: boolean;
     form: FormGroup;
     searchActive: boolean;
     categories$: Observable<Category[]>;
@@ -29,8 +28,7 @@ export class HeaderComponent implements OnInit {
         this.router.events.subscribe(
             (event: any) => {
                 if (event instanceof RoutesRecognized) {
-                    this.home = event.state.root.firstChild.data.headerDisabled ? true : false;
-                    this.position = event.state.root.firstChild.data.relative ? true : false;
+                    this.transparent = event.state.root.firstChild.data.transparent ? true : false;
                 }
             }
         );
@@ -42,11 +40,10 @@ export class HeaderComponent implements OnInit {
         this.categories$ = this.categoryService.index();
     }
 
-    search() {
+    search(): void {
         if (this.form.valid) {
             const search = this.form.value.search.trim().toLowerCase();
             this.router.navigate(['/shop'], { queryParams: { search: search }, queryParamsHandling: 'merge' });
         }
     }
-
 }

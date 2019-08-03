@@ -61,7 +61,7 @@ export class CategoryEditComponent implements OnInit {
 
     changeChild(child: boolean): void {
         if (child) {
-            this.categories$ = this.categoryService.index(true, true)
+            this.categories$ = this.categoryService.index({ all: true })
                 .pipe(
                     map(response => response.filter(x => x.id != this.form.get('id').value && x.parent_id == null))
                 );

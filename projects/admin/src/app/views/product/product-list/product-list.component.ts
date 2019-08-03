@@ -1,9 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatPaginator, MatDialog } from '@angular/material';
-import { Product } from 'src/app/models/Product.model';
-import { PetDataSource } from '../../../shared/class/pet-datasource';
-import { HttpClient } from '@angular/common/http';
-import { DialogDeleteComponent } from '../../../components/dialog-delete/dialog-delete.component';
+import { Component, OnInit } from '@angular/core';
+import { MatColumn } from '../../../components/mat-table/column.model';
 
 @Component({
     selector: 'app-product-list',
@@ -12,30 +8,14 @@ import { DialogDeleteComponent } from '../../../components/dialog-delete/dialog-
 })
 export class ProductListComponent implements OnInit {
 
-    displayedColumns: string[] = ['name', 'price', 'stock', 'actions'];
-    dataSource: PetDataSource<Product[]>;
-
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-    constructor(private http: HttpClient,
-        private dialog: MatDialog) { }
+    columns: MatColumn[];
 
     ngOnInit() {
-        this.dataSource = new PetDataSource(this.paginator, 'products', this.http, this.sort);
-    }
-
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    destroy(id: number) {
-        this.dialog.open(DialogDeleteComponent, {
-            width: '250px'
-        }).afterClosed().subscribe((result: boolean) => {
-            if (result) {
-                this.dataSource.destroy(id);
-            }
-        });
+        this.columns = [
+            { name: 'name', colum_name: 'Nombre' },
+            { name: 'price', colum_name: 'Precio', class: 'd-none d-sm-table-cell',prefix: 'S/ ' },
+            { name: 'stock', colum_name: 'Stock', class: 'd-none d-sm-table-cell' },
+            { name: 'actions' }
+        ];
     }
 }

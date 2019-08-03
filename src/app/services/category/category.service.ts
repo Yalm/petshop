@@ -11,24 +11,26 @@ export class CategoryService {
 
     constructor(private http: HttpClient) { }
 
-    public index(onlyChilds?: boolean, all?: boolean): Observable<Category[]> {
+    public index(options?: { onlyChilds?: boolean, all?: boolean }): Observable<Category[]> {
         return this.http.get<Category[]>('categories').pipe(
             share(),
             map(items => {
-                if (all) {
-                    return items.reduce((categories: Category[], category) => {
-                        category.categories = items.filter(x => x.parent_id == category.id);
-                        categories.push(category);
-                        return categories;
-                    }, []);
-                } else if (onlyChilds) {
-                    return items.filter(category => category.parent_id != null);
-                } else {
+                if(!options) {
                     return items.filter(category => category.parent_id == null).reduce((categories: Category[], category) => {
                         category.categories = items.filter(x => x.parent_id == category.id);
                         categories.push(category);
                         return categories;
                     }, []);
+                }
+
+                if (options.all) {
+                    return items.reduce((categories: Category[], category) => {
+                        category.categories = items.filter(x => x.parent_id == category.id);
+                        categories.push(category);
+                        return categories;
+                    }, []);
+                } else if (options.onlyChilds) {
+                    return items.filter(category => category.parent_id != null);
                 }
             })
         );

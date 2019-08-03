@@ -12,4 +12,5 @@ export interface Order {
     readonly payment?: Payment;
     readonly created_at: string;
     readonly state_id: number;
+    readonly error_log: string;
 }

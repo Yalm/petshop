@@ -33,7 +33,7 @@ export class ShopComponent implements OnInit {
         this.pagination$ = this.route.queryParams.pipe(
             switchMap(queryParams => this.productService.index(queryParams))
         );
-        this.categories$ = this.categoryService.index(true);
+        this.categories$ = this.categoryService.index({ onlyChilds: true });
         this.colors$ = this.colorService.index();
 
         this.filters$ = this.route.queryParams.pipe(
