@@ -9,7 +9,7 @@ import { debounce, takeWhile } from 'rxjs/operators';
 export class LoaderDirective implements OnDestroy {
     private subscription: Subscription;
 
-    constructor(private renderer: Renderer2, private el: ElementRef,private loader: LoaderService) {
+    constructor(private renderer: Renderer2, private el: ElementRef, private loader: LoaderService) {
         this.loader.appendDialogComponentToBody(el.nativeElement);
         this.subscription = loader.loaderState
             .pipe(
@@ -23,10 +23,21 @@ export class LoaderDirective implements OnDestroy {
 
     private hide(): void {
         this.renderer.removeClass(this.el.nativeElement, 'load');
+        this.setDisableOrEnable(false);
     }
 
     private show(): void {
         this.renderer.addClass(this.el.nativeElement, 'load');
+        this.setDisableOrEnable();
+    }
+
+    private setDisableOrEnable(enable: boolean = true): void {
+        const button = <HTMLInputElement>document.getElementsByClassName('link-new')[0];
+        if (enable) {
+            button.disabled = true;
+            return;
+        }
+        button.disabled = false;
     }
 
     ngOnDestroy() {

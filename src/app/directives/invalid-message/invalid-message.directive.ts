@@ -1,6 +1,6 @@
-import { Directive, Input, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
-import { ControlContainer, AbstractControl, FormGroupDirective } from '@angular/forms';
+import { Directive, Input, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ControlContainer, AbstractControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 
 @Directive({
@@ -15,8 +15,7 @@ export class InvalidMessageDirective implements OnInit, OnDestroy {
     constructor(
         private _fg: ControlContainer,
         private _el: ElementRef,
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.control = this.form.get(this.appInvalidMessage);

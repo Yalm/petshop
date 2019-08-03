@@ -43,11 +43,6 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <button type="button" #btnUpdate (click)="updateItem(cart.items,btnUpdate)"
-                        class="button-petshop text-center text-white position-relative ml-auto mt-4">Actualizar
-                        carrito</button>
-                </tfoot>
             </table>
             <table class="cart-total" *ngIf="cart.items.length > 0">
                 <thead>

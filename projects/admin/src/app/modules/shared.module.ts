@@ -10,6 +10,7 @@ import { UploadComponent } from '../components/upload/upload.component';
 import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete.component';
 import { LoaderDirective } from '../directives/loader/loader.directive';
 import { LoaderComponent } from '../components/loader/loader.component';
+import { MatTableComponent } from '../components/mat-table/mat-table.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { LoaderComponent } from '../components/loader/loader.component';
         UploadComponent,
         DialogDeleteComponent,
         LoaderDirective,
-        LoaderComponent
+        LoaderComponent,
+        MatTableComponent
     ],
     exports: [
         MaterialModule,
@@ -36,7 +38,13 @@ import { LoaderComponent } from '../components/loader/loader.component';
         InvalidMessageDirective,
         BreadcrumbComponent,
         UploadComponent,
-        LoaderDirective
-    ], entryComponents: [LoaderComponent, DialogDeleteComponent]
+        LoaderDirective,
+        LoaderComponent,
+        MatTableComponent
+    ],
+    entryComponents: [
+        LoaderComponent,
+        DialogDeleteComponent
+    ]
 })
 export class SharedModule { }

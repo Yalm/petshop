@@ -38,7 +38,7 @@ export class ProfileAccountComponent implements OnInit {
 
     public edit() {
         this.userService.edit(this.form.value).subscribe(() => {
-            this.snackBar.open('Su información ha sido actualizado', 'Ok');
+            this.snackBar.open('Su información ha sido actualizado', 'Ok', { duration: 5000 });
         });
     }
 

@@ -7,6 +7,10 @@
                     <li class="breadcrumb-item"><a class="text-decoration-none" routerLink="/">Inicio</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Ingrese a su cuenta</li>
                 </ol>
+                <div class="alert" [className]="verify.isVerify ? 'alert-success' : 'alert-danger'" role="alert"
+                    *ngIf="verify">
+                    {{ verify.isVerify ? 'Se verifico su correo': 'No se pudo verficar su correo'}}
+                </div>
             </nav>
             <form [formGroup]="form" (ngSubmit)="login()" novalidate class="pt-5 mt-5">
                 <div class="btn-google" (click)="googleSignIn()">

@@ -36,7 +36,7 @@ export class UserEditComponent implements OnInit {
 
     update() {
         this.userService.update(this.form.value).subscribe(() => {
-            this.snackBar.open('Usuario actualizado.', 'OK');
+            this.snackBar.open('Usuario actualizado.', 'OK', { duration: 5000 });
         }, (error: HttpErrorResponse) => {
             if (error.status == 422) {
                 this.form.get('email').setErrors({ 'unique': true });

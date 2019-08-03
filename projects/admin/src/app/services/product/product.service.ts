@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/models/Product.model';
 import { HttpClient } from '@angular/common/http';
+import { CreateFormData } from '../../shared/class/CreateFormData';
 
 @Injectable({
     providedIn: 'root'
@@ -11,26 +12,16 @@ export class ProductService {
 
     constructor(private http: HttpClient) { }
 
-    public store(data: any): Observable<Product> {
-        const form_data = new FormData();
-        for (const key in data) {
-            form_data.append(key, data[key]);
-        }
-        return this.http.post<Product>('products', form_data);
+    public store(data: Product): Observable<Product> {
+        return this.http.post<Product>('products', CreateFormData({ data }));
     }
 
     public show(id: number): Observable<Product> {
         return this.http.get<Product>(`products/${id}?id=true`);
     }
 
-    public update(data: any): Observable<Product> {
-        const form_data = new FormData();
-        for (const key in data) {
-            form_data.append(key, data[key]);
-        }
-        form_data.delete('id');
-        form_data.append('_method','PUT');
-        return this.http.post<Product>(`products/${data.id}`, form_data);
+    public update(data: Product): Observable<Product> {
+        return this.http.post<Product>(`products/${data.id}`, CreateFormData({ data, update: true }));
     }
 
     public count(): Observable<number> {

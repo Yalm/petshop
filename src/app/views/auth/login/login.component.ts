@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
 
     public form: FormGroup;
     private returnUrl: string;
+    verify: { isVerify: boolean };
 
     constructor(private auth: AuthService,
         private route: ActivatedRoute,
@@ -25,6 +26,10 @@ export class LoginComponent implements OnInit {
             email: new FormControl(null, [Validators.required, Validators.email]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
         });
+
+        if (window.history.state.hasOwnProperty('verify')) {
+            this.verify = { isVerify: window.history.state.verify };
+        }
     }
 
     login(): void {
@@ -59,6 +64,12 @@ export class LoginComponent implements OnInit {
                 break;
             case 'auth/user-disabled':
                 this.snackBar.open('Su cuenta ha sido suspendida. Póngase en contacto con el administrador.', '', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
+                break;
+            case 'auth/user-not-verified-email':
+                this.snackBar.open('Por favor verifique su correo.', '', {
                     duration: 5000,
                     panelClass: ['bg-danger', 'text-white']
                 });

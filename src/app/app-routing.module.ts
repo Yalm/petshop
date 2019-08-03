@@ -11,20 +11,19 @@ import { AuthGuard } from './views/auth/guards/auth/auth.guard';
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { ServicesComponent } from './views/services/services.component';
+import { VerifyResolver } from './resolvers/verify-resolver.resolver';
 
 const routes: Routes = [
     {
         path: '', component: HomeComponent,
-        data: { headerDisabled: true }
+        data: { transparent: true }
     },
     { path: 'shop', component: ShopComponent },
+    { path: 'about', component: AboutComponent, },
+    { path: 'services', component: ServicesComponent },
     {
-        path: 'about', component: AboutComponent,
-        data: { headerDisabled: true, relative: true }
-    },
-    {
-        path: 'services', component: ServicesComponent,
-        data: { headerDisabled: true, relative: true }
+        path: 'email/verify/:token', component: PageNotFoundComponent,
+        resolve: { verify: VerifyResolver }
     },
     { path: 'contact', component: ContactComponent },
     { path: 'p/:url', component: ShowProductComponent },

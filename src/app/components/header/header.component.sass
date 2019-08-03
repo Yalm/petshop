@@ -21,15 +21,6 @@
 .header-section2
     border-bottom: 1px solid #e0e0e0
     padding: 15px 0 15px 0
-    &.scroll-header
-        position: fixed !important
-        box-shadow: 0 2px 8px rgba(0,0,0,.08)
-        background-color: #ffffff
-        animation: 300ms ease-in-out 0s normal none 1 running fadeInDown
-        .menu-header2
-            & li a, path
-                color: #5e5e5e !important
-                fill: #5e5e5e !important
     .menu-header2
         li
             z-index: 1
@@ -61,7 +52,7 @@
                 border-radius: 500px
                 font-size: .875rem
     @media only screen and (min-width: 768px)
-        &.text-home
+        &.transparent
             position: absolute
             top: 0
             right: 0
@@ -73,7 +64,7 @@
     @media only screen and (max-width: 768px)
         padding: 5px 0
         position: relative
-        &.text-home svg path
+        &.transparent svg path
             fill: #5e5e5e !important
         .menu-header2
             justify-content: space-between

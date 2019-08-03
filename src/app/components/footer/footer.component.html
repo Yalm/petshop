@@ -19,7 +19,7 @@
                 <ul class="menu-items-footer list-unstyled">
                     <li *ngFor="let category of categories | async">
                         <a class="item-link text-decoration-none text-capitalize" routerLink="/shop"
-                            [queryParams]="{ category: category.path}">{{category.name}}</a>
+                            [queryParams]="{ category: category.name}">{{category.name}}</a>
                     </li>
                 </ul>
             </div>

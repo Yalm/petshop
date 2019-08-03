@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
     constructor(private category: CategoryService) { }
 
     ngOnInit() {
-        this.categories = this.category.index();
+        this.categories = this.category.index({ onlyChilds: true });
     }
 
 }

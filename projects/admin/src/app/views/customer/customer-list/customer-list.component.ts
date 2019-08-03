@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Customer } from 'src/app/views/auth/models/customer';
-import { PetDataSource } from '../../../shared/class/pet-datasource';
-import { MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { MatColumn } from '../../../components/mat-table/column.model';
 
 @Component({
     selector: 'app-customer-list',
@@ -11,24 +8,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CustomerListComponent implements OnInit {
 
-    displayedColumns: string[] = ['name', 'surnames', 'email', 'orders_count', 'actions'];
-    dataSource: PetDataSource<Customer[]>;
-
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-    constructor(private http: HttpClient,
-        private dialog: MatDialog) { }
+    columns: MatColumn[];
 
     ngOnInit() {
-        this.dataSource = new PetDataSource(this.paginator, 'customers', this.http, this.sort);
-    }
-
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-    }
-
-    destroy(id: number) {
-        this.dataSource.destroy(id);
+        this.columns = [
+            { name: 'name', colum_name: 'Nombre' },
+            { name: 'surnames', colum_name: 'Apellidos', class: 'd-none d-sm-table-cell' },
+            { name: 'email', colum_name: 'Correo', class: 'd-none d-sm-table-cell' },
+            { name: 'orders_count', colum_name: 'Pedidos', class: 'd-none d-sm-table-cell' },
+            { name: 'actions' }
+        ];
     }
 }

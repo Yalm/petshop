@@ -48,8 +48,7 @@ export class ProductEditComponent implements OnInit {
 
     edit() {
         this.productService.update(this.form.value).subscribe(() => {
-            this.snackBar.open('Producto editado.', 'OK');
+            this.snackBar.open('Producto editado.', 'OK', { duration: 5000 });
         });
     }
-
 }

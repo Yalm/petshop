@@ -33,7 +33,7 @@ export class OrderService {
     }
 
     public store(data: { culqi_token: string, email: string, items?: any[], plus_info?: string }): Observable<Order> {
-        data.items = JSON.parse(localStorage.getItem('myCart')).items;
+        data.items = JSON.parse(localStorage.getItem('items'));
         return this.http.post<Order>(`orders`, data);
     }
 }

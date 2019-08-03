@@ -25,8 +25,8 @@
 
                             <mat-list-item>
                                 <mat-icon mat-list-icon>payment</mat-icon>
-                                <h4 mat-line>S/ {{order.payment.amount}}</h4>
-                                <h4 mat-line>{{order.payment.reference_code}}</h4>
+                                <h4 mat-line>S/ {{order.payment?.amount || '0.00'}}</h4>
+                                <h4 mat-line>{{order.payment?.reference_code || 'Sin pago' }}</h4>
                             </mat-list-item>
 
                         </mat-list>
@@ -81,7 +81,7 @@
 
                 <mat-tab label="Estado">
                     <div class="p-4">
-                        <mat-form-field appearance="outline" class="w-100">
+                        <mat-form-field appearance="outline" class="w-100 mb-2">
                             <mat-label>Estado</mat-label>
                             <mat-select placeholder="Estado" formControlName="state_id">
                                 <mat-option *ngFor="let item of states | async" [value]="item.id">
@@ -89,6 +89,11 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error appInvalidMessage="state_id"></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100" appearance="outline" *ngIf="order.error_log">
+                            <mat-label>Error</mat-label>
+                            <input matInput placeholder="Nombre" name="erro_log" [value]="order.error_log" readonly>
                         </mat-form-field>
                     </div>
                 </mat-tab>
