@@ -7,7 +7,7 @@ use DB;
 
 class Order extends Model
 {
-    protected $guarded =[];
+    protected $guarded = [];
 
     public function products()
     {
@@ -46,26 +46,32 @@ class Order extends Model
                 });
     }
 
-    public static function purchases($f1, $f2)
+    public static function purchases()
     {
         return Order::join('customers', 'orders.customer_id', '=', 'customers.id')
             ->join('payments', 'payments.order_id', '=', 'orders.id')
             ->join('states', 'states.id', '=', 'orders.state_id')
             ->join('payment_types', 'payments.payment_type_id', '=', 'payment_types.id')
-            ->select(DB::raw("CONCAT(customers.name,customers.surnames) as customer"), 'orders.id', 'orders.created_at', 'payments.amount', 'payment_types.name as method', 'states.name as state')
-            ->whereBetween('orders.created_at', [$f1,  $f2]);
+            ->select(DB::raw("CONCAT(customers.name,customers.surnames) as customer"), 'orders.id', 'orders.created_at', 'payments.amount', 'payment_types.name as method', 'states.name as state');
     }
 
-    public static function topCustomer($f1, $f2)
+    public static function topCustomer()
     {
-        return DB::table('orders')
-            ->join('customers', 'customers.id', '=', 'orders.customer_id')
+        return Order::join('customers', 'customers.id', '=', 'orders.customer_id')
             ->select('customers.name', 'customers.surnames', 'customers.phone', 'customers.email', DB::raw('count(customer_id) as purchases'))
             ->where('state_id', '=', '2')
-            ->whereBetween('orders.created_at', [$f1,  $f2])
             ->groupBy('customer_id', 'customers.name', 'customers.surnames', 'customers.phone', 'customers.email')
-            ->orderBy(DB::raw('count(customer_id)'), 'desc')
-            ->take(10)
-            ->get();
+            ->orderBy(DB::raw('count(customer_id)'), 'desc');
+    }
+
+    public static function topProduct()
+    {
+        return DB::table('order_details')
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->select('products.id', 'products.name', DB::raw('sum(quantity) as TotalQuantity'))
+            ->where('orders.state_id', '=', '2')
+            ->groupBy('products.id', 'products.name')
+            ->orderBy(DB::raw('sum(quantity)'), 'desc');
     }
 }

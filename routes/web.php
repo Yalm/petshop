@@ -23,6 +23,7 @@ $router->group(['prefix' => 'api/auth/customer'], function () use ($router) {
 
     $router->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     $router->post('password/reset', 'Auth\ResetPasswordController@reset');
+    $router->post('verify', 'Auth\CustomerController@verify');
 });
 
 $router->group(['prefix' => 'api/auth/user'], function () use ($router) {

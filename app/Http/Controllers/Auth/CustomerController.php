@@ -29,6 +29,9 @@ class CustomerController extends Controller
         } else if (Auth::user()->actived == 0) {
             Auth::logout();
             return response()->json(['code' => 'auth/user-disabled'], 401);
+        } else if (!Auth::user()->email_verified_at) {
+            Auth::logout();
+            return response()->json(['code' => 'auth/user-not-verified-email'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -42,7 +45,7 @@ class CustomerController extends Controller
             'email' => 'required|email|string|max:191|unique:customers'
         ]);
 
-        $customer = Customer::create($request->all());
+        $customer = Customer::create($request->only(['name', 'password', 'email']));
         event(new Registered($customer));
 
         return response()->json(['success' => true]);
@@ -65,7 +68,7 @@ class CustomerController extends Controller
 
         $customer = Customer::updateOrCreate(
             ['email' => $oauth->getEmail()],
-            ['name' => $oauth->getName(), 'avatar' => $oauth->getAvatar()]
+            ['name' => $oauth->getName(), 'avatar' => $oauth->getAvatar(), 'email_verified_at' => date('Y-m-d H:i:s')]
         );
 
         if ($customer->actived = 0) {
@@ -79,6 +82,15 @@ class CustomerController extends Controller
     public function me()
     {
         return response()->json(Auth::user());
+    }
+
+    public function verify()
+    {
+        Auth::user()->update([
+            'email_verified_at' => date('Y-m-d H:i:s')
+        ]);
+        Auth::logout();
+        return response()->json(true);
     }
 
     public function refresh()

@@ -28,7 +28,7 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
      * @var array
      */
     protected $fillable = [
-        'name', 'avatar', 'email', 'document_id', 'document_number', 'surnames', 'phone'
+        'name', 'avatar', 'email', 'document_id', 'document_number', 'surnames', 'phone','password'
     ];
 
     /**
@@ -74,6 +74,11 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
             return $query->where('name', 'LIKE', "%$s%")
                 ->orWhere('email', 'LIKE', "%$s%")
                 ->orWhere('surnames', 'LIKE', "%$s%");
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = app('hash')->make($value);
     }
 
     protected static function boot()

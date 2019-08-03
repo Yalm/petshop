@@ -45,11 +45,17 @@ class OrderJob extends Job
                 )
             );
         } catch (\Exception $e) {
-            Order::create([
+            $log = json_decode($e->getMessage());
+
+            $order = Order::create([
                 'state_id' => 5,
                 'customer_id' => $this->data['customer_id'],
-                'plus_info' => $e->getMessage()
+                'plus_info' => $this->plus_info,
+                'error_log' => $log->user_message
             ]);
+            foreach ($items as $product) {
+                $order->products()->attach($product->id, ['quantity' => $product->quantity]);
+            }
             return;
         }
 

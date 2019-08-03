@@ -69,8 +69,8 @@ class CategoryController extends Controller
             $category->update(['actived' => false]);
             return response()->json($category);
         } else if ($category->categories()->count() > 0) {
-            $category->update(['actived' => false]);
             Category::where('parent_id', $id)->update(['parent_id' => null]);
+            $category->delete();
             return response()->json($category);
         }
 

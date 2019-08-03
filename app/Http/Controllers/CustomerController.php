@@ -37,10 +37,9 @@ class CustomerController extends Controller
         if (Auth::guard('user')->check()) {
             $customer = Customer::findOrFail($id);
             $customer->update($request->all());
-
             return response()->json($customer);
         } else if (Auth::check()) {
-            $customer = Auth::user()->update($request->except(['email']));
+            $customer = Auth::user()->update($request->only(['name', 'surnames', 'document_id', 'document_number']));
             return response()->json($customer);
         }
 

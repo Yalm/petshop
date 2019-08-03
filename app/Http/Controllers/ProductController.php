@@ -32,7 +32,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|between:3,99999999.99',
             'stock' => 'nullable|numeric|between:0,32767',
             'short_description' => 'required|max:400',
-            'description' => 'required',
+            'description' => 'string|min:10',
             'category_id' => 'required|numeric',
             'color_id' => 'numeric',
             'cover' => 'required|image'
@@ -76,7 +76,7 @@ class ProductController extends Controller
             'category_id' => 'required|numeric',
             'color_id' => 'numeric',
             'short_description' => 'required|max:400',
-            'description' => 'required|string'
+            'description' => 'string|min:10'
         ]);
 
         $product = Product::findOrFail($id);
