@@ -1,9 +1,8 @@
 <?php
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
+use Tests\TestCase;
 
-class AuthTest  extends TestCase
+class AuthTest extends TestCase
 {
     /**
      * A basic test example.

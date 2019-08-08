@@ -46,6 +46,13 @@ class Order extends Model
                 });
     }
 
+    public function scopeDate($query, array $s)
+    {
+        if ($s && count($s) > 0) {
+            return $query->whereBetween('orders.created_at', $s);
+        }
+    }
+
     public static function purchases()
     {
         return Order::join('customers', 'orders.customer_id', '=', 'customers.id')
@@ -62,16 +69,5 @@ class Order extends Model
             ->where('state_id', '=', '2')
             ->groupBy('customer_id', 'customers.name', 'customers.surnames', 'customers.phone', 'customers.email')
             ->orderBy(DB::raw('count(customer_id)'), 'desc');
-    }
-
-    public static function topProduct()
-    {
-        return DB::table('order_details')
-            ->join('products', 'order_details.product_id', '=', 'products.id')
-            ->join('orders', 'order_details.order_id', '=', 'orders.id')
-            ->select('products.id', 'products.name', DB::raw('sum(quantity) as TotalQuantity'))
-            ->where('orders.state_id', '=', '2')
-            ->groupBy('products.id', 'products.name')
-            ->orderBy(DB::raw('sum(quantity)'), 'desc');
     }
 }

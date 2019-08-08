@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Rules\NotParentCategory;
 
 class ProductController extends Controller
 {
@@ -33,8 +34,8 @@ class ProductController extends Controller
             'stock' => 'nullable|numeric|between:0,32767',
             'short_description' => 'required|max:400',
             'description' => 'string|min:10',
-            'category_id' => 'required|numeric',
-            'color_id' => 'numeric',
+            'category_id' => ['required', 'numeric', 'exists:categories,id', new NotParentCategory],
+            'color_id' => 'numeric|exists:colors,id',
             'cover' => 'required|image'
         ]);
 
@@ -53,17 +54,18 @@ class ProductController extends Controller
     {
         $product = null;
 
-        if ($request->query('id')) {
-            $product = Product::where('id', $url)
-                ->where('actived', true)
-                ->with(['category', 'color'])
-                ->firstOrFail();
-        } else {
+        if ($request->query('url')) {
             $product = Product::where('url', $url)
                 ->where('actived', true)
                 ->with(['category', 'color'])
                 ->firstOrFail();
+        } else {
+            $product = Product::where('id', $url)
+                ->where('actived', true)
+                ->with(['category', 'color'])
+                ->firstOrFail();
         }
+
         return response()->json($product);
     }
 
@@ -73,8 +75,8 @@ class ProductController extends Controller
             'name' => "required|max:300|unique:products,name,$id",
             'price' => 'required|numeric|between:3,99999999.99',
             'stock' => 'required|numeric|between:0,32767',
-            'category_id' => 'required|numeric',
-            'color_id' => 'numeric',
+            'category_id' => ['required', 'numeric', 'exists:categories,id', new NotParentCategory],
+            'color_id' => 'numeric|exists:colors,id',
             'short_description' => 'required|max:400',
             'description' => 'string|min:10'
         ]);

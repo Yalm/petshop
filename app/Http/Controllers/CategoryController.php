@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Rules\NotParentCategory;
 
 class CategoryController extends Controller
 {
@@ -24,7 +25,7 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:191|unique:categories,name',
-            'parent_id' => 'numeric|exists:categories,id',
+            'parent_id' => 'nullable|numeric|exists:categories,id',
         ]);
 
         $category = Category::create($request->only(['name', 'parent_id']));
@@ -46,13 +47,14 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => "required|max:191|unique:categories,name,$id",
-            'parent_id' => 'nullable|numeric|exists:categories,id',
-            'categories.*' => 'numeric|exists:categories,id'
+            'parent_id' => 'nullable|numeric|exists:categories,id|different:id',
+            'categories.*' => 'numericexists:categories,id'
         ]);
+
         $category = Category::findOrFail($id);
 
         Category::where('parent_id', $id)->update(['parent_id' => null]);
-        if (!$request->input('parent_id')) {
+        if ($request->has('categories') && $request->input('categories')) {
             Category::whereIn('id', $request->input('categories'))->update(['parent_id' => $id]);
         }
 
