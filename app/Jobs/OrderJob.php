@@ -56,6 +56,13 @@ class OrderJob extends Job
             foreach ($items as $product) {
                 $order->products()->attach($product->id, ['quantity' => $product->quantity]);
             }
+
+            Payment::create([
+                'order_id' => $order->id,
+                'amount' => 0.00,
+                'reference_code' => 'SIN PAGAR',
+                'payment_type_id' => 1
+            ]);
             return;
         }
 
@@ -69,7 +76,7 @@ class OrderJob extends Job
             'order_id' => $order->id,
             'amount' => $items->total,
             'reference_code' => $culqiSuccess->reference_code,
-            'payment_type_id' => 1,
+            'payment_type_id' => 1
         ]);
 
         foreach ($items as $product) {
