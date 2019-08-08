@@ -15,7 +15,12 @@ export class UserListComponent implements OnInit {
             { name: 'name', colum_name: 'Nombre' },
             { name: 'email', colum_name: 'Correo', class: 'd-none d-sm-table-cell' },
             { name: 'actived', colum_name: 'Activo', class: 'd-none d-sm-table-cell' },
-            { name: 'actions' }
+            {
+                name: 'actions', link: {
+                    icon: 'edit',
+                    actionAndElement: (element) => ['/users', element.id, 'edit']
+                }
+            }
         ];
     }
 }

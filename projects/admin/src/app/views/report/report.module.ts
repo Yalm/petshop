@@ -9,15 +9,23 @@ import { SharedModule } from '../../modules/shared.module';
 import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { DateFilterComponent } from './date-filter/date-filter.component';
 import { PurchasesComponent } from './purchases/purchases.component';
+import { MatTableModule } from '../../components/mat-table/mat-table.module';
 
 @NgModule({
-    declarations: [TopCustomerComponent, TopProductComponent, IndexReportComponent, DateFilterComponent, PurchasesComponent],
+    declarations: [
+        TopCustomerComponent,
+        TopProductComponent,
+        IndexReportComponent,
+        DateFilterComponent,
+        PurchasesComponent
+    ],
     imports: [
         CommonModule,
         SharedModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        RouterModule.forChild(ReportRoutingModule)
+        RouterModule.forChild(ReportRoutingModule),
+        MatTableModule
     ]
 })
 export class ReportModule { }

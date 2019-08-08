@@ -9,7 +9,6 @@ import { UploadComponent } from '../components/upload/upload.component';
 import { DialogDeleteComponent } from '../components/dialog-delete/dialog-delete.component';
 import { LoaderDirective } from '../directives/loader/loader.directive';
 import { LoaderComponent } from '../components/loader/loader.component';
-import { MatTableComponent } from '../components/mat-table/mat-table.component';
 
 @NgModule({
     imports: [
@@ -25,8 +24,7 @@ import { MatTableComponent } from '../components/mat-table/mat-table.component';
         UploadComponent,
         DialogDeleteComponent,
         LoaderDirective,
-        LoaderComponent,
-        MatTableComponent
+        LoaderComponent
     ],
     exports: [
         MaterialModule,
@@ -37,7 +35,6 @@ import { MatTableComponent } from '../components/mat-table/mat-table.component';
         UploadComponent,
         LoaderDirective,
         LoaderComponent,
-        MatTableComponent
     ],
     entryComponents: [
         LoaderComponent,

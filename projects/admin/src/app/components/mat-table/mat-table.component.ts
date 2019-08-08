@@ -17,6 +17,8 @@ export class MatTableComponent<T = any> implements OnInit {
     private _params: Params;
     displayedColumns: string[];
     dataSource: PetDataSource<T[]>;
+    action: MatColumn;
+
     @Input() url: string;
     @Input() columns: MatColumn[];
     @Input() hiddenDelete: boolean;
@@ -39,6 +41,7 @@ export class MatTableComponent<T = any> implements OnInit {
 
     ngOnInit(): void {
         this.displayedColumns = this.columns.map(x => x.name);
+        this.action = this.columns.find(x => x.name == 'actions');
         this.columns = this.columns.filter(x => x.name != 'actions');
         this.dataSource = new PetDataSource(this.paginator, this.url, this.http, this.sort, this._params);
     }

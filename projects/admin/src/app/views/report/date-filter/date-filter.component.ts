@@ -22,8 +22,8 @@ export class DateFilterComponent {
 
     filterData(): void {
         let data = this.form.value;
-        data.date_end = data.date_end.toJSON();
-        data.date_init = data.date_init.toJSON();
+        data.date_end = data.date_end instanceof Date ? data.date_end.toJSON() : data.date_end;
+        data.date_init = data.date_init instanceof Date ? data.date_init.toJSON() : data.date_init;
         this.filter.next(data);
     }
 }

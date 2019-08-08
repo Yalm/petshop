@@ -20,7 +20,7 @@
 
         <td mat-cell *matCellDef="let element">
             <div class="d-flex justify-content-end">
-                <a mat-icon-button color="primary" matTooltip="Editar" [routerLink]="['/categories',element.id,'edit']">
+                <a mat-icon-button color="primary" matTooltip="Editar" [routerLink]="['/catalog/categories',element.id,'edit']">
                     <mat-icon aria-label="Editar">edit</mat-icon>
                 </a>
                 <button mat-icon-button color="primary" class="ml-1" matTooltip="Eliminar" (click)="destroy(element.id)">

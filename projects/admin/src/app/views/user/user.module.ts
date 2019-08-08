@@ -6,6 +6,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { SharedModule } from '../../modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { UserRoutingModule } from './user-routing.module';
+import { MatTableModule } from '../../components/mat-table/mat-table.module';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { UserRoutingModule } from './user-routing.module';
     imports: [
         CommonModule,
         RouterModule.forChild(UserRoutingModule),
-        SharedModule
+        SharedModule,
+        MatTableModule
     ]
 })
 export class UserModule { }
