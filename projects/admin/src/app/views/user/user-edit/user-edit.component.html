@@ -1,53 +1,51 @@
-<ng-container *ngIf="form">
-    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
-        <mat-card-content>
-            <mat-tab-group>
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
+    <mat-card-content>
+        <mat-tab-group>
 
-                <mat-tab label="Información basica *">
-                    <div class="p-4">
-                        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                            <mat-label>Nombre</mat-label>
-                            <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre"
-                                name="name" required>
-                            <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
-                            <mat-error appInvalidMessage="name"></mat-error>
-                        </mat-form-field>
+            <mat-tab label="Información basica *">
+                <div class="p-4">
+                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name"
+                            required>
+                        <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="name"></mat-error>
+                    </mat-form-field>
 
-                        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                            <mat-label>Apellidos</mat-label>
-                            <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
-                                name="surnames" required>
-                            <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
-                            <mat-error appInvalidMessage="surnames"></mat-error>
-                        </mat-form-field>
+                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
+                            name="surnames" required>
+                        <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="surnames"></mat-error>
+                    </mat-form-field>
 
-                        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                            <mat-label>Correo</mat-label>
-                            <input matInput type="email" #email maxlength="191" formControlName="email"
-                                placeholder="Correo" name="email" required>
-                            <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
-                            <mat-error appInvalidMessage="email"></mat-error>
-                        </mat-form-field>
+                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Correo</mat-label>
+                        <input matInput type="email" #email maxlength="191" formControlName="email" placeholder="Correo"
+                            name="email" required>
+                        <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="email"></mat-error>
+                    </mat-form-field>
 
-                        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                            <mat-label>Contraseña</mat-label>
-                            <input matInput type="password" #password maxlength="191" formControlName="password"
-                                placeholder="Contraseña" name="password">
-                            <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
-                            <mat-error appInvalidMessage="password"></mat-error>
-                        </mat-form-field>
-                    </div>
-                </mat-tab>
+                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput type="password" #password maxlength="191" formControlName="password"
+                            placeholder="Contraseña" name="password">
+                        <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="password"></mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
 
 
-                <mat-tab label="Avatar">
-                    <div class="p-4">
-                        <app-upload formControlName="avatar"></app-upload>
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card-content>
-    </mat-card>
-    <button type="button" [disabled]="form.invalid" (click)="update()" mat-raised-button
-        class="position-absolute link-new">Guardar</button>
-</ng-container>
+            <mat-tab label="Avatar">
+                <div class="p-4">
+                    <app-upload formControlName="avatar"></app-upload>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
+<button type="button" [disabled]="form.invalid" (click)="update()" mat-raised-button
+    class="position-absolute link-new">Guardar</button>

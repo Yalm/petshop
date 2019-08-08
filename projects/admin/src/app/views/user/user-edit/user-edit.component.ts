@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { UserService } from '../../../services/user/user.service';
-import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -19,22 +18,19 @@ export class UserEditComponent implements OnInit {
         private snackBar: MatSnackBar,
         private userService: UserService) { }
 
-    ngOnInit() {
-        this.route.params.pipe(
-            switchMap(params => this.userService.show(params.id))
-        ).subscribe(user => {
-            this.form = new FormGroup({
-                id: new FormControl(user.id, Validators.required),
-                name: new FormControl(user.name, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
-                surnames: new FormControl(user.surnames, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
-                email: new FormControl(user.email, [Validators.required, Validators.email]),
-                avatar: new FormControl(user.avatar),
-                password: new FormControl(null, [Validators.maxLength(191), Validators.minLength(6)])
-            });
+    ngOnInit(): void {
+        const user = this.route.snapshot.data.user;
+        this.form = new FormGroup({
+            id: new FormControl(user.id, Validators.required),
+            name: new FormControl(user.name, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
+            surnames: new FormControl(user.surnames, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
+            email: new FormControl(user.email, [Validators.required, Validators.email]),
+            avatar: new FormControl(user.avatar),
+            password: new FormControl(null, [Validators.maxLength(191), Validators.minLength(6)])
         });
     }
 
-    update() {
+    update(): void {
         this.userService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Usuario actualizado.', 'OK', { duration: 5000 });
         }, (error: HttpErrorResponse) => {

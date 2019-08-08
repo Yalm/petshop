@@ -8,9 +8,11 @@ import { debounce, takeWhile } from 'rxjs/operators';
 })
 export class LoaderDirective implements OnDestroy {
     private subscription: Subscription;
+    private buttons: HTMLCollectionOf<HTMLButtonElement>;
+    private count = 0;
 
     constructor(private renderer: Renderer2, private el: ElementRef, private loader: LoaderService) {
-        this.loader.appendDialogComponentToBody(el.nativeElement);
+        this.loader.appendLoaderComponentToParent(el.nativeElement);
         this.subscription = loader.loaderState
             .pipe(
                 debounce(() => timer(1000)),
@@ -19,6 +21,7 @@ export class LoaderDirective implements OnDestroy {
                 if (state) { this.show(); }
                 else { this.hide(); }
             });
+        this.buttons = this.el.nativeElement.parentElement ? this.el.nativeElement.parentElement.getElementsByTagName('button') : [];
     }
 
     private hide(): void {
@@ -32,16 +35,14 @@ export class LoaderDirective implements OnDestroy {
     }
 
     private setDisableOrEnable(enable: boolean = true): void {
-        const button = <HTMLInputElement>document.getElementsByClassName('link-new')[0];
-        if (enable) {
-            button.disabled = true;
-            return;
+        for (let index = 0; index < this.buttons.length; index++) {
+            this.buttons[index].disabled = this.count == 0 ? this.buttons[index].disabled : enable;
         }
-        button.disabled = false;
+        this.count++;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscription.unsubscribe();
-        this.loader.removeDialogComponentFromBody();
+        this.loader.removeLoaderComponentFromParent();
     }
 }

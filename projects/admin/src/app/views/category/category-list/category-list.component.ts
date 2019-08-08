@@ -21,7 +21,7 @@ export class CategoryListComponent implements OnInit {
         private dialog: MatDialog) { }
 
     ngOnInit() {
-        this.categoryService.index({ onlyChilds: true }).subscribe(response => {
+        this.categoryService.index({ all: true }).subscribe(response => {
             this.dataSource.data = response;
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

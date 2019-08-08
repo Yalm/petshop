@@ -1,54 +1,43 @@
-<ng-container *ngIf="form">
-    <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="store()" [formGroup]="form" appLoader>
-        <mat-card-content>
-            <mat-tab-group>
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="edit()" [formGroup]="form" appLoader>
+    <mat-card-content>
+        <mat-tab-group>
+            <mat-tab label="Información basica *">
+                <div class="p-4">
+                    <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre"
+                            name="name" required>
+                        <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="name"></mat-error>
+                    </mat-form-field>
+                    <mat-slide-toggle class="mb-3 ml-auto" [checked]="isChild"
+                        (change)="changeChild(isChild = !isChild,form.value)">
+                        {{ isChild ? 'Hijo':'Padre'}}
+                    </mat-slide-toggle>
 
-                <mat-tab label="Información basica *">
-                    <div class="p-4">
-                        <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                            <mat-label>Nombre</mat-label>
-                            <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre"
-                                name="name" required>
-                            <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
-                            <mat-error appInvalidMessage="name"></mat-error>
-                        </mat-form-field>
-                        <mat-slide-toggle class="mb-3 ml-auto" [checked]="isChild"
-                            (change)="changeChild(isChild = !isChild)">
-                            {{ isChild ? 'Hijo':'Padre'}}
-                        </mat-slide-toggle>
+                    <mat-form-field appearance="outline" class="w-100" *ngIf="isChild;else parent">
+                        <mat-label>Categoría padre</mat-label>
+                        <mat-select placeholder="Categoría padre" formControlName="parent_id">
+                            <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
+                                {{category.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-                        <mat-form-field appearance="outline" class="w-100" *ngIf="isChild;else parent">
-                            <mat-label>Categoría padre</mat-label>
-                            <mat-select placeholder="Categoría padre" formControlName="parent_id">
+                    <ng-template #parent>
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Hijos</mat-label>
+                            <mat-select formControlName="categories" multiple>
                                 <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-                                    {{category.name}}</mat-option>
+                                    {{category.name}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
+                    </ng-template>
 
-                        <ng-template #parent>
-                            <mat-form-field appearance="outline" class="w-100" formArrayName="categories">
-                                <mat-chip-list #chipList aria-label="Fruit selection">
-                                    <mat-chip *ngFor="let category of form.get('categories').value;let i  = index"
-                                        (removed)="remove(i)">
-                                        {{category.name}}
-                                        <mat-icon matChipRemove>cancel</mat-icon>
-                                    </mat-chip>
-                                    <input placeholder="Nuevo hijo..." #fruitInput [matAutocomplete]="auto"
-                                        [matChipInputFor]="chipList" (matChipInputTokenEnd)="add($event)">
-                                </mat-chip-list>
-                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                    <mat-option *ngFor="let category of categories$ | async" [value]="category.id">
-                                        {{category.name}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                        </ng-template>
-
-                    </div>
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card-content>
-    </mat-card>
-    <button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button
-        class="position-absolute link-new">Guardar</button>
-</ng-container>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
+<button type="button" [disabled]="form.invalid" (click)="edit()" mat-raised-button
+    class="position-absolute link-new">Guardar</button>

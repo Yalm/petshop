@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
         this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/');
         this.form = new FormGroup({
             email: new FormControl(null, [Validators.required, Validators.email]),
-            password: new FormControl(null, Validators.required),
+            password: new FormControl(null, Validators.required)
         });
     }
 

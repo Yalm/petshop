@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { A11yModule } from '@angular/cdk/a11y';
 import {
     MatInputModule,
     MatButtonModule,
@@ -17,23 +17,8 @@ import {
 } from '@angular/material';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        MatSnackBarModule,
-        MatTabsModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatExpansionModule,
-        MatChipsModule,
-        MatTableModule,
-        MatSortModule
-    ],
     exports: [
+        A11yModule,
         MatInputModule,
         MatButtonModule,
         MatIconModule,

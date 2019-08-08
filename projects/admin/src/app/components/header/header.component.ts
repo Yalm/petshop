@@ -27,7 +27,8 @@ export class HeaderComponent implements OnInit {
             { path: '/catalog', icon: 'store', label: 'Catalogo' },
             { path: '/customers', icon: 'group', label: 'Clientes' },
             { path: '/users', icon: 'contacts', label: 'Usuarios' },
-            { path: '/orders', icon: 'shopping_basket', label: 'Pedidos' }
+            { path: '/orders', icon: 'shopping_basket', label: 'Pedidos' },
+            { path: '/reports/customers', icon: 'table_chart', label: 'Reportes' }
         ];
         const link = this.links.findIndex(x => x.path == this.router.url);
         this.selectedLink = link >= 0 ? link : 0;

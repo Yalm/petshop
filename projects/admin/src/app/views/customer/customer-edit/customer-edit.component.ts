@@ -26,20 +26,18 @@ export class CustomerEditComponent implements OnInit {
         private customerService: CustomerService) { }
 
     ngOnInit() {
-        this.route.params.pipe(
-            switchMap(params => this.customerService.show(params.id))
-        ).subscribe(customer => {
-            this.form = new FormGroup({
-                id: new FormControl(customer.id, [Validators.required]),
-                name: new FormControl(customer.name, [Validators.required]),
-                surnames: new FormControl(customer.surnames, [Validators.required]),
-                document_id: new FormControl(customer.document_id, [Validators.required]),
-                document_number: new FormControl(customer.document_number, [Validators.required]),
-                phone: new FormControl(customer.phone, [Validators.required]),
-                email: new FormControl(customer.email, [Validators.required, Validators.email])
-            });
-            this.dataSource.data = customer.orders;
+        const customer = this.route.snapshot.data.customer;
+        this.form = new FormGroup({
+            id: new FormControl(customer.id, [Validators.required]),
+            name: new FormControl(customer.name, [Validators.required]),
+            surnames: new FormControl(customer.surnames, [Validators.required]),
+            document_id: new FormControl(customer.document_id, [Validators.required]),
+            document_number: new FormControl(customer.document_number, [Validators.required]),
+            phone: new FormControl(customer.phone, [Validators.required]),
+            email: new FormControl(customer.email, [Validators.required, Validators.email])
         });
+        this.dataSource.data = customer.orders;
+
         this.documents = this.documentService.index();
     }
 

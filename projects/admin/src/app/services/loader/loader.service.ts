@@ -15,7 +15,7 @@ import { LoaderComponent } from '../../components/loader/loader.component';
 export class LoaderService {
     private loaderSubject = new Subject<boolean>();
     loaderState = this.loaderSubject.asObservable();
-    dialogComponentRef: ComponentRef<LoaderComponent>;
+    private dialogComponentRef: ComponentRef<LoaderComponent>;
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -31,7 +31,7 @@ export class LoaderService {
         this.loaderSubject.next(false);
     }
 
-    appendDialogComponentToBody(el: HTMLElement) {
+    appendLoaderComponentToParent(el: HTMLElement) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(LoaderComponent);
         const componentRef = componentFactory.create(this.injector);
         this.appRef.attachView(componentRef.hostView);
@@ -42,7 +42,7 @@ export class LoaderService {
         this.dialogComponentRef = componentRef;
     }
 
-    removeDialogComponentFromBody() {
+    removeLoaderComponentFromParent() {
         this.appRef.detachView(this.dialogComponentRef.hostView);
         this.dialogComponentRef.destroy();
     }

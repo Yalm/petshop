@@ -45,7 +45,7 @@ export class QtyComponent {
 
     addCartProduct(): void {
         if (this.shoppingCartService.add({ quantity: this.quantity, ... this.product })) {
-            this.snackBar.open('Su producto ha sido agregado.', 'Ok', { duration: 5000 });
+            this.snackBar.open('Su producto ha sido agregado.', 'Ok', { duration: 3000 });
         }
     }
 }

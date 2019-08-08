@@ -6,7 +6,6 @@ export function EqualsValidator(controlToCompare: AbstractControl): ValidatorFn 
         if (c.value === null || c.value.length === 0) {
             return null;
         }
-        //const controlToCompare = c.root.get(controlNameToCompare);
 
         if (controlToCompare) {
             const subscription: Subscription = controlToCompare.valueChanges.subscribe(() => {

@@ -1,10 +1,16 @@
 <table mat-table [dataSource]="dataSource" matSort matSortActive="updated_at" matSortDirection="desc"
-    class="mat-elevation-z8 w-100 mt-n3 table-petshop">
+    class="mat-elevation-z8 w-100 table-petshop" [class.mt-n3]="marginTop">
 
     <!-- Columns -->
     <ng-container *ngFor="let column of columns" matColumnDef="{{column.name}}">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="column.class">
-            {{column.colum_name || column.name }} </th>
+        <ng-container *ngIf="sortActive;else notSort">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="column.class">
+                {{column.colum_name || column.name }} </th>
+        </ng-container>
+        <ng-template #notSort>
+            <th mat-header-cell *matHeaderCellDef [ngClass]="column.class">
+                {{column.colum_name || column.name }} </th>
+        </ng-template>
         <td mat-cell *matCellDef="let element" [ngClass]="column.class">{{column.prefix}}{{element[column.name]}}
         </td>
     </ng-container>
@@ -36,5 +42,13 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" class="pagination-petshop" showFirstLastButtons>
-</mat-paginator>
+
+<div class="position-relative">
+    <div class="left-items-bottom">
+        <button mat-icon-button aria-label="cloud_download" color="primary" *ngIf="export" (click)="exportAsExcelFile()" matTooltip="Descargar EXCEL">
+            <mat-icon>cloud_download</mat-icon>
+        </button>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" class="pagination-petshop" showFirstLastButtons>
+    </mat-paginator>
+</div>

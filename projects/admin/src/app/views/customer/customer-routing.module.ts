@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerEditComponent } from './customer-edit/customer-edit.component';
+import { IdResolver } from '../../shared/resolvers/id-resolver.resolver';
 
 export const CustomerRoutingModule: Routes = [
     {
@@ -12,10 +13,12 @@ export const CustomerRoutingModule: Routes = [
     },
     {
         path: ':id/edit', component: CustomerEditComponent,
+        resolve: { customer: IdResolver },
         data: {
             name: 'Editar cliente',
             back: '/customers',
-            text: 'Detalle del cliente'
+            text: 'Detalle del cliente',
+            path: 'customers'
         }
     }
 ];

@@ -37,6 +37,8 @@ import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCustom } from 'projects/admin/src/app/shared/class/MatPaginatorIntlCustom';
+import { DateFilterComponent } from './views/report/date-filter/date-filter.component';
+
 
 @NgModule({
     declarations: [
@@ -55,7 +57,8 @@ import { MatPaginatorIntlCustom } from 'projects/admin/src/app/shared/class/MatP
         AboutComponent,
         ServicesComponent,
         ContactComponent,
-        MegaMenuComponent
+        MegaMenuComponent,
+        DateFilterComponent
     ],
     imports: [
         BrowserAnimationsModule,

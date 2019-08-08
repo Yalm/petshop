@@ -14,7 +14,6 @@ export class CategoryCreateComponent implements OnInit {
 
     form: FormGroup;
     categories$: Observable<Category[]>;
-    loading: boolean;
 
     constructor(private categoryService: CategoryService,
         private snackBar: MatSnackBar) { }
@@ -28,14 +27,9 @@ export class CategoryCreateComponent implements OnInit {
     }
 
     store() {
-        this.loading = true;
         this.categoryService.store(this.form.value).subscribe(() => {
-            this.loading = false;
-            this.snackBar.open('Categoría creada.', 'OK');
             this.snackBar.open('Categoría creada.', 'OK', { duration: 5000 });
             this.form.reset();
-        }, (err) => {
-            console.log(err);
         });
     }
 }

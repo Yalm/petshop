@@ -3,7 +3,6 @@ import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrderService } from '../../../services/order/order.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
 import { Order } from 'src/app/models/Order.model';
 import { Observable } from 'rxjs';
 import { State } from '../../../models/State.model';
@@ -16,7 +15,7 @@ import { StateService } from '../../../services/state/state.service';
 })
 export class OrderEditComponent implements OnInit {
     form: FormGroup;
-    displayedColumns: string[] = ['show','name', 'price', 'quantity', 'total'];
+    displayedColumns: string[] = ['show', 'name', 'price', 'quantity', 'total'];
     dataSource = new MatTableDataSource();
     order: Order;
     states: Observable<State[]>;
@@ -26,21 +25,19 @@ export class OrderEditComponent implements OnInit {
         private stateService: StateService,
         private orderService: OrderService) { }
 
-    ngOnInit() {
-        this.route.params.pipe(
-            switchMap(params => this.orderService.show(params.id))
-        ).subscribe(order => {
-            this.form = new FormGroup({
-                id: new FormControl(order.id, [Validators.required]),
-                state_id: new FormControl(order.state_id, [Validators.required])
-            });
-            this.order = order;
-            this.dataSource.data = order.products;
+    ngOnInit(): void {
+        this.order = this.route.snapshot.data.order;
+
+        this.form = new FormGroup({
+            id: new FormControl(this.order.id, [Validators.required]),
+            state_id: new FormControl(this.order.state_id, [Validators.required])
         });
+
+        this.dataSource.data = this.order.products;
         this.states = this.stateService.index();
     }
 
-    update() {
+    update(): void {
         this.orderService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Pedido editado.', 'OK', { duration: 5000 });
         });

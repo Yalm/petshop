@@ -1,26 +1,46 @@
 import { MatPaginator, MatSort } from '@angular/material';
 import { DataSource } from '@angular/cdk/table';
-import { Observable, merge, BehaviorSubject, of, Subject } from 'rxjs';
-import { map, tap, switchMap, filter } from 'rxjs/operators';
+import { Observable, merge, of, Subject } from 'rxjs';
+import { map, tap, switchMap, filter, startWith } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Pagination } from 'src/app/models/Pagination.model';
+import { Params } from '@angular/router';
 
 export class PetDataSource<T> extends DataSource<T> {
 
+    private _params = new HttpParams();
+    protected load: boolean;
+
     set filter(value: string) {
-        this._filterChange.next(value);
+        if (value) {
+            this._params = this._params.set('search', value);
+        } else {
+            this._params = this._params.delete('search');
+        }
+        this._paramsChange.next(true);
+    }
+
+    set params(value: Params) {
+        Object.keys(value).forEach(key => {
+            this._params = this._params.set(key, value[key]);
+        });
+        this._paramsChange.next(true);
     }
 
     data: T[];
-    private _filterChange = new BehaviorSubject<string>('');
-    private _destroyItem = new Subject<boolean>();
 
+    private _destroyItem = new Subject<boolean>();
+    private _paramsChange = new Subject<boolean>();
 
     constructor(private paginator: MatPaginator,
         private collection: string,
         private http: HttpClient,
-        private sort?: MatSort) {
+        private sort?: MatSort,
+        params?: Params) {
         super();
+        params ? Object.keys(params).forEach(key => {
+            this._params = this._params.set(key, params[key]);
+        }) : null;
     }
 
     /**
@@ -31,33 +51,32 @@ export class PetDataSource<T> extends DataSource<T> {
     connect(): Observable<T[]> {
         const dataMutations = [
             this.paginator.page,
-            this._destroyItem.asObservable(),
-            this._filterChange.asObservable(),
+            this._destroyItem,
+            this._paramsChange,
             this.sort ? this.sort.sortChange : of(null)
         ];
 
         return merge(...dataMutations)
             .pipe(
                 filter(data => data != null),
+                startWith({}),
                 switchMap(() => this.getData())
             )
     }
 
     private getData(): Observable<T[]> {
-        let params = new HttpParams();
-        params = params.append('page', (this.paginator.pageIndex + 1).toString());
-        params = params.append('results', this.paginator.pageSize.toString());
+
+        this._params = this._params.append('page', (this.paginator.pageIndex + 1).toString());
+        this._params = this._params.append('results', this.paginator.pageSize.toString());
 
         if (this.sort) {
-            params = params.append('sort', this.sort.active);
-            params = params.append('order', this.sort.direction || 'asc');
+            this._params = this._params.append('sort', this.sort.active);
+            this._params = this._params.append('order', this.sort.direction || 'asc');
         }
 
-        if (this._filterChange.value) {
-            params = params.append('search', this._filterChange.value);
-        }
-
-        return this.http.get<Pagination<T>>(this.collection, { params })
+        return this.http.get<Pagination<T>>(this.collection, {
+            params: this._params
+        })
             .pipe(
                 tap(response => {
                     this.paginator.length = response.total;

@@ -19,6 +19,6 @@ export class ProductService {
     }
 
     public show(url: string): Observable<Product> {
-        return this.http.get<Product>(`products/${url}`);
+        return this.http.get<Product>(`products/${url}?url=true`);
     }
 }

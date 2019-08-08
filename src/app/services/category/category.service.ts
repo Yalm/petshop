@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Category } from 'src/app/models/Category.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { share, map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CategoryService {
 
+    private categories: Observable<Category[]>;
+
     constructor(private http: HttpClient) { }
 
-    public index(options?: { onlyChilds?: boolean, all?: boolean }): Observable<Category[]> {
-        return this.http.get<Category[]>('categories').pipe(
-            share(),
+    public index(options?: { onlyChilds?: boolean, all?: boolean, onlyParents?: boolean }): Observable<Category[]> {
+        this.categories = this.categories || this.http.get<Category[]>('categories');
+
+        return this.categories.pipe(
+            tap(response => this.categories = of(response)),
             map(items => {
-                if(!options) {
+                if (!options) {
                     return items.filter(category => category.parent_id == null).reduce((categories: Category[], category) => {
                         category.categories = items.filter(x => x.parent_id == category.id);
                         categories.push(category);
@@ -30,6 +34,8 @@ export class CategoryService {
                     }, []);
                 } else if (options.onlyChilds) {
                     return items.filter(category => category.parent_id != null);
+                } else if (options.onlyParents) {
+                    return items.filter(category => category.parent_id == null);
                 }
             })
         );

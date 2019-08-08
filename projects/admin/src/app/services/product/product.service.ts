@@ -17,7 +17,7 @@ export class ProductService {
     }
 
     public show(id: number): Observable<Product> {
-        return this.http.get<Product>(`products/${id}?id=true`);
+        return this.http.get<Product>(`products/${id}`);
     }
 
     public update(data: Product): Observable<Product> {

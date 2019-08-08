@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Category } from 'src/app/models/Category.model';
-import { MatSnackBar, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -22,74 +22,44 @@ export class CategoryEditComponent implements OnInit {
         private route: ActivatedRoute,
         private snackBar: MatSnackBar) { }
 
-    ngOnInit() {
-        this.route.params.pipe(
-            switchMap(params => this.categoryService.show(params.id))
-        ).subscribe(category => {
-            this.isChild = category.parent_id ? true : false;
-            this.form = new FormGroup({
-                id: new FormControl(category.id),
-                name: new FormControl(category.name, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
-                parent_id: new FormControl(category.parent_id),
-                categories: new FormArray(
-                    category.categories.reduce((controls: FormGroup[], element) => {
-                        controls.push(this.addControl(element));
-                        return controls;
-                    }, [])
-                )
-            });
-            this.changeChild(this.isChild);
+    ngOnInit(): void {
+        const category = this.route.snapshot.data.category;
+        this.isChild = category.parent_id ? true : false;
+        this.changeChild(this.isChild, category);
+        this.form = new FormGroup({
+            id: new FormControl(category.id),
+            name: new FormControl(category.name, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
+            parent_id: new FormControl(category.parent_id),
+            categories: new FormControl(category.categories.map(x => x.id))
         });
     }
 
-    remove(index: number): void {
-        const control = <FormArray>this.form.get('categories');
-        control.removeAt(index);
-    }
 
-    add(event: MatChipInputEvent): void {
-        console.log(event);
-    }
-
-    selected(event: MatAutocompleteSelectedEvent): void {
-        const control = <FormArray>this.form.get('categories');
-        const exist = control.value.find(x => x.id == event.option.value) ? false : true;
-        if (exist) {
-            control.push(this.addControl({ name: event.option.viewValue, id: event.option.value }));
-        }
-    }
-
-    changeChild(child: boolean): void {
+    changeChild(child: boolean, category: Category): void {
         if (child) {
-            this.categories$ = this.categoryService.index({ all: true })
+            this.categories$ = this.categoryService.index({ onlyParents: true })
                 .pipe(
-                    map(response => response.filter(x => x.id != this.form.get('id').value && x.parent_id == null))
+                    map(response => response.filter(x => x.id != category.id))
                 );
         } else {
-            this.categories$ = this.categoryService.index()
+            this.categories$ = this.categoryService.index({ all: true })
                 .pipe(
-                    map(response => response.filter(x => x.id != this.form.get('id').value && x.categories.length < 1))
+                    map(response =>
+                        response.filter(x => x.id != category.id && x.categories.length < 1 && x.parent_id == null)
+                            .concat(response.filter(x => x.parent_id == category.id))
+                    )
                 );
         }
     }
 
-    store() {
-        let data = this.form.value;
+    edit(): void {
         if (!this.isChild) {
-            data.parent_id = null;
             this.form.get('parent_id').setValue(null);
+        } else {
+            this.form.get('categories').setValue(null);
         }
-        data.categories = data.categories.map(x => x.id);
-        this.categoryService.update(data).subscribe(() => {
-            this.snackBar.open('Categoría actulizada.', 'OK', { duration: 5000 });
+        this.categoryService.update(this.form.value).subscribe(() => {
+            this.snackBar.open('Categoría actualizada.', 'OK', { duration: 5000 });
         });
     }
-
-    addControl(element?: Category): FormGroup {
-        return new FormGroup({
-            id: new FormControl(element ? element.id : null, [Validators.required]),
-            name: new FormControl(element ? element.name : null, [Validators.required, Validators.maxLength(191), Validators.minLength(5)])
-        })
-    }
-
 }

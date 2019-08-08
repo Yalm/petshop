@@ -1,0 +1,22 @@
+<div class="container-fluid px-0 pt-4 pb-3">
+    <div class="row mx-0">
+        <div class="col-xl-2 col-md-3 pb-0 px-0">
+            <mat-card>
+                <mat-card-header class="d-flex align-items-center">
+                    <mat-icon mat-card-avatar>table_chart</mat-icon>
+                    <mat-card-title class="mb-0 mat-h1">Reportes</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="mx-n3 border-top border-secondary mt-4">
+                    <mat-nav-list class="pt-0">
+                        <a mat-list-item routerLink="/reports/customers">Clientes</a>
+                        <a mat-list-item routerLink="/reports/products">Productos</a>
+                        <a mat-list-item routerLink="/reports/purchases">Pedidos</a>
+                    </mat-nav-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-xl-10 col-md-9 pt-4 pt-md-0 px-0 pl-md-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

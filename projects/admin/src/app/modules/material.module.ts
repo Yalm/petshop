@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { A11yModule } from '@angular/cdk/a11y';
 import {
     MatInputModule,
     MatCardModule,
@@ -9,7 +9,6 @@ import {
     MatTooltipModule,
     MatProgressBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
@@ -31,37 +30,8 @@ import {
 } from '@angular/material';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatInputModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatDividerModule,
-        MatTooltipModule,
-        MatProgressBarModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatProgressSpinnerModule,
-        MatSnackBarModule,
-        MatSelectModule,
-        MatStepperModule,
-        MatCheckboxModule,
-        MatToolbarModule,
-        MatBadgeModule,
-        MatRippleModule,
-        MatMenuModule,
-        MatTabsModule,
-        MatChipsModule,
-        MatAutocompleteModule,
-        MatSlideToggleModule,
-        MatListModule
-    ],
     exports: [
+        A11yModule,
         MatInputModule,
         MatCardModule,
         MatButtonModule,

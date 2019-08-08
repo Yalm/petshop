@@ -16,7 +16,7 @@ export class LoaderInterceptor implements HttpInterceptor {
                 this.loaderService.hide();
             }
         },
-            (err: any) => {
+            () => {
                 this.loaderService.hide();
             }));
     }
