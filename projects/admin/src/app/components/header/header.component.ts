@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
     @Output() activeDark = new EventEmitter();
     user: User;
     links: any[];
-    selectedLink: number;
 
     constructor(public auth: AuthService,
         private router: Router) { }
@@ -23,25 +22,18 @@ export class HeaderComponent implements OnInit {
     ngOnInit() {
         this.user = this.auth.getPayload();
         this.links = [
-            { path: '/', icon: 'home', label: 'Inicio' },
+            { path: '/', icon: 'home', label: 'Inicio', options: { exact: true } },
             { path: '/catalog', icon: 'store', label: 'Catalogo' },
             { path: '/customers', icon: 'group', label: 'Clientes' },
             { path: '/users', icon: 'contacts', label: 'Usuarios' },
             { path: '/orders', icon: 'shopping_basket', label: 'Pedidos' },
             { path: '/reports/customers', icon: 'table_chart', label: 'Reportes' }
         ];
-        const link = this.links.findIndex(x => x.path == this.router.url);
-        this.selectedLink = link >= 0 ? link : 0;
     }
 
     logout(): void {
         this.auth.logout().subscribe(() => {
             this.router.navigateByUrl('/login');
         });
-    }
-
-    navigate(event: MatTabChangeEvent) {
-        const link = this.links[event.index];
-        this.router.navigateByUrl(link.path);
     }
 }

@@ -27,15 +27,15 @@ const routes: Routes = [
                 }
             },
             {
-                path: 'products',
+                path: 'catalog/products',
                 loadChildren: () => import('./views/product/product.module').then(m => m.ProductModule)
             },
             {
-                path: 'categories',
+                path: 'catalog/categories',
                 loadChildren: () => import('./views/category/category.module').then(m => m.CategoryModule)
             },
             {
-                path: 'colors',
+                path: 'catalog/colors',
                 loadChildren: () => import('./views/color/color.module').then(m => m.ColorModule)
             },
             {

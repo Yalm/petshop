@@ -8,9 +8,6 @@
                 <div class="nav-top d-flex justify-content-sm-between justify-content-end">
                     <h6 class="title d-none d-sm-block">Pet Shop</h6>
                     <div class="nav-actions d-flex align-items-center" *ngIf="user">
-                        <button mat-icon-button aria-label="notifications" class="mr-3">
-                            <mat-icon matBadge="0" matBadgeColor="warn">notifications</mat-icon>
-                        </button>
                         <button mat-button class="p-0" [matMenuTriggerFor]="menu">
                             <img fallback-src [src]="user.avatar" [alt]="user.name" width="28" height="28"
                                 class="rounded">
@@ -33,15 +30,13 @@
                     </div>
                 </div>
 
-                <mat-tab-group [selectedIndex]="selectedLink" (selectedTabChange)="navigate($event)"
-                    [color]="darkTheme ? null: 'accent'">
-                    <mat-tab *ngFor="let link of links">
-                        <ng-template mat-tab-label>
-                            <mat-icon class="mr-1" [class.text-white]="!darkTheme">{{link.icon}}</mat-icon>
-                            <span [class.text-white]="!darkTheme"> {{link.label}}</span>
-                        </ng-template>
-                    </mat-tab>
-                </mat-tab-group>
+                <nav mat-tab-nav-bar [color]="darkTheme ? null: 'accent'">
+                    <a mat-tab-link *ngFor="let link of links" [routerLink]="link.path" routerLinkActive
+                        #rla="routerLinkActive" [active]="rla.isActive" [routerLinkActiveOptions]="link.options || {}">
+                        <mat-icon class="mr-1" [class.text-white]="!darkTheme">{{link.icon}}</mat-icon>
+                        <span [class.text-white]="!darkTheme"> {{link.label}}</span>
+                    </a>
+                </nav>
             </div>
         </div>
     </div>

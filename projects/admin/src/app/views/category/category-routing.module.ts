@@ -16,7 +16,7 @@ export const CategoryRoutingModule: Routes = [
         path: 'create', component: CategoryCreateComponent,
         data: {
             name: 'Nuevo categoría',
-            back: '/categories',
+            back: '/catalog/categories',
             text: 'Detalle de la categoría'
         }
     },
@@ -25,7 +25,7 @@ export const CategoryRoutingModule: Routes = [
         resolve: { category: IdResolver },
         data: {
             name: 'Editar categoría',
-            back: '/categories',
+            back: '/catalog/categories',
             text: 'Detalle de la categoría',
             path: 'categories'
         }

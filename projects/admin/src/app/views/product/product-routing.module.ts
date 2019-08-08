@@ -16,7 +16,7 @@ export const ProductRoutingModule: Routes = [
         path: 'create', component: ProductCreateComponent,
         data: {
             name: 'Nuevo Producto',
-            back: '/products',
+            back: '/catalog/products',
             text: 'Detalle del producto'
         }
     },
@@ -25,7 +25,7 @@ export const ProductRoutingModule: Routes = [
         resolve: { product: IdResolver },
         data: {
             name: 'Editar Producto',
-            back: '/products',
+            back: '/catalog/products',
             text: 'Detalle del producto',
             path: 'products'
         }

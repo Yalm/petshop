@@ -40,7 +40,7 @@
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element">
                                 <a mat-icon-button color="primary" matTooltip="Editar"
-                                    [routerLink]="['/products',element.id,'edit']"
+                                    [routerLink]="['/catalog/products',element.id,'edit']"
                                     [state]="{ back:'/orders/' + order.id + '/edit' }">
                                     <mat-icon aria-label="Editar">remove_red_eye</mat-icon>
                                 </a>
