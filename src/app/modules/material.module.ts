@@ -8,11 +8,8 @@ import {
     MatSnackBarModule,
     MatTabsModule,
     MatRadioModule,
-    MatSelectModule,
     MatExpansionModule,
     MatChipsModule,
-    MatTableModule,
-    MatSortModule,
     MatPaginatorModule
 } from '@angular/material';
 
@@ -23,15 +20,12 @@ import {
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
-        MatPaginatorModule,
         MatSnackBarModule,
         MatTabsModule,
         MatRadioModule,
-        MatSelectModule,
+        MatPaginatorModule,
         MatExpansionModule,
-        MatChipsModule,
-        MatTableModule,
-        MatSortModule
+        MatChipsModule
     ],
     declarations: [],
 })

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class StateOrderPipe implements PipeTransform {
 
-    transform(value: number): any {
+    transform(value: number): string {
         let bg: string;
 
         switch (value) {

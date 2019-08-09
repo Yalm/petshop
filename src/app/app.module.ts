@@ -60,8 +60,6 @@ import { MatPaginatorIntlCustom } from 'projects/admin/src/app/shared/class/MatP
     imports: [
         BrowserAnimationsModule,
         SharedModule,
-        AuthModule,
-        ProfileModule,
         AppRoutingModule,
         HttpClientModule,
         MatCarouselModule,

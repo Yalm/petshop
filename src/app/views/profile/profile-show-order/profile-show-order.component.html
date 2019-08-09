@@ -2,7 +2,7 @@
     <h2 class="h2 mb-3">
         Pedido # {{order.id}}
         <span
-            class="text-{{ order.state.id | stateOrder }} h6 border border-{{ order.state.id  | stateOrder }} rounded p-2 ml-2">{{ order.state.name }}</span>
+            class="text-secondary h6 border border-secondary rounded p-2 ml-2">{{ order.state.name }}</span>
     </h2>
     <div class="alert alert-danger mt-4" role="alert" *ngIf="order.error_log">
         {{order.error_log}}

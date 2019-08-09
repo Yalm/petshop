@@ -1,6 +1,6 @@
 <div class="qty d-flex align-items-center justify-content-end" [ngClass]="{ 'justify-content-md-center': !btn,
 'justify-content-md-start': btn} ">
-    <input type="number" readonly [value]="quantity" class="num-qty" [max]="product.stock" aria-label="num-qty">
+    <input type="number" readonly [value]="quantity.toString()" class="num-qty" [max]="product.stock.toString()" aria-label="num-qty">
     <span class="input-group-btn-vertical">
         <button (click)="quantityUp()" class="btn-qty-up" type="button" aria-label="btn-qty-up">
             <svg width="10" height="10" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

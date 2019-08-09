@@ -26,7 +26,7 @@
 
     <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
         <mat-label>Numero de documento</mat-label>
-        <input matInput #document_number maxlength="10" formControlName="document_number"
+        <input type="number" matInput #document_number maxlength="10" formControlName="document_number"
             placeholder="Numero de documento" name="document_number" required>
         <mat-hint align="end">{{document_number.value?.length || 0}}/10</mat-hint>
         <mat-error appInvalidMessage="document_number"></mat-error>
@@ -34,9 +34,9 @@
 
     <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
         <mat-label>Telefono/Celular</mat-label>
-        <input matInput #document_number maxlength="191" formControlName="phone" placeholder="Telefono/Celular"
+        <input matInput #phone maxlength="191" formControlName="phone" placeholder="Telefono/Celular"
             name="phone" required>
-        <mat-hint align="end">{{document_number.value?.length || 0}}/20</mat-hint>
+        <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
         <mat-error appInvalidMessage="phone"></mat-error>
     </mat-form-field>
 

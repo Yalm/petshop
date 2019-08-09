@@ -11,7 +11,6 @@ import { AuthGuard } from './views/auth/guards/auth/auth.guard';
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { ServicesComponent } from './views/services/services.component';
-import { VerifyResolver } from './resolvers/verify-resolver.resolver';
 
 const routes: Routes = [
     {
@@ -21,10 +20,6 @@ const routes: Routes = [
     { path: 'shop', component: ShopComponent },
     { path: 'about', component: AboutComponent, },
     { path: 'services', component: ServicesComponent },
-    {
-        path: 'email/verify/:token', component: PageNotFoundComponent,
-        resolve: { verify: VerifyResolver }
-    },
     { path: 'contact', component: ContactComponent },
     { path: 'p/:url', component: ShowProductComponent },
     { path: 'cart', component: CartComponent },
@@ -32,11 +27,15 @@ const routes: Routes = [
     { path: '404', component: PageNotFoundComponent },
 
     {
-        path: 'profile', loadChildren: () => {
+        path: '', canActivate: [AuthGuard], loadChildren: () => {
             return import('./views/profile/profile.module').then(m => m.ProfileModule)
         }
     },
-
+    {
+        path: '', loadChildren: () => {
+            return import('./views/auth/auth.module').then(m => m.AuthModule)
+        }
+    },
     { path: '**', component: PageNotFoundComponent }
 ];
 
