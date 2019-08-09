@@ -1,4 +1,3 @@
 # Petshop
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) 
+[Angular CLI](https://github.com/angular/angular-cli) and [Lumen](https://lumen.laravel.com/docs)
 
