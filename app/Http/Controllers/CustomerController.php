@@ -25,21 +25,27 @@ class CustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'max:191|required',
-            'surnames' => 'max:191|string',
-            'document_id' => 'numeric|exists:documents,id',
-            'document_number' => 'string|max:20',
-            'email' => "required|email|max:191|unique:customers,email,$id",
-            'password' => 'min:6|max:191'
-        ]);
-
         if (Auth::guard('user')->check()) {
+            $this->validate($request, [
+                'name' => 'max:191|required',
+                'surnames' => 'max:191|string',
+                'document_id' => 'numeric|exists:documents,id',
+                'document_number' => 'string|max:20',
+                'email' => "required|email|max:191|unique:customers,email,$id",
+                'password' => 'min:6|max:191'
+            ]);
             $customer = Customer::findOrFail($id);
             $customer->update($request->all());
             return response()->json($customer);
         } else if (Auth::check()) {
-            $customer = Auth::user()->update($request->only(['name', 'surnames', 'document_id', 'document_number']));
+            $this->validate($request, [
+                'name' => 'max:191|required',
+                'surnames' => 'max:191|string',
+                'document_id' => 'numeric|exists:documents,id',
+                'document_number' => 'numeric|max:20',
+                'phone' => 'numeric|max:20',
+            ]);
+            $customer = Auth::user()->update($request->only(['name', 'surnames', 'document_id', 'document_number','phone']));
             return response()->json($customer);
         }
 
