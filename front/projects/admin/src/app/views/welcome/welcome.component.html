@@ -1,0 +1,20 @@
+<div class="container pt-5">
+    <div class="row justify-content-around">
+        <mat-card class="d-flex align-items-center flex-column col-md-3 mb-2">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="products" color="primary">apps</mat-icon>
+            Productos {{ countProduct | async }}
+        </mat-card>
+
+        <mat-card class="d-flex align-items-center flex-column col-md-3 mb-2">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="orders" color="primary">shopping_basket
+            </mat-icon>
+            Pedidos {{ countOrder | async }}
+        </mat-card>
+
+        <mat-card class="d-flex align-items-center flex-column col-md-3 mb-2">
+            <mat-icon class="size-60 mb-2" aria-hidden="false" aria-label="customers" color="primary">group
+            </mat-icon>
+            Clientes {{ countCustomer | async }}
+        </mat-card>
+    </div>
+</div>

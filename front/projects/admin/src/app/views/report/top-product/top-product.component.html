@@ -1,0 +1,5 @@
+<app-date-filter (filter)="params = $event"></app-date-filter>
+
+<app-mat-table url="reports/product" [columns]="columns" [marginTop]="false" [sortActive]="false" [export]="true"
+    [params]="params">
+</app-mat-table>

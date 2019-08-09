@@ -1,0 +1,25 @@
+<mat-card class="mb-3">
+    <mat-card-header>
+        <mat-card-title class="ml-0">Filtrar por fecha</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-column flex-md-row justify-content-md-end flex-wrap" [formGroup]="form">
+        <mat-form-field class="mr-md-2" appearance="outline">
+            <mat-label>Fecha de inicio</mat-label>
+            <input matInput [matDatepicker]="date_init" placeholder="Fecha" formControlName="date_init" [max]="maxDate"
+                readonly>
+            <mat-datepicker-toggle matSuffix [for]="date_init"></mat-datepicker-toggle>
+            <mat-datepicker #date_init></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="mr-md-2">
+            <mat-label>Fecha final</mat-label>
+            <input matInput [matDatepicker]="date_end" placeholder="Fecha" formControlName="date_end" [max]="maxDate"
+                readonly>
+            <mat-datepicker-toggle matSuffix [for]="date_end"></mat-datepicker-toggle>
+            <mat-datepicker #date_end></mat-datepicker>
+        </mat-form-field>
+        <button mat-icon-button aria-label="Filter" [disabled]="form.invalid" class="mt-md-2 ml-auto ml-md-0"
+            matTooltip="Filtrar" (click)="filterData()">
+            <mat-icon>filter_list</mat-icon>
+        </button>
+    </mat-card-content>
+</mat-card>

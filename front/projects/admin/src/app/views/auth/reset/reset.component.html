@@ -1,0 +1,46 @@
+<form (ngSubmit)="reset()" [formGroup]="form">
+    <mat-card class="card-petshop" appLoader>
+        <mat-card-header class="text-center">
+            <mat-card-title class="mat-h4">Restablecer la contraseña</mat-card-title>
+            <mat-card-subtitle>Por favor ingrese la dirección de correo electrónico que usó para registrarse.
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Dirección de correo electrónico</mat-label>
+                <input matInput #email maxlength="191" formControlName="email"
+                    placeholder="Dirección de correo electrónico" name="email" required>
+                <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="email"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Constraseña</mat-label>
+                <input type="password" matInput #password maxlength="191" formControlName="password"
+                    placeholder="Contraseña" name="email" required>
+                <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="password"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Confirmar constraseña</mat-label>
+                <input type="password" matInput #password_confirmation maxlength="191"
+                    formControlName="password_confirmation" placeholder="Confirmar contraseña"
+                    name="password_confirmation" required>
+                <mat-hint align="end">{{password_confirmation.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="password_confirmation"></mat-error>
+            </mat-form-field>
+
+            <a class="my-2 mx-3" routerLink="/login">Atrás para iniciar sesión</a>
+        </mat-card-content>
+
+        <mat-card-actions class="d-flex justify-content-center">
+            <button mat-raised-button [disabled]="form.invalid" color="primary" class="btn-login" type="submit">
+                Restablecer la
+                contraseña <mat-icon aria-hidden="false" aria-label="Enviar enlace de
+                    restablecimiento">arrow_right_alt</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

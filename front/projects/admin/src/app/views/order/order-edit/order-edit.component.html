@@ -1,0 +1,103 @@
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
+    <mat-card-content>
+        <mat-tab-group>
+
+            <mat-tab label="Información basica">
+                <div class="px-4 pb-2">
+                    <mat-list>
+                        <h3 mat-subheader>Cliente</h3>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>account_circle</mat-icon>
+                            <a [routerLink]="['/customers',order.customer.id,'edit']" mat-line
+                                [state]="{ back:'/orders/' + order.id + '/edit' }">{{order.customer.name}}</a>
+                            <p mat-line> {{order.customer.email}} </p>
+                        </mat-list-item>
+
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>Información extra</h3>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>note</mat-icon>
+                            <h4 mat-line>{{order.plus_info}}</h4>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>Pago</h3>
+
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>payment</mat-icon>
+                            <h4 mat-line>S/ {{order.payment?.amount || '0.00'}}</h4>
+                            <h4 mat-line>{{order.payment?.reference_code || 'Sin pago' }}</h4>
+                        </mat-list-item>
+
+                    </mat-list>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Productos">
+                <div class="px-4 py-3">
+                    <table mat-table [dataSource]="dataSource" class="w-100 table-petshop">
+                        <!-- name Column -->
+                        <ng-container matColumnDef="show">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <a mat-icon-button color="primary" matTooltip="Editar"
+                                    [routerLink]="['/catalog/products',element.id,'edit']"
+                                    [state]="{ back:'/orders/' + order.id + '/edit' }">
+                                    <mat-icon aria-label="Editar">remove_red_eye</mat-icon>
+                                </a>
+                            </td>
+                        </ng-container>
+                        <!-- name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef>Producto</th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <!-- price Column -->
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef>Precio</th>
+                            <td mat-cell *matCellDef="let element">S/ {{element.price | number: '1.2-2' }}
+                            </td>
+                        </ng-container>
+
+                        <!-- quantity Column -->
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+                            <td mat-cell *matCellDef="let element"> {{element.pivot.quantity}} </td>
+                        </ng-container>
+
+                        <!-- total Column -->
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell">Total</th>
+                            <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">S/
+                                {{element.price * element.pivot.quantity | number: '1.2-2' }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </mat-tab>
+
+            <mat-tab label="Estado">
+                <div class="p-4">
+                    <mat-form-field appearance="outline" class="w-100 mb-2">
+                        <mat-label>Estado</mat-label>
+                        <mat-select placeholder="Estado" formControlName="state_id">
+                            <mat-option *ngFor="let item of states | async" [value]="item.id">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error appInvalidMessage="state_id"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100" appearance="outline" *ngIf="order.error_log">
+                        <mat-label>Error</mat-label>
+                        <input matInput placeholder="Nombre" name="erro_log" [value]="order.error_log" readonly>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
+<button type="button" [disabled]="form.invalid" (click)="update()" mat-raised-button
+    class="position-absolute link-new">Guardar</button>

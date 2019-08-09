@@ -1,0 +1,12 @@
+version: '2'
+services:
+    admin:
+        build:
+            context: ./front/.
+            args:
+                env: admin
+    client:
+        build:
+            context: ./front/.
+            args:
+                env: client

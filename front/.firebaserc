@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "yalm-94feb"
+  },
+  "targets": {
+    "yalm-94feb": {
+      "hosting": {
+        "admin": [
+          "admin-36df3"
+        ],
+        "client": [
+          "yalm-94feb"
+        ]
+      }
+    }
+  }
+}

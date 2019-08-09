@@ -1,0 +1,74 @@
+<div class="profile position-relative d-flex align-items-end">
+    <img src="assets/img/vet-bg-2-min.jpg" alt="back" class="img-fluid back-profile position-absolute w-100">
+    <div class="media align-items-center p-4">
+        <img [src]="user.avatar" [alt]="user.name" fallback-src class="rounded-circle">
+        <div class="media-body text-white ml-3">
+            <h2 class="mb-0 h2">{{user.name}} {{user.surnames}}</h2>
+            {{user.email}}
+        </div>
+    </div>
+</div>
+<mat-tab-group>
+    <mat-tab label="Datos personales">
+        <form class="p-4" (ngSubmit)="update()" [formGroup]="firstFormGroup" appLoader>
+            <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Nombre</mat-label>
+                <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name" required>
+                <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="name"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Apellidos</mat-label>
+                <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
+                    name="surnames" required>
+                <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="surnames"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Correo</mat-label>
+                <input matInput type="email" #email maxlength="191" formControlName="email" placeholder="Correo"
+                    name="email" required>
+                <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="email"></mat-error>
+            </mat-form-field>
+            <div class="d-flex justify-content-end col-12">
+                <button type="submit" class="ml-auto" [disabled]="firstFormGroup.invalid"
+                    mat-raised-button>Guardar</button>
+            </div>
+
+        </form>
+    </mat-tab>
+    <mat-tab label="Cambiar contraseña">
+        <form class="p-4" (ngSubmit)="changePassword()" [formGroup]="secondFormGroup" appLoader>
+            <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Antigua contraseña</mat-label>
+                <input matInput type="password" #current_password maxlength="191"
+                    formControlName="current_password" placeholder="Contraseña" name="current_password">
+                <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="current_password"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="password" #password maxlength="191" formControlName="password"
+                    placeholder="Contraseña" name="password">
+                <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="password"></mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                <mat-label>Confimar contraseña</mat-label>
+                <input matInput type="password" #password_confirmation maxlength="191"
+                    formControlName="password_confirmation" placeholder="Contraseña" name="password_confirmation">
+                <mat-hint align="end">{{password_confirmation.value?.length || 0}}/191</mat-hint>
+                <mat-error appInvalidMessage="password_confirmation"></mat-error>
+            </mat-form-field>
+            <div class="d-flex justify-content-end col-12">
+                <button type="submit" [disabled]="secondFormGroup.invalid" class="ml-auto"
+                    mat-raised-button>Guardar</button>
+            </div>
+        </form>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,7 @@
+<ng-container *ngIf="customer">
+    <h1 class="pt-4">Hola {{customer.name}} (¿no eres {{customer.name}}? <span class="text-primary c-p"
+            (click)="logout()">Cerrar sesión</span>)</h1>
+    <p>Desde el panel de control de tu cuenta puedes ver tus <a href="#" class="text-decoration-none">pedidos
+            recientes</a> y
+        <a href="#" class="text-decoration-none"> editar tu contraseña y los detalles de tu cuenta.</a></p>
+</ng-container>

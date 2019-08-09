@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming'
+// Plus imports for other components in your app.
+
+$my-primary: (50: $primary,100: $primary,200: $primary,300: $primary,400: $primary,500: $primary,600: $primary,700: $primary,800: $primary,900: $primary,A100: $primary,A200: $primary,A400: $primary,A700: $primary,contrast: (50: white,100: white,200: white,300: white,400: white,500: white,600: white,700: white,800: white,900: white,A100: white,A200: white,A400: white,A700: white,))
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core()
+
+// Define the theme.
+$candy-app-primary: mat-palette($my-primary)
+$candy-app-accent:  mat-palette($mat-grey,50)
+$candy-app-theme:   mat-light-theme($candy-app-primary, $candy-app-accent)
+
+// Define dark theme.
+$dark-app-primary: mat-palette($my-primary)
+$dark-app-accent:  mat-palette($mat-grey,900)
+$dark-app-theme:   mat-dark-theme($dark-app-primary, $dark-app-accent)
+
+// Include the theme styles for only specified components.
+@include angular-material-theme($candy-app-theme)
+
+.dark-theme
+	@include angular-material-theme($dark-app-theme)
