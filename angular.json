@@ -22,7 +22,7 @@
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "aot": true,
+                        "aot": false,
                         "assets": [
                             "src/favicon.ico",
                             "src/assets"
@@ -54,6 +54,11 @@
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
                                 }
                             ]
                         }
@@ -139,7 +144,7 @@
                         "main": "projects/admin/src/main.ts",
                         "polyfills": "projects/admin/src/polyfills.ts",
                         "tsConfig": "projects/admin/tsconfig.app.json",
-                        "aot": true,
+                        "aot": false,
                         "assets": [
                             "projects/admin/src/favicon.ico",
                             "projects/admin/src/assets"
@@ -171,6 +176,11 @@
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
                                 }
                             ]
                         }
@@ -205,7 +215,7 @@
                             "projects/admin/src/assets"
                         ],
                         "styles": [
-                            "projects/admin/src/styles.css"
+                            "projects/admin/src/styles.sass"
                         ],
                         "scripts": []
                     }

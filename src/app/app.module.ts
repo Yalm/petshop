@@ -10,9 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import { environment } from '../environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthModule } from './views/auth/auth.module';
 
-import { ProfileModule } from './views/profile/profile.module';
 import { ProductComponent } from './components/product/product.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
