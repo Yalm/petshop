@@ -15,7 +15,7 @@ import { ServicesComponent } from './views/services/services.component';
 const routes: Routes = [
     {
         path: '', component: HomeComponent,
-        data: { transparent: true }
+        /*data: { transparent: false }*/
     },
     { path: 'shop', component: ShopComponent },
     { path: 'about', component: AboutComponent, },
