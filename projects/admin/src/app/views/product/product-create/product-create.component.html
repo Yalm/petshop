@@ -76,4 +76,4 @@
         </mat-tab-group>
     </mat-card-content>
 </mat-card>
-<button type="button" [disabled]="form.invalid" mat-raised-button class="position-absolute link-new">Guardar</button>
+<button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button class="position-absolute link-new">Guardar</button>
