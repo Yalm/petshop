@@ -34,7 +34,7 @@ registerLocaleData(localeEsAr, 'es-PE');
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { MatPaginatorIntl } from '@angular/material';
-import { MatPaginatorIntlCustom } from 'projects/admin/src/app/shared/class/MatPaginatorIntlCustom';
+import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
 
 @NgModule({
     declarations: [
