@@ -14,7 +14,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
 
-    transparent: boolean;
     form: FormGroup;
     searchActive: boolean;
     categories$: Observable<Category[]>;
@@ -25,16 +24,8 @@ export class HeaderComponent implements OnInit {
         public shoppingCartService: ShoppingCartService) { }
 
     ngOnInit() {
-        this.router.events.subscribe(
-            (event: any) => {
-                if (event instanceof RoutesRecognized) {
-                    this.transparent = event.state.root.firstChild.data.transparent ? true : false;
-                }
-            }
-        );
-
         this.form = new FormGroup({
-            search: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+            search: new FormControl(null, [Validators.required, Validators.minLength(3)])
         });
 
         this.categories$ = this.categoryService.index();
