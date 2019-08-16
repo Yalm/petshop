@@ -11,12 +11,12 @@ import { Observable } from 'rxjs';
 export class FooterComponent implements OnInit {
 
     year: number = new Date().getFullYear();
-    categories: Observable<Category[]>;
+    categories$: Observable<Category[]>;
 
     constructor(private category: CategoryService) { }
 
     ngOnInit() {
-        this.categories = this.category.index({ onlyChilds: true });
+        this.categories$ = this.category.index({ onlyChilds: true });
     }
 
 }

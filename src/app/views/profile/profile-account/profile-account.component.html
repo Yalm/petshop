@@ -1,47 +1,48 @@
-<form class="form-row mt-4 mt-md-0" [formGroup]="form" *ngIf="form" (ngSubmit)="edit()">
-    <h2 class="h2 col-12 border-bottom pb-2 mb-4">Información personal</h2>
+<ng-container *ngIf="form">
+    <form class="form-row mt-4 mt-md-0" [formGroup]="form" (ngSubmit)="edit()">
+        <h2 class="h2 col-12 border-bottom pb-2 mb-4">Información personal</h2>
 
-    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-        <mat-label>Nombre</mat-label>
-        <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name" required>
-        <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
-        <mat-error appInvalidMessage="name"></mat-error>
-    </mat-form-field>
+        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+            <mat-label>Nombre</mat-label>
+            <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name" required>
+            <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
+            <mat-error appInvalidMessage="name"></mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-        <mat-label>Apellidos</mat-label>
-        <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre" name="surnames"
-            required>
-        <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
-        <mat-error appInvalidMessage="surnames"></mat-error>
-    </mat-form-field>
+        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+            <mat-label>Apellidos</mat-label>
+            <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre" name="surnames"
+                required>
+            <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
+            <mat-error appInvalidMessage="surnames"></mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="col-md-6 mb-2" appearance="outline">
-        <mat-label>Tipo de documento</mat-label>
-        <mat-select placeholder="Tipo de documento" formControlName="document_id">
-            <mat-option *ngFor="let item of documents | async" [value]="item.id">{{item.name}}</mat-option>
-        </mat-select>
-        <mat-error appInvalidMessage="document_id"></mat-error>
-    </mat-form-field>
+        <mat-form-field class="col-md-6 mb-2" appearance="outline">
+            <mat-label>Tipo de documento</mat-label>
+            <mat-select placeholder="Tipo de documento" formControlName="document_id">
+                <mat-option *ngFor="let item of documents | async" [value]="item.id">{{item.name}}</mat-option>
+            </mat-select>
+            <mat-error appInvalidMessage="document_id"></mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-        <mat-label>Numero de documento</mat-label>
-        <input type="number" matInput #document_number maxlength="10" formControlName="document_number"
-            placeholder="Numero de documento" name="document_number" required>
-        <mat-hint align="end">{{document_number.value?.length || 0}}/10</mat-hint>
-        <mat-error appInvalidMessage="document_number"></mat-error>
-    </mat-form-field>
+        <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 10 caracteres">
+            <mat-label>Numero de documento</mat-label>
+            <input type="text" matInput #document_number maxlength="10" formControlName="document_number"
+                placeholder="Numero de documento" name="document_number" required>
+            <mat-hint align="end">{{document_number.value?.length || 0}}/10</mat-hint>
+            <mat-error appInvalidMessage="document_number"></mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-        <mat-label>Telefono/Celular</mat-label>
-        <input matInput #phone maxlength="191" formControlName="phone" placeholder="Telefono/Celular"
-            name="phone" required>
-        <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
-        <mat-error appInvalidMessage="phone"></mat-error>
-    </mat-form-field>
+        <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 20 caracteres">
+            <mat-label>Telefono/Celular</mat-label>
+            <input matInput #phone maxlength="20" formControlName="phone" placeholder="Telefono/Celular"
+                name="phone" required>
+            <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
+            <mat-error appInvalidMessage="phone"></mat-error>
+        </mat-form-field>
 
-    <div class="form-group col-md-12 d-flex justify-content-end">
-        <button type="submit" class="button-petshop text-center text-white position-relative">Guardar</button>
-    </div>
-
-</form>
+        <div class="form-group col-md-12 d-flex justify-content-end">
+            <button type="submit" class="button-petshop text-center text-white position-relative">Guardar</button>
+        </div>
+    </form>
+</ng-container>

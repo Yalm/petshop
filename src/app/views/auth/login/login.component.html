@@ -1,10 +1,10 @@
 <div class="container login pt-md-5 pb-5">
     <div class="row d-flex justify-content-center pt-5 pb-2">
         <div class="col-lg-5 col-md-7">
-            <h1 class="title text-center">Ingrese a su cuenta</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb d-flex justify-content-center">
-                    <li class="breadcrumb-item"><a class="text-decoration-none" routerLink="/">Inicio</a></li>
+            <h1 class="font-weight-bold text-center">Ingrese a su cuenta</h1>
+            <nav aria-label="breadcrumb text-dark">
+                <ol class="breadcrumb d-flex justify-content-center bg-transparent">
+                    <li class="breadcrumb-item"><a class="text-decoration-none text-dark" routerLink="/">Inicio</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Ingrese a su cuenta</li>
                 </ol>
                 <div class="alert" [className]="verify.isVerify ? 'alert-success' : 'alert-danger'" role="alert"
@@ -13,7 +13,7 @@
                 </div>
             </nav>
             <form [formGroup]="form" (ngSubmit)="login()" novalidate class="pt-5 mt-5">
-                <div class="btn-google" (click)="googleSignIn()">
+                <div class="btn-google bg-white font-weight-bold" (click)="googleSignIn()">
                     <div class="d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             viewBox="0 0 48 48">

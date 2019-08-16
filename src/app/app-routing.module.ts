@@ -13,10 +13,7 @@ import { ContactComponent } from './views/contact/contact.component';
 import { ServicesComponent } from './views/services/services.component';
 
 const routes: Routes = [
-    {
-        path: '', component: HomeComponent,
-        /*data: { transparent: false }*/
-    },
+    { path: '', component: HomeComponent },
     { path: 'shop', component: ShopComponent },
     { path: 'about', component: AboutComponent, },
     { path: 'services', component: ServicesComponent },
@@ -25,7 +22,6 @@ const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard] },
     { path: '404', component: PageNotFoundComponent },
-
     {
         path: '', canActivate: [AuthGuard], loadChildren: () => {
             return import('./views/profile/profile.module').then(m => m.ProfileModule)

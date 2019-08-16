@@ -22,21 +22,21 @@ export class ProfileAccountComponent implements OnInit {
         private userService: UserService,
         private auth: AuthService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.auth.me().subscribe(customer => {
             this.form = new FormGroup({
-                id: new FormControl(customer.id, [Validators.required]),
-                name: new FormControl(customer.name, [Validators.required]),
-                surnames: new FormControl(customer.surnames, [Validators.required]),
-                document_id: new FormControl(customer.document_id, [Validators.required]),
-                document_number: new FormControl(customer.document_number, [Validators.required]),
-                phone: new FormControl(customer.phone, [Validators.required]),
+                id: new FormControl(customer.id, Validators.required),
+                name: new FormControl(customer.name, Validators.required),
+                surnames: new FormControl(customer.surnames, Validators.required),
+                document_id: new FormControl(customer.document_id, Validators.required),
+                document_number: new FormControl(customer.document_number, [Validators.required,Validators.pattern('^[0-9]*$')]),
+                phone: new FormControl(customer.phone, [Validators.required,Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')])
             });
         });
         this.documents = this.document.index();
     }
 
-    edit() {
+    edit(): void {
         this.userService.edit(this.form.value).subscribe(() => {
             this.snackBar.open('Su información ha sido actualizado', 'Ok', { duration: 5000 });
         });
