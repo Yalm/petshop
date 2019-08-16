@@ -8,8 +8,6 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "build:admin": "ng build admin --prod --output-path=dist",
-        "build:client": "ng build petshop --prod --output-path=dist",
         "deploy:client": "ng build petshop --prod && firebase deploy --only hosting:client",
         "deploy:admin": "ng build admin --prod && firebase deploy --only hosting:admin",
         "build-all": "ng build admin --prod && ng build petshop --prod && firebase deploy"
