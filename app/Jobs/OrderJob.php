@@ -10,15 +10,17 @@ use App\Payment;
 class OrderJob extends Job
 {
     protected $data;
+    protected $customer;
     protected $plus_info;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Array $data)
+    public function __construct(array $data)
     {
         $this->data = $data;
+        $this->customer = $data['customer'];
         if (array_key_exists('plus_info', $this->data)) {
             $this->plus_info = $this->data['plus_info'];
         }
@@ -49,7 +51,7 @@ class OrderJob extends Job
 
             $order = Order::create([
                 'state_id' => 5,
-                'customer_id' => $this->data['customer_id'],
+                'customer_id' => $this->customer->id,
                 'plus_info' => $this->plus_info,
                 'error_log' => $log->user_message
             ]);
@@ -67,7 +69,7 @@ class OrderJob extends Job
         }
 
         $order = Order::create([
-            'customer_id' => $this->data['customer_id'],
+            'customer_id' => $this->customer->id,
             'plus_info' => $this->plus_info,
             'state_id' => 4
         ]);
@@ -83,6 +85,8 @@ class OrderJob extends Job
             $product->decrement('stock', $product->quantity);
             $order->products()->attach($product->id, ['quantity' => $product->quantity]);
         }
+
+        $this->customer->sendOrderNotification($order);
     }
 
     protected function getProducts()

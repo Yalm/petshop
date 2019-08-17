@@ -65,7 +65,7 @@ class OrderController extends Controller
             'items.*.id' => 'required|numeric',
             'items.*.quantity' => 'required|numeric'
         ]);
-        $request->merge(['customer_id' => Auth::user()->getJWTIdentifier()]);
+        $request->merge(['customer' => Auth::user()]);
 
         dispatch(new OrderJob($request->all()));
 

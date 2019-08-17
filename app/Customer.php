@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\CustomerResetPasswordNotification;
 use App\Notifications\CustomerVerifyEmailNotification;
+use App\Notifications\CustomerOrderNotification;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Auth\MustVerifyEmail;
@@ -61,6 +62,11 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
     public function sendEmailVerificationNotification()
     {
         $this->notify(new CustomerVerifyEmailNotification());
+    }
+
+    public function sendOrderNotification($order)
+    {
+        $this->notify(new CustomerOrderNotification($order));
     }
 
     public function orders()
