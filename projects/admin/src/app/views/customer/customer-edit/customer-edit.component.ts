@@ -6,7 +6,6 @@ import { DocumentService } from 'src/app/services/identification-document/identi
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../../services/customer/customer.service';
-import { switchMap } from 'rxjs/operators';
 import { Order } from 'src/app/models/Order.model';
 
 @Component({

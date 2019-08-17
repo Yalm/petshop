@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ResetComponent } from './reset/reset.component';
 import { EmailComponent } from './email/email.component';
 import { SharedModule } from 'src/app/modules/shared.module';
+import { MatInputModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { SharedModule } from 'src/app/modules/shared.module';
     ],
     imports: [
         CommonModule,
+        MatInputModule,
         RouterModule.forChild(AuthRoutingModule),
         SharedModule
     ]

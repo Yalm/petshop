@@ -1,4 +1,4 @@
-<nav class="header-section1 bg-primary pb-3 h-100 pt-3" [class.d-none]="transparent">
+<nav class="header-section1 bg-primary pb-3 h-100 pt-3">
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
@@ -21,7 +21,7 @@
         </li>
     </ul>
 </nav>
-<nav class="header-section2" [class.transparent]="transparent">
+<nav class="header-section2">
     <ul class="menu-header2 d-flex align-items-center list-unstyled container mb-0">
         <li class="logo px-3">
             <a routerLink="/"><img width="125" height="55" src="assets/img/logo.png"  alt="logo"></a>
@@ -50,7 +50,7 @@
                         class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
                 </ng-container>
             </a>
-            <span class="icon_search-he" [className]="transparent ? 'pl-2 c-p' : 'd-md-none'">
+            <span class="icon_search-he d-md-none">
                 <svg (click)="searchActive = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 20 20">
                     <path

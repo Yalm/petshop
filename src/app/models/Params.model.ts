@@ -3,12 +3,13 @@ import { Params } from '@angular/router';
 export class PetParams {
 
     params: Param[];
-    constructor(private initData: { params: Params, filters?: string | string[] }) {
-        this.params = Object.keys(this.initData.params)
-            .reduce((data, param) => {
+    constructor(private initData: { params: Params, only: string[] }) {
+        this.params = initData.only.reduce((data, param) => {
+            if (this.initData.params[param]) {
                 data.push({ key: param, value: this.initData.params[param] });
-                return data;
-            }, []);
+            }
+            return data;
+        }, []);
     }
 
 

@@ -39,7 +39,7 @@ export class ShopComponent implements OnInit {
         this.colors$ = this.colorService.index();
 
         this.filters$ = this.route.queryParams.pipe(
-            map(params => new PetParams({ params }))
+            map(params => new PetParams({ params, only: ['category', 'color','search'] }))
         );
     }
 

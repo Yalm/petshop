@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     }
 
     register(): void {
-        this.auth.register(this.form.value).subscribe(response => {
+        this.auth.register(this.form.value).subscribe(() => {
             this.sendEmailVerify = true;
         }, response => {
             this.errorsShow(response.error);
