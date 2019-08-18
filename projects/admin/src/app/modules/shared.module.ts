@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../modules/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { InvalidMessageDirective } from 'src/app/directives/invalid-message/invalid-message.directive';
+import { InvalidMessageDirective } from '../directives/invalid-message/invalid-message.directive';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
 import { UploadComponent } from '../components/upload/upload.component';
@@ -34,7 +34,7 @@ import { LoaderComponent } from '../components/loader/loader.component';
         BreadcrumbComponent,
         UploadComponent,
         LoaderDirective,
-        LoaderComponent,
+        LoaderComponent
     ],
     entryComponents: [
         LoaderComponent,

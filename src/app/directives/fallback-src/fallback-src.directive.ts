@@ -16,5 +16,4 @@ export class FallbackSrcDirective {
     updateUrl() {
         this.src = this.default;
     }
-
 }

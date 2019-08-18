@@ -14,7 +14,7 @@ export class InvalidMessageDirective implements OnInit, OnDestroy {
 
     constructor(
         private _fg: ControlContainer,
-        private _el: ElementRef,
+        private _el: ElementRef
     ) { }
 
     ngOnInit() {
@@ -48,5 +48,4 @@ export class InvalidMessageDirective implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.controlSubscription.unsubscribe();
     }
-
 }

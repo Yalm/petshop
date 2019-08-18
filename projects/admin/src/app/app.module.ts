@@ -27,7 +27,7 @@ import { EmailComponent } from './views/auth/email/email.component';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ApiInterceptor } from './interceptors/api.interceptor';
-import { FallbackSrcDirective } from 'src/app/directives/fallback-src/fallback-src.directive';
+import { FallbackSrcDirective } from './directives/fallback-src/fallback-src.directive';
 
 @NgModule({
     declarations: [
