@@ -6,8 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-email-verify',
-    templateUrl: './email-verify.component.html',
-    styleUrls: ['./email-verify.component.sass']
+    templateUrl: './email-verify.component.html'
 })
 export class EmailVerifyComponent implements OnInit {
     form: FormGroup;
