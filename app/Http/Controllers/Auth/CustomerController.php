@@ -13,7 +13,7 @@ class CustomerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:customer', ['except' => ['social', 'login', 'register']]);
+        $this->middleware('auth:customer', ['except' => ['social', 'login', 'register', 'sendEmailVerification']]);
     }
 
     public function login(Request $request)
@@ -89,7 +89,21 @@ class CustomerController extends Controller
         Auth::user()->update([
             'email_verified_at' => date('Y-m-d H:i:s')
         ]);
+
         Auth::logout();
+        return response()->json(true);
+    }
+
+    public function sendEmailVerification(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|string|email|max:191|exists:customers,email'
+        ]);
+
+        $customer = Customer::where('email', $request->input('email'))->first();
+        if (!$customer->email_verified_at) {
+            $customer->sendEmailVerificationNotification();
+        }
         return response()->json(true);
     }
 
