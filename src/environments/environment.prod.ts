@@ -3,7 +3,7 @@ export const environment = {
     img_default: 'https://i.stack.imgur.com/l60Hf.png',
     cuqli: {
         public_key: 'pk_test_3h54x8PMEbZy9YxS',
-        logo: 'assets/img/logo.png'
+        logo: 'assets/img/logo-header.png'
     },
     apiUrl: 'https://petshopj.herokuapp.com/api',
     providers: {
