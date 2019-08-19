@@ -42,6 +42,8 @@
                     <mat-error appInvalidMessage="email"></mat-error>
                 </mat-form-field>
 
+                <a routerLink="/password/email" class="text-decoration-none text-right w-100 d-block">¿Olvidaste tu
+                    contraseña?</a>
                 <mat-form-field class="w-100 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
                     <mat-label>Constraseña</mat-label>
                     <input type="password" matInput #password maxlength="191" formControlName="password"
@@ -51,10 +53,12 @@
                 </mat-form-field>
 
                 <button type="submit" [disabled]="form.invalid"
-                    class="button-petshop text-center text-white position-relative w-100">Iniciar Sesión</button>
-                <div class="elements text-right pt-3 text-primary">
-                    <a routerLink="/password/email" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-                </div>
+                    class="button-petshop text-center text-white position-relative w-100 mb-3">Iniciar Sesión</button>
+                <span>
+                    ¿Todavía no has recibido el correo electrónico de confirmación?
+                    <a routerLink="/confirmation/new" class="text-decoration-none"> Vuelva a enviar el correo
+                        electrónico </a>
+                </span>
             </form>
         </div>
     </div>

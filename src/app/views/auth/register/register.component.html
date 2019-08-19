@@ -28,7 +28,7 @@
                 <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
                     <mat-label>Constraseña</mat-label>
                     <input type="password" matInput #password maxlength="191" formControlName="password"
-                        placeholder="Contraseña" name="email" required>
+                        placeholder="Contraseña" name="password" required>
                     <mat-hint align="end">{{password.value?.length || 0}}/191</mat-hint>
                     <mat-error appInvalidMessage="password"></mat-error>
                 </mat-form-field>
@@ -78,7 +78,7 @@
                 <img src="assets/svg/email.svg" alt="email" class="img-fluid">
                 <h2>Verifique su dirección de correo electrónico</h2>
                 <p>Antes de continuar, consulte su correo electrónico para ver un enlace de verificación.</p>
-                <p>Si no ha recibido el correo electrónico, <a routerLink="verification/resend">haga clic aquí
+                <p>Si no ha recibido el correo electrónico, <a routerLink="/confirmation/new">haga clic aquí
                         para
                         solicitar otro.</a></p>
             </div>
