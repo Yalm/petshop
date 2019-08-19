@@ -4,6 +4,7 @@ import { Category } from 'src/app/models/Category.model';
 import { MatSnackBar } from '@angular/material';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-category-create',
@@ -28,8 +29,12 @@ export class CategoryCreateComponent implements OnInit {
 
     store() {
         this.categoryService.store(this.form.value).subscribe(() => {
-            this.snackBar.open('Categoría creada.', 'OK', { duration: 5000 });
+            this.snackBar.open('Categoría creada.', 'OK', { duration: 4000 });
             this.form.reset();
+        }, (error: HttpErrorResponse) => {
+            if (error.status == 422) {
+                this.form.get('name').setErrors({ 'unique': true });
+            }
         });
     }
 }

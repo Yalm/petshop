@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-category-edit',
@@ -60,6 +61,10 @@ export class CategoryEditComponent implements OnInit {
         }
         this.categoryService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Categoría actualizada.', 'OK', { duration: 5000 });
+        }, (error: HttpErrorResponse) => {
+            if (error.status == 422) {
+                this.form.get('name').setErrors({ 'unique': true });
+            }
         });
     }
 }
