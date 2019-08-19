@@ -1,0 +1,65 @@
+.fixed-top::before
+    background-color: #ffffff
+    opacity: 0.6
+    content: ''
+    position: absolute
+    width: 100%
+    height: 100%
+.cat
+    max-width: 20em
+    &::before
+        content: ''
+        display: block
+        padding-bottom: 100%
+
+%cat-img
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    animation: rotating 2.79s cubic-bezier(.65, .54, .12, .93) infinite
+    &::before
+        content: ''
+        position: absolute
+        width: 50%
+        height: 50%
+        background-size: 200%
+        background-repeat: no-repeat
+        background-image: url(/assets/img/load.png)
+
+.cat__head
+    @extend %cat-img
+    &::before
+        top: 0
+        right: 0
+        background-position: 100% 0%
+        transform-origin: 0% 100%
+        transform: rotate(90deg)
+
+.cat__tail
+    @extend %cat-img
+    animation-delay: .2s
+    &::before
+        left: 0
+        bottom: 0
+        background-position: 0% 100%
+        transform-origin: 100% 0%
+        transform: rotate(-30deg)
+
+.cat__body
+    @extend %cat-img
+    animation-delay: .1s
+    &:nth-of-type(2)
+        animation-delay: .2s
+    &::before
+        right: 0
+        bottom: 0
+        background-position: 100% 100%
+        transform-origin: 0% 0%
+
+@keyframes rotating
+    from
+        transform: rotate(720deg)
+    to
+        transform: none

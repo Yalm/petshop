@@ -58,7 +58,6 @@ import {
         MatAutocompleteModule,
         MatSlideToggleModule,
         MatListModule
-    ],
-    declarations: [],
+    ]
 })
 export class MaterialModule { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Token } from './token.model';
+import { LoaderService } from '../loader/loader.service';
 declare const Culqi: any;
 
 @Injectable({
@@ -17,7 +18,8 @@ export class CulqiService {
         newValue: { id: null },
     }
 
-    constructor() {
+    constructor(private load: LoaderService) {
+        this.initCulqi();
         (<any>window).culqi = () => {
             if (Culqi.token) {
                 this.tokenChange.newValue = Culqi.token;
@@ -29,46 +31,44 @@ export class CulqiService {
         }
     }
 
-    public open(settings: { amount: number, title: string, currency: string, description: string }) {
+    open(settings: { amount: number, title: string, currency: string, description: string }) {
         settings.amount = (settings.amount * 100).toFixed(2) as any;
         Culqi.settings(settings);
         Culqi.open();
     }
 
-    initCulqi(data?: { publicKey: string }): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            let c: number = 0;
-            if (!document.getElementById('culqui-lib')) {
-                const culqiScript = document.createElement('script');
-                culqiScript.setAttribute('src', 'https://checkout.culqi.com/js/v3');
-                culqiScript.setAttribute('id', 'culqui-lib');
-                document.body.appendChild(culqiScript);
-            } else {
-                this.setOptions(data ? data.publicKey : null);
-                resolve(true);
+    private initCulqi(options?: { publicKey: string }) {
+        this.load.show();
+        let c: number = 0;
+        if (!document.getElementById('culqui-lib')) {
+            const culqiScript = document.createElement('script');
+            culqiScript.setAttribute('src', 'https://checkout.culqi.com/js/v3');
+            culqiScript.setAttribute('id', 'culqui-lib');
+            document.body.appendChild(culqiScript);
+        } else {
+            this.setOptions(options);
+            this.load.hide();
+        }
+        const checkCulqi = setInterval(() => {
+            c++;
+            if (c > 10) {
+                clearInterval(checkCulqi);
+                this.load.hide();
             }
-            const checkCulqi = setInterval(() => {
-                c++;
-                if (c > 10) {
-                    clearInterval(checkCulqi);
-                    reject('No init');
-                }
-                if ((<any>window).Culqi) {
-                    clearInterval(checkCulqi);
-                    this.setOptions(data ? data.publicKey : null);
-                    resolve(true);
-                }
-            }, 1000);
-        });
+            if ((<any>window).Culqi) {
+                clearInterval(checkCulqi);
+                this.setOptions(options);
+                this.load.hide();
+            }
+        }, 1000);
     }
 
-    private setOptions(publicKey?: string): void {
-        Culqi.publicKey = publicKey || environment.cuqli.public_key;
+    private setOptions(options?: { publicKey: string }): void {
+        Culqi.publicKey = options ? options.publicKey : false || environment.cuqli.public_key;
         Culqi.options({
             style: {
-                logo: `${window.location.origin}/${environment.cuqli.logo}`,
+                logo: `${window.location.origin}/${environment.cuqli.logo}`
             }
         });
     }
-
 }

@@ -10,7 +10,7 @@ export class StateService {
 
     constructor(private http: HttpClient) { }
 
-    public index(): Observable<State[]> {
+    index(): Observable<State[]> {
         return this.http.get<State[]>('states');
     }
 }
