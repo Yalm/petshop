@@ -25,7 +25,7 @@ class Product extends Model
 
     public function getCoverAttribute($value)
     {
-        return $value;
+        return Storage::url($value);
     }
 
     public function scopePrice($query, $min_price, $max_price)
