@@ -12,19 +12,19 @@ export class ProductService {
 
     constructor(private http: HttpClient) { }
 
-    public store(data: Product): Observable<Product> {
+    store(data: Product): Observable<Product> {
         return this.http.post<Product>('products', CreateFormData({ data }));
     }
 
-    public show(id: number): Observable<Product> {
+    show(id: number): Observable<Product> {
         return this.http.get<Product>(`products/${id}`);
     }
 
-    public update(data: Product): Observable<Product> {
+    update(data: Product): Observable<Product> {
         return this.http.post<Product>(`products/${data.id}`, CreateFormData({ data, update: true }));
     }
 
-    public count(): Observable<number> {
+    count(): Observable<number> {
         return this.http.get<number>('product/count');
     }
 }

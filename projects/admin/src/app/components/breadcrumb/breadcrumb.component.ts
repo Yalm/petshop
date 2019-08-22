@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivationEnd, Router, ActivationStart, NavigationStart } from '@angular/router';
+import { ActivationEnd, Router, ActivationStart } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { Breadcrumb } from './Breadcrumb.model';
 
@@ -26,12 +26,5 @@ export class BreadcrumbComponent {
         ).subscribe((data: Breadcrumb) => {
             this.data = data;
         })
-
-        // this.router.events.pipe(
-        //     filter(e => e instanceof NavigationStart),
-        //     map(() => this.router.getCurrentNavigation().extras.state)
-        // ).subscribe((data: Breadcrumb) => {
-        //     console.log(data);
-        // })
     }
 }

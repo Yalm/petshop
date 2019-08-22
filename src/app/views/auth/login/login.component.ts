@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-    public form: FormGroup;
+    form: FormGroup;
     private returnUrl: string;
     verify: { isVerify: boolean };
 
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
             password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
         });
 
-        if (window.history.state.hasOwnProperty('verify')) {
-            this.verify = { isVerify: window.history.state.verify };
+        if (this.route.snapshot.data.hasOwnProperty('verify')) {
+            this.verify = { isVerify: this.route.snapshot.data.verify };
         }
     }
 

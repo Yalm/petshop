@@ -21,5 +21,4 @@ export class BreadcrumbComponent {
             return this.sanitizer.bypassSecurityTrustStyle(`url(${this.image})`);
         }
     }
-
 }

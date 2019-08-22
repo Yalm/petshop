@@ -25,6 +25,7 @@ import { ServicesComponent } from './views/services/services.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
@@ -53,7 +54,8 @@ import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
         AboutComponent,
         ServicesComponent,
         ContactComponent,
-        MegaMenuComponent
+        MegaMenuComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserAnimationsModule,

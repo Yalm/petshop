@@ -24,7 +24,6 @@ import {
         MatPaginatorModule,
         MatExpansionModule,
         MatChipsModule
-    ],
-    declarations: [],
+    ]
 })
 export class MaterialModule { }

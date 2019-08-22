@@ -26,8 +26,7 @@ export class ProfileComponent implements OnInit {
             id: new FormControl(this.user['sub'], Validators.required),
             name: new FormControl(this.user.name, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
             surnames: new FormControl(this.user.surnames, [Validators.required, Validators.maxLength(191), Validators.minLength(5)]),
-            email: new FormControl(this.user.email, [Validators.required, Validators.email]),
-            avatar: new FormControl()
+            email: new FormControl(this.user.email, [Validators.required, Validators.email])
         });
 
         this.secondFormGroup = new FormGroup({

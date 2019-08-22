@@ -1,109 +1,103 @@
 <mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
     <mat-card-content>
-        <mat-tab-group>
-
+        <mat-tab-group class="group-pet">
             <mat-tab label="Información basica *">
-                <div class="p-4">
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name"
-                            required>
-                        <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
-                        <mat-error appInvalidMessage="name"></mat-error>
-                    </mat-form-field>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput #name maxlength="191" formControlName="name" placeholder="Nombre" name="name"
+                        required>
+                    <mat-hint align="end">{{name.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="name"></mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
-                            name="surnames" required>
-                        <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
-                        <mat-error appInvalidMessage="surnames"></mat-error>
-                    </mat-form-field>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
+                        name="surnames" required>
+                    <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="surnames"></mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline">
-                        <mat-label>Tipo de documento</mat-label>
-                        <mat-select placeholder="Tipo de documento" formControlName="document_id">
-                            <mat-option *ngFor="let item of documents | async" [value]="item.id">{{item.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error appInvalidMessage="document_id"></mat-error>
-                    </mat-form-field>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline">
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-select placeholder="Tipo de documento" formControlName="document_id">
+                        <mat-option *ngFor="let item of documents | async" [value]="item.id">{{item.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error appInvalidMessage="document_id"></mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                        <mat-label>Numero de documento</mat-label>
-                        <input matInput #document_number maxlength="10" formControlName="document_number"
-                            placeholder="Numero de documento" name="document_number" required>
-                        <mat-hint align="end">{{document_number.value?.length || 0}}/10</mat-hint>
-                        <mat-error appInvalidMessage="document_number"></mat-error>
-                    </mat-form-field>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Numero de documento</mat-label>
+                    <input matInput #document_number maxlength="10" formControlName="document_number"
+                        placeholder="Numero de documento" name="document_number" required>
+                    <mat-hint align="end">{{document_number.value?.length || 0}}/10</mat-hint>
+                    <mat-error appInvalidMessage="document_number"></mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                        <mat-label>Telefono/Celular</mat-label>
-                        <input matInput #document_number maxlength="191" formControlName="phone"
-                            placeholder="Telefono/Celular" name="phone" required>
-                        <mat-hint align="end">{{document_number.value?.length || 0}}/20</mat-hint>
-                        <mat-error appInvalidMessage="phone"></mat-error>
-                    </mat-form-field>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Telefono/Celular</mat-label>
+                    <input matInput #document_number maxlength="191" formControlName="phone"
+                        placeholder="Telefono/Celular" name="phone" required>
+                    <mat-hint align="end">{{document_number.value?.length || 0}}/20</mat-hint>
+                    <mat-error appInvalidMessage="phone"></mat-error>
+                </mat-form-field>
 
-                    <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
-                        <mat-label>Telefono/Celular</mat-label>
-                        <input type="email" matInput #email maxlength="191" formControlName="email" placeholder="Correo"
-                            name="phone" required>
-                        <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
-                        <mat-error appInvalidMessage="email"></mat-error>
-                    </mat-form-field>
-                </div>
+                <mat-form-field class="col-md-6 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                    <mat-label>Telefono/Celular</mat-label>
+                    <input type="email" matInput #email maxlength="191" formControlName="email" placeholder="Correo"
+                        name="phone" required>
+                    <mat-hint align="end">{{email.value?.length || 0}}/191</mat-hint>
+                    <mat-error appInvalidMessage="email"></mat-error>
+                </mat-form-field>
             </mat-tab>
 
-
             <mat-tab label="Pedidos">
-                <div class="p-4">
-                    <table mat-table [dataSource]="dataSource" class="w-100 table-petshop">
-                        <!-- Id Column -->
-                        <ng-container matColumnDef="id">
-                            <th mat-header-cell *matHeaderCellDef>#</th>
-                            <td mat-cell *matCellDef="let element">
-                                <a [routerLink]="['/orders',element.id,'edit']"
-                                    [state]="{ back:'/customers/' + form.get('id').value + '/edit' }"
-                                    mat-line>{{element.id}}</a>
-                            </td>
-                        </ng-container>
+                <table mat-table [dataSource]="dataSource" class="w-100 table-petshop">
+                    <!-- Id Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef>#</th>
+                        <td mat-cell *matCellDef="let element">
+                            <a [routerLink]="['/orders',element.id,'edit']"
+                                [state]="{ back:'/customers/' + form.get('id').value + '/edit' }"
+                                mat-line>{{element.id}}</a>
+                        </td>
+                    </ng-container>
 
-                        <!-- amount Column -->
-                        <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef>Monto</th>
-                            <td mat-cell *matCellDef="let element">S/ {{element.payment?.amount || 0 | number: '1.2-2'}}
-                            </td>
-                        </ng-container>
+                    <!-- amount Column -->
+                    <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef>Monto</th>
+                        <td mat-cell *matCellDef="let element">S/ {{element.payment?.amount || 0 | number: '1.2-2'}}
+                        </td>
+                    </ng-container>
 
-                        <!-- payment_type Column -->
-                        <ng-container matColumnDef="payment_type">
-                            <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell">Tipo de pago</th>
-                            <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">
-                                {{element.payment?.payment_type.name || 'Sin pago'}} </td>
-                        </ng-container>
+                    <!-- payment_type Column -->
+                    <ng-container matColumnDef="payment_type">
+                        <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell">Tipo de pago</th>
+                        <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">
+                            {{element.payment?.payment_type.name || 'Sin pago'}} </td>
+                    </ng-container>
 
-                        <!-- state Column -->
-                        <ng-container matColumnDef="state">
-                            <th mat-header-cell *matHeaderCellDef>Estado</th>
-                            <td mat-cell *matCellDef="let element"> {{element.state.name}} </td>
-                        </ng-container>
+                    <!-- state Column -->
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let element"> {{element.state.name}} </td>
+                    </ng-container>
 
-                        <!-- Edit Column -->
-                        <ng-container matColumnDef="edit">
-                            <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell"></th>
-                            <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">
-                                <a mat-icon-button color="primary" matTooltip="Editar"
-                                    [routerLink]="['/orders',element.id,'edit']">
-                                    <mat-icon aria-label="Editar">edit</mat-icon>
-                                </a>
-                            </td>
-                        </ng-container>
+                    <!-- Edit Column -->
+                    <ng-container matColumnDef="edit">
+                        <th mat-header-cell *matHeaderCellDef class="d-none d-sm-table-cell"></th>
+                        <td mat-cell *matCellDef="let element" class="d-none d-sm-table-cell">
+                            <a mat-icon-button color="primary" matTooltip="Editar"
+                                [routerLink]="['/orders',element.id,'edit']">
+                                <mat-icon aria-label="Editar">edit</mat-icon>
+                            </a>
+                        </td>
+                    </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
             </mat-tab>
         </mat-tab-group>
     </mat-card-content>

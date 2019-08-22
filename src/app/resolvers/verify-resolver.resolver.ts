@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, UrlTree, Router } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthService } from '../views/auth/services/auth/auth.service';
 import { Observable, of } from 'rxjs';
-import { map, catchError, finalize } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -13,13 +13,7 @@ export class VerifyResolver implements Resolve<any> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         return this.auth.verifyEmail(route.paramMap.get('token')).pipe(
-            finalize(() =>
-                this.router.createUrlTree(['/login'], { state: { verify: true } })
-            ),
-            catchError(() => {
-                this.router.navigate(['/login'], { state: { verify: false } })
-                return of();
-            })
+            catchError(() => of(false))
         );
     }
 }

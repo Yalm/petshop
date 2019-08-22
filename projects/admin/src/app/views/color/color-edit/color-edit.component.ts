@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Color } from 'src/app/models/Color.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ColorService } from 'src/app/services/color/color.service';
@@ -16,7 +16,6 @@ export class ColorEditComponent implements OnInit {
     constructor(
         private dialogRef: MatDialogRef<ColorEditComponent>,
         private colorService: ColorService,
-        private snackBar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public data: Color) { }
 
     onNoClick(): void {
@@ -35,12 +34,7 @@ export class ColorEditComponent implements OnInit {
             () => {
                 this.dialogRef.close(this.form.value);
             }, (error: HttpErrorResponse) => {
-                if (error.status == 500) {
-                    this.snackBar.open('Oops, ocurrio un error.', '', {
-                        duration: 5000,
-                        panelClass: ['bg-danger', 'text-white']
-                    });
-                } else if (error.status == 422) {
+                if (error.status == 422) {
                     this.form.get('name').setErrors({ 'unique': true });
                 }
             }

@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ResetComponent } from './reset/reset.component';
 import { EmailComponent } from './email/email.component';
+import { EmailVerifyComponent } from './email-verify/email-verify.component';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { MatInputModule } from '@angular/material';
 
@@ -16,7 +17,8 @@ import { MatInputModule } from '@angular/material';
         RegisterComponent,
         LoginComponent,
         ResetComponent,
-        EmailComponent
+        EmailComponent,
+        EmailVerifyComponent
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,5 @@
 <ng-container *ngIf="product$ | async as product">
-    <div class="bread-crumb d-md-block d-none">
+    <div class="bread-crumb">
         <ul class="d-flex container list-unstyled">
             <li><a routerLink="/" class="text-decoration-none">Inicio</a></li>
             <li>
@@ -11,7 +11,7 @@
     </div>
     <div class="container pt-4">
         <div class="row justify-content-center">
-            <div class="col-md-6 pb-3">
+            <div class="col-md-6 pb-3 d-flex justify-content-center">
                 <img [src]="product.cover" [alt]="product.name" class="img-fluid">
             </div>
             <div class="col-md-6">

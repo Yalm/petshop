@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ColorService } from 'src/app/services/color/color.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,7 +14,6 @@ export class ColorCreateComponent implements OnInit {
 
     constructor(
         private colorService: ColorService,
-        private snackBar: MatSnackBar,
         public dialogRef: MatDialogRef<ColorCreateComponent>) { }
 
     onNoClick(): void {

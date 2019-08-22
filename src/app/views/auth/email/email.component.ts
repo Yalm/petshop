@@ -5,8 +5,7 @@ import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-email',
-    templateUrl: './email.component.html',
-    styleUrls: ['./email.component.sass']
+    templateUrl: './email.component.html'
 })
 export class EmailComponent implements OnInit {
     form: FormGroup;

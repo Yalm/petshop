@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
     styleUrls: ['./checkout.component.sass']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-    loading: boolean;
-    order: any;
+
+    order: { items: any[], total: number };
     form: FormGroup;
     subscription: Subscription;
 
@@ -24,13 +24,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.form = new FormGroup({
             culqi_token: new FormControl(null),
             email: new FormControl(null, Validators.email),
-            plus_info: new FormControl({ value: null, disabled: this.loading }, [Validators.minLength(3), Validators.maxLength(250)]),
+            plus_info: new FormControl(null, [Validators.minLength(3), Validators.maxLength(250)]),
             method: new FormControl(null, Validators.required)
-        });
-
-        this.loading = true;
-        this.culqi.initCulqi().then(() => {
-            this.loading = false;
         });
 
         this.subscription = this.culqi.token.subscribe(token => {
@@ -50,14 +45,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     private checkout() {
-        this.loading = true;
-        this.orderService.store(this.form.value).subscribe(data => {
-            this.loading = false;
-            this.order = data;
-            this.order.items = this.shoppingCartService.cart_init.items;
-            this.order.total = this.shoppingCartService.cart_init.totalCart();
+        this.orderService.store(this.form.value).subscribe(() => {
+            this.order = {
+                items: this.shoppingCartService.cart_init.items,
+                total: this.shoppingCartService.cart_init.totalCart()
+            }
             this.shoppingCartService.reset();
-        }, () => this.loading = false);
+        });
     }
 
     ngOnDestroy() {
