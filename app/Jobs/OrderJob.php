@@ -118,7 +118,7 @@ class OrderJob extends Job
                     'client_details' => array(
                         'first_name'=> $this->customer->name,
                         'last_name'=> $this->customer->surnames,
-                        'email' => 'renzomanuelc@gmail.com',
+                        'email' => $this->customer->email,
                         'phone_number'=> $this->customer->phone
                     ),
                     'confirm' => true,
