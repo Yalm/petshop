@@ -4,6 +4,7 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { CulqiService } from 'src/app/services/culqi/culqi.service';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-checkout',
@@ -18,6 +19,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     constructor(public shoppingCartService: ShoppingCartService,
         private culqi: CulqiService,
+        private snackBar: MatSnackBar,
         private orderService: OrderService) { }
 
     ngOnInit() {
@@ -29,19 +31,30 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
 
         this.subscription = this.culqi.token.subscribe(token => {
-            this.form.get('culqi_token').setValue(token.id);
-            this.form.get('email').setValue(token.email);
-            this.checkout();
+            if (token.id) {
+                this.form.get('culqi_token').setValue(token.id);
+                this.form.get('email').setValue(token.email);
+                this.checkout();
+            } else {
+                this.snackBar.open(token['user_message'], 'Ok', {
+                    duration: 5000,
+                    panelClass: ['bg-danger', 'text-white']
+                });
+            }
         });
     }
 
     openCulqui(total: number) {
-        this.culqi.open({
-            amount: total,
-            title: 'Pet Shop',
-            currency: 'PEN',
-            description: 'Petshop Veterinaria Huancayo'
-        });
+        if (this.form.get('method').value == 'credit_card') {
+            this.culqi.open({
+                amount: total,
+                title: 'Pet Shop',
+                currency: 'PEN',
+                description: 'Petshop Veterinaria Huancayo'
+            });
+        } else {
+            this.checkout();
+        }
     }
 
     private checkout() {

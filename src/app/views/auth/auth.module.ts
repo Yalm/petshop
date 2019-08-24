@@ -11,6 +11,7 @@ import { EmailComponent } from './email/email.component';
 import { EmailVerifyComponent } from './email-verify/email-verify.component';
 import { SharedModule } from 'src/app/modules/shared.module';
 import { MatInputModule } from '@angular/material';
+import { CompleteInfoComponent } from './complete-info/complete-info.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { MatInputModule } from '@angular/material';
         LoginComponent,
         ResetComponent,
         EmailComponent,
-        EmailVerifyComponent
+        EmailVerifyComponent,
+        CompleteInfoComponent
     ],
     imports: [
         CommonModule,

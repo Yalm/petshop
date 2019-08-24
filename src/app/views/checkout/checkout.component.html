@@ -42,6 +42,13 @@
                         Mastercard y
                         más!</label>
                 </div>
+                <div class="custom-control custom-radio mt-3">
+                    <input formControlName="method" type="radio" class="custom-control-input" id="customCheck2"
+                        value="bank_deposit">
+                    <label class="custom-control-label" for="customCheck2">Banca por Internet o Dépositos
+                        Bancarios</label>
+                </div>
+
                 <hr>
                 <button type="submit" (click)="openCulqui(cart.totalCart())" [disabled]="form.invalid"
                     class="button-petshop text-center text-white position-relative w-100">Finalizar</button>
@@ -57,7 +64,8 @@
                     </li>
                     <li>
                         <span>Metodo de Pago:</span>
-                        <strong class="ml-2">Tarjeta de credito</strong>
+                        <strong class="ml-2">{{form.get('method').value == 'bank_deposit' ? 'Déposito
+                            Bancario':'Tarjeta de credito' }}</strong>
                     </li>
                 </ul>
                 <h3>Detalles del pedido</h3>
@@ -81,7 +89,8 @@
                         </tr>
                         <tr class="payment-method font-weight-bold">
                             <td>Metododo de Pago:</td>
-                            <td class="text-right">Tarjeta de credito</td>
+                            <td class="text-right">{{form.get('method').value == 'bank_deposit' ? 'Déposito
+                                Bancario':'Tarjeta de credito' }}</td>
                         </tr>
                         <tr class="order-total font-weight-bold">
                             <td>Total:</td>
