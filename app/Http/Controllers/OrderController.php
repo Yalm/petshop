@@ -6,6 +6,7 @@ use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\OrderJob;
+use Culqi\Culqi;
 
 class OrderController extends Controller
 {
@@ -58,8 +59,9 @@ class OrderController extends Controller
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
         $this->validate($request, [
-            'culqi_token' => 'required|string',
-            'email' => 'required|email',
+            'method' => 'required|in:credit_card,bank_deposit',
+            'culqi_token' => 'required_unless:method,bank_deposit|nullable|string',
+            'email' => 'required_unless:method,bank_deposit|nullable|email',
             'plus_info' => 'nullable|string|min:6',
             'items' => 'required',
             'items.*.id' => 'required|numeric',
@@ -86,5 +88,41 @@ class OrderController extends Controller
     {
         $orders = Order::count();
         return response()->json($orders);
+    }
+
+    public function statusChanged(Request $request)
+    {
+        $this->validate($request, [
+            'type' => 'required|in:order.status.changed',
+            'data' => 'required|json'
+        ]);
+
+        $data = json_decode($request->input('data'), true);
+
+        switch ($data['state']) {
+            case 'paid':
+                $order = Order::find($data['order_number'])->update([
+                    'state_id' => 4
+                ]);
+                foreach ($order->products as $product) {
+                    $product->decrement('stock', $product->pivot->quantity);
+                }
+                $order->payment()->update([
+                    'amount' => $data['amount'],
+                    'reference_code' => $data['id']
+                ]);
+                break;
+            case 'expired':
+                $order = Order::find($data['order_number'])->update([
+                    'state_id' => 8
+                ]);
+                break;
+            case 'deleted':
+                $order = Order::find($data['order_number'])->update([
+                    'state_id' => 1
+                ]);
+                break;
+        }
+        return response()->json(['response' => 'Webhook de Culqi recibido correctamente']);
     }
 }

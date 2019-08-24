@@ -64,9 +64,9 @@ class Customer extends Model implements JWTSubject, AuthenticatableContract, Aut
         $this->notify(new CustomerVerifyEmailNotification());
     }
 
-    public function sendOrderNotification($order)
+    public function sendOrderNotification($order,$method,$cip)
     {
-        $this->notify(new CustomerOrderNotification($order));
+        $this->notify(new CustomerOrderNotification($order,$method,$cip));
     }
 
     public function orders()

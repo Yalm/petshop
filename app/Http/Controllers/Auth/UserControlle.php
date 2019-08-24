@@ -39,7 +39,7 @@ class UserController extends Controller
         $request->merge(['code' => $request->input('oauthData.code')]);
 
         $this->validate($request, [
-            'provider' => 'required|ends_with:google',
+            'provider' => 'required|in:google',
             'code' => 'required'
         ]);
 

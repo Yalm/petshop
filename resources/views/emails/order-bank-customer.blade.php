@@ -1,7 +1,7 @@
 @component('mail::message')
-# Muchas Gracias
+# Solo nos falta tu pago
 
-Gracias por comprar en nuestra tienda. A continuación se muestra su recibo y enlace para ver su pedido.
+Gracias por compar en {{ config('app.name') }}.Recuerda que tienes 24 horas para pagar tu pedido con tu código de pago CIP: {{$cip}}
 
 @component('mail::table')
 | Producto      | Cantidad     | Precio  |

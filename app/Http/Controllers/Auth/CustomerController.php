@@ -57,7 +57,7 @@ class CustomerController extends Controller
         $request->merge(['code' => $request->input('oauthData.code')]);
 
         $this->validate($request, [
-            'provider' => 'required|ends_with:google',
+            'provider' => 'required|in:google',
             'code' => 'required'
         ]);
 
@@ -82,6 +82,17 @@ class CustomerController extends Controller
     public function me()
     {
         return response()->json(Auth::user());
+    }
+
+    public function complete()
+    {
+        $customer = Auth::user();
+
+        if($customer->surnames == null || $customer->phone == null)
+        {
+            return response()->json(false);
+        }
+        return response()->json(true);
     }
 
     public function verify()

@@ -43,7 +43,7 @@ class CustomerController extends Controller
                 'surnames' => 'max:191|string',
                 'document_id' => 'numeric|exists:documents,id',
                 'document_number' => 'numeric',
-                'phone' => 'numeric',
+                'phone' => 'string'
             ]);
             $customer = Auth::user()->update($request->only(['name', 'surnames', 'document_id', 'document_number','phone']));
             return response()->json($customer);

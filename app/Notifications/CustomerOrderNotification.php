@@ -11,14 +11,18 @@ class CustomerOrderNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     public $order;
+    public $method;
+    public $cip;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order,$method,$cip)
     {
         $this->order = $order;
+        $this->method = $method;
+        $this->cip = $cip;
     }
 
     /**
@@ -43,7 +47,8 @@ class CustomerOrderNotification extends Notification implements ShouldQueue
         return (new MailMessage)
                     ->from('ventas@petshop.com')
                     ->subject('Detalles de su pedido')
-                    ->markdown('emails.order-customer', ['order' => $this->order]);
+                    ->markdown($this->method == 'bank_deposit' ?  'emails.order-bank-customer':'emails.order-customer',
+                        ['order' => $this->order,'cip' => $this->cip]);
     }
 
     /**

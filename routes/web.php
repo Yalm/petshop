@@ -20,6 +20,7 @@ $router->group(['prefix' => 'api/auth/customer'], function () use ($router) {
     $router->get('logout', 'Auth\CustomerController@logout');
     $router->get('me', 'Auth\CustomerController@me');
     $router->get('refresh', 'Auth\CustomerController@refresh');
+    $router->get('complete', 'Auth\CustomerController@complete');
 
     $router->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     $router->post('password/reset', 'Auth\ResetPasswordController@reset');
@@ -63,6 +64,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('orders/{id}', 'OrderController@show');
     $router->put('orders/{id}', 'OrderController@update');
     $router->get('order/count', 'OrderController@count');
+    $router->post('order-status-changed', 'OrderController@statusChanged');
 
     $router->get('states', 'StateController@index');
 

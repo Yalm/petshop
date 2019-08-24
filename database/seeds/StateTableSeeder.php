@@ -35,5 +35,9 @@ class StateTableSeeder extends Seeder
         State::create([
             'name' => 'enviado'
         ]);
+
+        State::create([
+            'name' => 'expirado'
+        ]);
     }
 }
