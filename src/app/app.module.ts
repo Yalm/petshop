@@ -28,14 +28,14 @@ import { MegaMenuComponent } from './components/mega-menu/mega-menu.component';
 import { LoaderComponent } from './components/loader/loader.component';
 
 // importar locales
-import localeEsAr from '@angular/common/locales/es-AR';
+import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
-registerLocaleData(localeEsAr, 'es-PE');
+registerLocaleData(localeEsPe, 'es-PE');
 import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { MatPaginatorIntl } from '@angular/material';
-import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
+import { getDutchPaginatorIntl } from './shared/class/MatPaginatorIntlCustom';
 
 @NgModule({
     declarations: [
@@ -69,11 +69,11 @@ import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
     {
         provide: HTTP_INTERCEPTORS,
         useClass: ApiInterceptor,
-        multi: true,
+        multi: true
     },
     {
         provide: MatPaginatorIntl,
-        useClass: MatPaginatorIntlCustom
+        useValue: getDutchPaginatorIntl()
     }],
     bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Token } from './token.model';
+import { Token, OptionsCulqi } from './token.model';
 import { LoaderService } from '../loader/loader.service';
 declare const Culqi: any;
 
@@ -11,11 +11,11 @@ declare const Culqi: any;
 export class CulqiService {
 
     private subject = new Subject<Token>();
-    public token = this.subject.asObservable();
+    token = this.subject.asObservable();
 
     private tokenChange: any = {
         preventValue: { id: null },
-        newValue: { id: null },
+        newValue: { id: null }
     }
 
     constructor(private load: LoaderService) {
@@ -27,6 +27,8 @@ export class CulqiService {
                     this.tokenChange.preventValue = this.tokenChange.newValue;
                     this.subject.next(Culqi.token);
                 }
+            } else {
+                this.subject.next(Culqi.error);
             }
         }
     }
@@ -37,7 +39,7 @@ export class CulqiService {
         Culqi.open();
     }
 
-    private initCulqi(options?: { publicKey: string }) {
+    private initCulqi(key?: string, options?: OptionsCulqi) {
         this.load.show();
         let c: number = 0;
         if (!document.getElementById('culqui-lib')) {
@@ -46,7 +48,7 @@ export class CulqiService {
             culqiScript.setAttribute('id', 'culqui-lib');
             document.body.appendChild(culqiScript);
         } else {
-            this.setOptions(options);
+            this.setOptions(key, options);
             this.load.hide();
         }
         const checkCulqi = setInterval(() => {
@@ -57,17 +59,20 @@ export class CulqiService {
             }
             if ((<any>window).Culqi) {
                 clearInterval(checkCulqi);
-                this.setOptions(options);
+                this.setOptions(key, options);
                 this.load.hide();
             }
         }, 1000);
     }
 
-    private setOptions(options?: { publicKey: string }): void {
-        Culqi.publicKey = options ? options.publicKey : false || environment.cuqli.public_key;
-        Culqi.options({
+    private setOptions(key: string, options?: OptionsCulqi): void {
+        Culqi.publicKey = key || environment.cuqli.public_key;
+        Culqi.options(options || {
             style: {
-                logo: `${window.location.origin}/${environment.cuqli.logo}`
+                logo: `${window.location.origin}/${environment.cuqli.logo}`,
+                style: {
+                    maincolor: '#da573e'
+                }
             }
         });
     }

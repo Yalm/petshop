@@ -42,3 +42,17 @@ interface client {
 interface metadata {
     dni: string,
 }
+
+export interface OptionsCulqi {
+    lang?: 'auto' | 'en' | 'es',
+    modal?: boolean,
+    installments?: boolean,
+    customButton?: string,
+    style?: {
+        logo?: string,
+        maincolor?: string,
+        buttontext?: string,
+        maintext?: string,
+        desctext?: string
+    }
+}

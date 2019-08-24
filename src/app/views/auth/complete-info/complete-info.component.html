@@ -1,0 +1,33 @@
+<div class="container pt-md-5 pb-5">
+    <div class="row d-flex justify-content-center text-center pt-5 pb-2">
+        <div class="col-lg-5 col-md-7">
+            <ng-container *ngIf="form">
+                <form class="form-row mt-4 mt-md-0" [formGroup]="form" (ngSubmit)="edit()">
+                    <h2 class="h2 col-12 border-bottom pb-2 mb-4">Complete tu información personal para continuar con la
+                        compra.</h2>
+
+                    <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput #surnames maxlength="191" formControlName="surnames" placeholder="Nombre"
+                            name="surnames" required>
+                        <mat-hint align="end">{{surnames.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="surnames"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-12 mb-2" appearance="outline" hintLabel="Max 20 caracteres">
+                        <mat-label>Telefono/Celular</mat-label>
+                        <input matInput #phone maxlength="20" formControlName="phone" placeholder="Telefono/Celular"
+                            name="phone" required>
+                        <mat-hint align="end">{{phone.value?.length || 0}}/20</mat-hint>
+                        <mat-error appInvalidMessage="phone"></mat-error>
+                    </mat-form-field>
+
+                    <div class="form-group col-md-12 d-flex justify-content-end">
+                        <button type="submit"
+                            class="button-petshop text-center text-white position-relative w-100">Guardar</button>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
+    </div>
+</div>

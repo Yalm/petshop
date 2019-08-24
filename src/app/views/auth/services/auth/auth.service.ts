@@ -72,6 +72,10 @@ export class AuthService extends ng2Auth {
         return this.http.get<Customer>('auth/customer/me');
     }
 
+    complete(): Observable<boolean> {
+        return this.http.get<boolean>('auth/customer/complete');
+    }
+
     sendEmailVerification(data: { email: string }): Observable<boolean> {
         return this.http.post<boolean>('auth/customer/send-email-verify', data);
     }

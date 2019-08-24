@@ -11,6 +11,7 @@ import { AuthGuard } from './views/auth/guards/auth/auth.guard';
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { ServicesComponent } from './views/services/services.component';
+import { CompleteInfoGuard } from './views/auth/guards/complete-info./complete-info.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -20,7 +21,7 @@ const routes: Routes = [
     { path: 'contact', component: ContactComponent },
     { path: 'p/:url', component: ShowProductComponent },
     { path: 'cart', component: CartComponent },
-    { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard] },
+    { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard, CompleteInfoGuard] },
     { path: '404', component: PageNotFoundComponent },
     {
         path: '', canActivate: [AuthGuard], loadChildren: () => {
