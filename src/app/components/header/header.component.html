@@ -45,7 +45,7 @@
                     </svg>
                 </span>
                 <ng-container *ngIf="shoppingCartService.cart$ | async as cart">
-                    <span class="cart-total mx-lg-2">S/ {{cart.totalCart() | number: '1.2-2' }}</span>
+                    <span class="cart-total mx-lg-2">S/ {{cart.subtotal | number: '1.2-2' }}</span>
                     <span
                         class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
                 </ng-container>

@@ -14,12 +14,16 @@ export class ApiInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        let url: string = req.url[0] === '/' ? environment.apiUrl : `${environment.apiUrl}/`;
+        const url: string = req.url[0] === '/' ? environment.apiUrl : `${environment.apiUrl}/`;
 
-        const apiReq = req.clone({ url: `${url}${req.url}` });
+        let http = new RegExp("^(http|https)://", "i");
+        if (!/\.(gif|jpg|jpeg|tiff|png|svg|json)$/i.test(req.url)) {
+            req = http.test(req.url) ? req : req.clone({ url: `${url}${req.url}` });
+        }
+
         this.loaderService.show();
 
-        return next.handle(apiReq).pipe(
+        return next.handle(req).pipe(
             filter(event => event instanceof HttpResponse),
             tap(() => {
                 this.loaderService.hide();

@@ -11,7 +11,7 @@ import { AuthGuard } from './views/auth/guards/auth/auth.guard';
 import { AboutComponent } from './views/about/about.component';
 import { ContactComponent } from './views/contact/contact.component';
 import { ServicesComponent } from './views/services/services.component';
-import { CompleteInfoGuard } from './views/auth/guards/complete-info./complete-info.guard';
+import { CompleteInfoGuard } from './views/auth/guards/complete-info/complete-info.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },

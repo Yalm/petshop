@@ -38,6 +38,11 @@ export class ShoppingCartService {
         this.setNewValue();
     }
 
+    shipping(total: number): void {
+        this.cart_init.shipping = total;
+        this.cart$.next(this.cart_init);
+    }
+
     private getCart(): void {
         const items: CartItem[] = JSON.parse(localStorage.getItem('items')) || [];
         this.cart_init = new ShoppingCart(items);

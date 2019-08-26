@@ -1,8 +1,58 @@
 <app-breadcrumb title="Pago" [image]="null" subTitle="Pago"></app-breadcrumb>
-<div class="container" *ngIf="shoppingCartService.cart$ | async as cart">
+<div class="container">
     <form [formGroup]="form" class="row pb-5 d-flex justify-content-center">
         <ng-container *ngIf="!order;else orderTemplate">
             <div class="col-xl-8 col-lg-7">
+                <h2>Dirección de envío</h2>
+                <mat-tab-group (selectedTabChange)="shipping($event.index)">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">location_searching</mat-icon>
+                            Envío a domicilio
+                        </ng-template>
+
+                        <mat-form-field class="col-md-6 mb-2 pt-3" appearance="outline">
+                            <mat-label>Departamento</mat-label>
+                            <mat-select placeholder="Departamento" formControlName="department">
+                                <mat-option *ngFor="let item of departments | async" [value]="item.id_ubigeo">
+                                    {{item.nombre_ubigeo}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error appInvalidMessage="department"></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6 mb-2" appearance="outline">
+                            <mat-label>Provincia</mat-label>
+                            <mat-select placeholder="Provincia" formControlName="province">
+                                <mat-option *ngFor="let item of provinces | async" [value]="item.id_ubigeo">
+                                    {{item.nombre_ubigeo}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error appInvalidMessage="province"></mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-6 mb-2" appearance="outline">
+                            <mat-label>Distrito</mat-label>
+                            <mat-select placeholder="Distrito" formControlName="district">
+                                <mat-option *ngFor="let item of districts | async" [value]="item.id_ubigeo">
+                                    {{item.nombre_ubigeo}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error appInvalidMessage="district"></mat-error>
+                        </mat-form-field>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">store</mat-icon>
+                            Recoger en tienda
+                        </ng-template>
+                        <p class="p-3">Para recoger tus artículos en Pet Shop, debes llevar el número de pedido y un
+                            documento
+                            oficial de entidad con foto.</p>
+                    </mat-tab>
+                </mat-tab-group>
+
                 <h2>Infomarción extra</h2>
                 <p>Si desea dejarnos un comentario acerca de su pedido, por favor, escríbalo a continuación</p>
                 <div class="form-group">
@@ -11,7 +61,7 @@
                 </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-11 order-details border-primary">
-                <table class="checkout-review-order">
+                <table class="checkout-review-order" *ngIf="shoppingCartService.cart$ | async as cart">
                     <thead>
                         <tr>
                             <th>Producto</th>
@@ -27,7 +77,13 @@
                     <tfoot>
                         <tr class="cart-subtotal">
                             <td>Subtotal</td>
-                            <td class="text-right">S/{{cart.totalCart() | number: '1.2-2'}}</td>
+                            <td class="text-right">S/{{cart.subtotal | number: '1.2-2'}}</td>
+                        </tr>
+                        <tr class="cart-subtotal" *ngIf="form.get('shipping').value">
+                            <td>Envío</td>
+                            <td class="text-right">
+                                S/{{ cart.shipping || 0 | number: '1.2-2' }}
+                            </td>
                         </tr>
                         <tr class="order-total">
                             <td>Total</td>
@@ -48,9 +104,8 @@
                     <label class="custom-control-label" for="customCheck2">Banca por Internet o Dépositos
                         Bancarios</label>
                 </div>
-
                 <hr>
-                <button type="submit" (click)="openCulqui(cart.totalCart())" [disabled]="form.invalid"
+                <button type="submit" (click)="openCulqui()" [disabled]="form.invalid"
                     class="button-petshop text-center text-white position-relative w-100">Finalizar</button>
             </div>
         </ng-container>
@@ -85,7 +140,11 @@
                     <tfoot>
                         <tr class="cart-subtotal font-weight-bold">
                             <td>Subtotal:</td>
-                            <td class="text-right">S/ {{order.total | number: '1.2-2' }}</td>
+                            <td class="text-right">S/ {{order.subtotal | number: '1.2-2' }}</td>
+                        </tr>
+                        <tr class="cart-subtotal font-weight-bold" *ngIf="order.shipping > 0">
+                            <td>Envío:</td>
+                            <td class="text-right">S/ {{order.shipping | number: '1.2-2' }}</td>
                         </tr>
                         <tr class="payment-method font-weight-bold">
                             <td>Metododo de Pago:</td>

@@ -2,9 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { CulqiService } from 'src/app/services/culqi/culqi.service';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Validators, FormGroup, FormControl, ValidatorFn } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { UbigeosService } from 'src/app/services/ubigeos/ubigeos.service';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-checkout',
@@ -13,13 +15,17 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
 
-    order: { items: any[], total: number };
+    order: { items: any[], subtotal: number, total: number, shipping: number };
     form: FormGroup;
     subscription: Subscription;
+    departments: Observable<any[]>;
+    provinces: Observable<any[]>;
+    districts: Observable<any[]>;
 
     constructor(public shoppingCartService: ShoppingCartService,
         private culqi: CulqiService,
         private snackBar: MatSnackBar,
+        private ubigueo: UbigeosService,
         private orderService: OrderService) { }
 
     ngOnInit() {
@@ -27,8 +33,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             culqi_token: new FormControl(null),
             email: new FormControl(null, Validators.email),
             plus_info: new FormControl(null, [Validators.minLength(3), Validators.maxLength(250)]),
-            method: new FormControl(null, Validators.required)
+            method: new FormControl(null, Validators.required),
+            shipping: new FormControl(true),
+            department: new FormControl(null, Validators.required),
+            province: new FormControl(null, Validators.required),
+            district: new FormControl(null, Validators.required)
         });
+
+        this.departments = this.ubigueo.departments();
+
+        this.provinces = this.form.get('department').valueChanges.pipe(
+            tap(department => this.shoppingCartService.shipping(department == '3655' ? 5 : 20)),
+            switchMap(department => this.ubigueo.provinces(department))
+        );
+
+        this.districts = this.form.get('province').valueChanges.pipe(
+            switchMap(province => this.ubigueo.districts(province))
+        );
 
         this.subscription = this.culqi.token.subscribe(token => {
             if (token.id) {
@@ -44,10 +65,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
     }
 
-    openCulqui(total: number) {
+    openCulqui(): void {
         if (this.form.get('method').value == 'credit_card') {
             this.culqi.open({
-                amount: total,
+                amount: this.shoppingCartService.cart_init.totalCart(),
                 title: 'Pet Shop',
                 currency: 'PEN',
                 description: 'Petshop Veterinaria Huancayo'
@@ -57,14 +78,42 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
     }
 
-    private checkout() {
+    private checkout(): void {
         this.orderService.store(this.form.value).subscribe(() => {
             this.order = {
                 items: this.shoppingCartService.cart_init.items,
+                subtotal: this.shoppingCartService.cart_init.subtotal,
+                shipping: this.shoppingCartService.cart_init.shipping,
                 total: this.shoppingCartService.cart_init.totalCart()
             }
             this.shoppingCartService.reset();
         });
+    }
+
+    shipping(index: number): void {
+        if (index == 0) {
+            this.shoppingCartService.shipping(this.form.get('department').value == '3655' ? 5 : 20);
+            this.form.get('shipping').setValue(true);
+
+            this.deleteOrAddValidate(Validators.required);
+        } else {
+            this.form.get('shipping').setValue(false);
+            this.deleteOrAddValidate();
+            this.shoppingCartService.shipping(0);
+        }
+    }
+
+    private deleteOrAddValidate(validators?: ValidatorFn | ValidatorFn[]): void {
+        let items = ['department', 'province', 'district'];
+        for (let key of items) {
+            if (validators) {
+                this.form.get(key).setValidators(validators);
+                this.form.get(key).updateValueAndValidity();
+            } else {
+                this.form.get(key).clearValidators();
+                this.form.get(key).updateValueAndValidity();
+            }
+        }
     }
 
     ngOnDestroy() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/views/auth/services/auth/auth.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { Observable } from 'rxjs';
