@@ -26,6 +26,19 @@
                         <h4 mat-line>{{order.payment?.reference_code || 'Sin pago' }}</h4>
                     </mat-list-item>
 
+                    <ng-container *ngIf="order.shipping">
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>Envío</h3>
+
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>local_shipping</mat-icon>
+                            <h4 mat-line>Monto: S/ {{order.shipping.price }}</h4>
+                            <h4 mat-line>Departamento: {{order.shipping | shipping: 'departament' | async}}</h4>
+                            <h4 mat-line>Provincia: {{order.shipping | shipping: 'province' | async}}</h4>
+                            <h4 mat-line>Distrito: {{order.shipping | shipping: 'district' | async}}</h4>
+                        </mat-list-item>
+                    </ng-container>
+
                 </mat-list>
             </mat-tab>
 
