@@ -116,7 +116,7 @@ class OrderJob extends Job
                     'amount' => round(($items->total * 100), 2),
                     'currency_code' => 'PEN',
                     'description' => 'Ventas en línea petShop',
-                    'order_number' => 'xd-'.$order->id,
+                    'order_number' => 'pedido-'.$order->id . '-' .strtotime("now"),
                     'client_details' => array(
                         'first_name'=> $this->customer->name,
                         'last_name'=> $this->customer->surnames,
@@ -125,6 +125,7 @@ class OrderJob extends Job
                     ),
                     'confirm' => true,
                     'expiration_date' => time() + 24*60*60,   // 1 dia
+                    "metadata" => array ("id" => $order->id)
                 )
             );
         } catch (\Exception $e) {

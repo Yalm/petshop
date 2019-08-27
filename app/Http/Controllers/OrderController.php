@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\OrderJob;
 use Culqi\Culqi;
+use Validator;
 
 class OrderController extends Controller
 {
@@ -56,8 +57,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        // DB::enableQueryLog();
-        // dd(DB::getQueryLog());
         $this->validate($request, [
             'method' => 'required|in:credit_card,bank_deposit',
             'culqi_token' => 'required_unless:method,bank_deposit|nullable|string',
@@ -103,30 +102,43 @@ class OrderController extends Controller
 
         $data = json_decode($request->input('data'), true);
 
-        switch ($data['state']) {
-            case 'paid':
-                $order = Order::find($data['order_number'])->update([
-                    'state_id' => 4
-                ]);
-                foreach ($order->products as $product) {
-                    $product->decrement('stock', $product->pivot->quantity);
-                }
-                $order->payment()->update([
-                    'amount' => $data['amount'],
-                    'reference_code' => $data['id']
-                ]);
+        $validator = Validator::make($data, [
+            'id' => 'required|string',
+            'state' => 'required|in:paid,expired,deleted',
+            'amount' => 'required|numeric',
+            'order_number' => 'required|string'
+        ]);
+
+        $id = explode('-', $data['order_number']);
+
+        if ($validator->passes() && count($id) > 1) {
+            switch ($data['state']) {
+                case 'paid':
+                    $order = Order::findOrFail($id[1])->update([
+                        'state_id' => 4
+                    ]);
+                    foreach ($order->products as $product) {
+                        $product->decrement('stock', $product->pivot->quantity);
+                    }
+                    $order->payment()->update([
+                        'amount' => $data['amount'],
+                        'reference_code' => $data['id']
+                    ]);
+                    break;
+                case 'expired':
+                    $order = Order::findOrFail($id[1])->update([
+                        'state_id' => 8
+                    ]);
+                    break;
+                case 'deleted':
+                    $order = Order::findOrFail($id[1])->update([
+                        'state_id' => 1
+                    ]);
                 break;
-            case 'expired':
-                $order = Order::find($data['order_number'])->update([
-                    'state_id' => 8
-                ]);
-                break;
-            case 'deleted':
-                $order = Order::find($data['order_number'])->update([
-                    'state_id' => 1
-                ]);
-                break;
+            }
+            return response()->json(['response' => 'Webhook de Culqi recibido correctamente']);
+        } else {
+            return response()->json($validator->errors()->all(),422);
         }
-        return response()->json(['response' => 'Webhook de Culqi recibido correctamente']);
     }
 }
