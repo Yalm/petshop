@@ -10,13 +10,14 @@
                             [state]="{ back:'/orders/' + order.id + '/edit' }">{{order.customer.name}}</a>
                         <p mat-line> {{order.customer.email}} </p>
                     </mat-list-item>
-
-                    <mat-divider></mat-divider>
-                    <h3 mat-subheader>Información extra</h3>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>note</mat-icon>
-                        <h4 mat-line>{{order.plus_info}}</h4>
-                    </mat-list-item>
+                    <ng-container *ngIf="order.plus_info">
+                        <mat-divider></mat-divider>
+                        <h3 mat-subheader>Información extra</h3>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>note</mat-icon>
+                            <h4 mat-line>{{order.plus_info}}</h4>
+                        </mat-list-item>
+                    </ng-container>
                     <mat-divider></mat-divider>
                     <h3 mat-subheader>Pago</h3>
 
