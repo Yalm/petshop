@@ -24,6 +24,11 @@ class Order extends Model
         return $this->belongsTo(State::class);
     }
 
+    public function shipping()
+	{
+	  	return $this->hasOne(Shipping::class);
+    }
+
     public function payment()
     {
         return $this->hasOne(Payment::class);

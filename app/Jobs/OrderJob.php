@@ -6,6 +6,7 @@ use Culqi\Culqi;
 use App\Order;
 use App\Product;
 use App\Payment;
+use App\Shipping;
 
 class OrderJob extends Job
 {
@@ -97,6 +98,7 @@ class OrderJob extends Job
             $order->products()->attach($product->id, ['quantity' => $product->quantity]);
         }
 
+        $this->shipping($order);
         $this->customer->sendOrderNotification($order,$this->data['method'],'');
     }
 
@@ -141,7 +143,21 @@ class OrderJob extends Job
             $order->products()->attach($product->id, ['quantity' => $product->quantity]);
         }
 
+        $this->shipping($order);
         $this->customer->sendOrderNotification($order,$this->data['method'],$payment->payment_code);
+    }
+
+    protected function shipping(Order $order)
+    {
+        if($this->data['shipping']) {
+            Shipping::create([
+                'order_id' => $order->id,
+                'departament_id' => $this->data['department'],
+                'province_id' => $this->data['province'],
+                'district_id' => $this->data['district'],
+                'price' => $this->data['department'] == '3655' ? 5:20
+            ]);
+        }
     }
 
     protected function getProducts()
@@ -160,6 +176,8 @@ class OrderJob extends Job
             $product->quantity = $this->data['items'][$key]['quantity'];
             $total += $product->price * $product->quantity;
         }
+        $total += $this->data['shipping'] ? $this->data['department'] == '3655' ? 5 : 20 :0;
+
         $products->total = $total;
 
         return $products;

@@ -65,7 +65,11 @@ class OrderController extends Controller
             'plus_info' => 'nullable|string|min:6',
             'items' => 'required',
             'items.*.id' => 'required|numeric',
-            'items.*.quantity' => 'required|numeric'
+            'items.*.quantity' => 'required|numeric',
+            'shipping' => 'required|boolean',
+            'department' => 'required_if:shipping,true',
+            'province' => 'required_if:shipping,true',
+            'district' => 'required_if:shipping,true'
         ]);
         $request->merge(['customer' => Auth::user()]);
 
