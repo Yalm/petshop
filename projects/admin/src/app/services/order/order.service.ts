@@ -10,14 +10,6 @@ export class OrderService {
 
     constructor(private http: HttpClient) { }
 
-    index(): Observable<Order[]> {
-        return this.http.get<Order[]>('orders');
-    }
-
-    show(id: number): Observable<Order> {
-        return this.http.get<Order>(`orders/${id}`);
-    }
-
     update(data: Order): Observable<Order> {
         return this.http.put<Order>(`orders/${data.id}`, data);
     }

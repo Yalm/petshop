@@ -1,5 +1,6 @@
 import { CartItem } from './CartItem.model';
 import { Customer } from '../views/auth/models/customer';
+import { Observable } from 'rxjs';
 
 export interface Order {
     id: string;
@@ -11,11 +12,22 @@ export interface Order {
     readonly created_at: string;
     readonly state_id: number;
     readonly error_log: string;
+    readonly shipping?: Shipping;
 }
 
 interface StatusOrder {
     readonly id: string;
     readonly name: number;
+}
+
+export interface Shipping {
+    readonly departament_id: string;
+    readonly province_id: string;
+    readonly district_id: string;
+    readonly price: number;
+    departament: Observable<string>;
+    province: Observable<string>;
+    distric: Observable<string>;
 }
 
 interface Payment {

@@ -15,9 +15,11 @@ export class ApiInterceptor implements HttpInterceptor {
 
         let url: string = req.url[0] === '/' ? environment.apiUrl : `${environment.apiUrl}/`;
 
-        const apiReq = req.clone({ url: `${url}${req.url}` });
+        if (!/\.(gif|jpg|jpeg|tiff|png|svg|json)$/i.test(req.url)) {
+            req = req.clone({ url: `${url}${req.url}` });
+        }
 
-        return next.handle(apiReq).pipe(
+        return next.handle(req).pipe(
             filter(event => event instanceof HttpResponse),
             tap(() => { }, (event: HttpErrorResponse) => {
                 if (event.status == 500) {

@@ -8,7 +8,7 @@ import { ProfileOrderComponent } from './profile-order/profile-order.component';
 import { ProfileShowOrderComponent } from './profile-show-order/profile-show-order.component';
 import { ProfileAccountComponent } from './profile-account/profile-account.component';
 import { SharedModule } from 'src/app/modules/shared.module';
-import { MatTableModule, MatSortModule, MatSelectModule, MatInputModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatInputModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -24,8 +24,7 @@ import { MatTableModule, MatSortModule, MatSelectModule, MatInputModule } from '
         SharedModule,
         MatInputModule,
         MatTableModule,
-        MatSortModule,
-        MatSelectModule
+        MatSortModule
     ]
 })
 export class ProfileModule { }

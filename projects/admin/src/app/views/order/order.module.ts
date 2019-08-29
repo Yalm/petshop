@@ -5,11 +5,13 @@ import { OrderEditComponent } from './order-edit/order-edit.component';
 import { SharedModule } from '../../modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { OrderRoutingModule } from './order-routing.module';
+import { ShippingPipe } from '../../pipes/shipping.pipe';
 
 @NgModule({
     declarations: [
         OrderListComponent,
-        OrderEditComponent
+        OrderEditComponent,
+        ShippingPipe
     ],
     imports: [
         CommonModule,

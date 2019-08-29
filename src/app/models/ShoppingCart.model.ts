@@ -1,8 +1,13 @@
 import { CartItem } from './CartItem.model';
 
 export class ShoppingCart {
+    get subtotal() {
+        return this.totalCart() - this.shipping;
+    }
+
     constructor(
-        public items: CartItem[]
+        public items: CartItem[],
+        public shipping = 0
     ) { }
 
     public add(item: CartItem): boolean {
@@ -28,6 +33,7 @@ export class ShoppingCart {
     public totalCart(): number {
         let total: number = 0;
         this.items.map(item => total += item.quantity * item.price);
+        total += this.shipping;
         return total;
     }
 
