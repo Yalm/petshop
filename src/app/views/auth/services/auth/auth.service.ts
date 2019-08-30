@@ -73,7 +73,11 @@ export class AuthService extends ng2Auth {
     }
 
     complete(): Observable<boolean> {
-        return this.http.get<boolean>('auth/customer/complete');
+        if (this.isAuthenticated()) {
+            return this.http.get<boolean>('auth/customer/complete');
+        } else {
+            return of(false);
+        }
     }
 
     sendEmailVerification(data: { email: string }): Observable<boolean> {
