@@ -18,5 +18,4 @@ export class FooterComponent implements OnInit {
     ngOnInit() {
         this.categories$ = this.category.index({ onlyChilds: true });
     }
-
 }
