@@ -43,7 +43,7 @@ export class MatTableComponent<T = any> implements OnInit {
         this.displayedColumns = this.columns.map(x => x.name);
         this.action = this.columns.find(x => x.name === 'actions');
         this.columns = this.columns.filter(x => x.name !== 'actions');
-        this.dataSource = new PetDataSource(this.paginator, this.url, this.http, this.sort, this._params);
+        this.dataSource = new PetDataSource(this.paginator, this.url, this.http, this.sort, this.paramsSet);
     }
 
     applyFilter(filterValue: string): void {
