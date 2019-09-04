@@ -14,7 +14,7 @@ import * as XLSX from 'xlsx';
     styleUrls: ['./mat-table.component.sass']
 })
 export class MatTableComponent<T = any> implements OnInit {
-    private _params: Params;
+    private paramsSet: Params;
     displayedColumns: string[];
     dataSource: PetDataSource<T[]>;
     action: MatColumn;
@@ -23,26 +23,26 @@ export class MatTableComponent<T = any> implements OnInit {
     @Input() columns: MatColumn[];
     @Input() hiddenDelete: boolean;
     @Input() export: boolean;
-    @Input() marginTop: boolean = true;
-    @Input() sortActive: boolean = true;
+    @Input() marginTop = true;
+    @Input() sortActive = true;
     @Input() set params(value: Params) {
         if (this.dataSource) {
             this.dataSource.params = value;
         } else {
-            this._params = value;
+            this.paramsSet = value;
         }
-    };
+    }
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private http: HttpClient,
-        private dialog: MatDialog) { }
+                private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.displayedColumns = this.columns.map(x => x.name);
-        this.action = this.columns.find(x => x.name == 'actions');
-        this.columns = this.columns.filter(x => x.name != 'actions');
+        this.action = this.columns.find(x => x.name === 'actions');
+        this.columns = this.columns.filter(x => x.name !== 'actions');
         this.dataSource = new PetDataSource(this.paginator, this.url, this.http, this.sort, this._params);
     }
 
@@ -62,14 +62,14 @@ export class MatTableComponent<T = any> implements OnInit {
 
     exportAsExcelFile(): void {
         const data = this.dataSource.data.reduce((array, element) => {
-            array.push(this.columns.reduce((object,column) => {
+            array.push(this.columns.reduce((object, column) => {
                 object[column.colum_name] = element[column.name];
                 return object;
-            },{} as T));
+            }, {} as T));
             return array;
         }, []);
         const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
         const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
         this.saveAsExcelFile(excelBuffer, 'reporte-excel');
     }

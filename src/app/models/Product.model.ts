@@ -10,6 +10,7 @@ export interface Product {
     stock: number;
     readonly description: string;
     readonly short_description: string;
+    readonly category_id: number;
     readonly category: Category;
     readonly color: Color;
     readonly transport?: Transport;

@@ -14,7 +14,7 @@ export class PetParams {
 
 
     has(value: string): boolean {
-        return this.params.find(element => element.value == value) ? true : false;
+        return this.params.find(element => element.value === value) ? true : false;
     }
 
     delete(key: string): Params {

@@ -6,7 +6,7 @@ export interface Order {
     id: string;
     readonly customer: Customer;
     readonly state: StatusOrder;
-    readonly products: CartItem[]
+    readonly products: CartItem[];
     readonly plus_info?: string;
     readonly payment?: Payment;
     readonly created_at: string;

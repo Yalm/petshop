@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    public edit(data: Customer): Observable<Customer> {
+    edit(data: Customer): Observable<Customer> {
         return this.http.put<Customer>(`customers/${data.id}`, data);
     }
 }

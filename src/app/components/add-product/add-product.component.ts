@@ -11,7 +11,8 @@ export class AddProductComponent {
 
     constructor(
         public dialogRef: MatDialogRef<AddProductComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: CartItem) { }
+        @Inject(MAT_DIALOG_DATA) public data: CartItem
+    ) { }
 
     onNoClick(): void {
         this.dialogRef.close();

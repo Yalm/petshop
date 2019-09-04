@@ -17,14 +17,14 @@ export class UbigeosService {
     department(id: string): Observable<string> {
         return this.http.get<any[]>('assets/json/departamentos.json')
             .pipe(
-                map(response => response.find(x => x.id_ubigeo == id).nombre_ubigeo)
+                map(response => response.find(x => x.id_ubigeo === id).nombre_ubigeo)
             );
     }
 
     provinces(id: string): Observable<any[]> {
         return this.http.get<any[]>('assets/json/provincias.json').pipe(
             map(response => {
-                const provinces = Object.keys(response).find(element => element == id);
+                const provinces = Object.keys(response).find(element => element === id);
                 return response[provinces];
             })
         );
@@ -33,8 +33,8 @@ export class UbigeosService {
     province(parent: string, id: string): Observable<string> {
         return this.http.get<any[]>('assets/json/provincias.json').pipe(
             map(response => {
-                const provinces = Object.keys(response).find(element => element == parent);
-                return response[provinces].find(x => x.id_ubigeo == id).nombre_ubigeo;
+                const provinces = Object.keys(response).find(element => element === parent);
+                return response[provinces].find(x => x.id_ubigeo === id).nombre_ubigeo;
             })
         );
     }

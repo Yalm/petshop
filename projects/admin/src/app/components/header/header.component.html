@@ -9,7 +9,7 @@
                     <h6 class="title d-none d-sm-block">Pet Shop Huancayo </h6>
                     <div class="nav-actions d-flex align-items-center" *ngIf="user">
                         <button mat-button class="p-0" [matMenuTriggerFor]="menu">
-                            <img fallback-src [src]="user.avatar" [alt]="user.name" width="28" height="28"
+                            <img appFallbackSrc [src]="user.avatar" [alt]="user.name" width="28" height="28"
                                 class="rounded">
                             <mat-icon aria-hidden="false" aria-label="Info">more_vert</mat-icon>
                         </button>

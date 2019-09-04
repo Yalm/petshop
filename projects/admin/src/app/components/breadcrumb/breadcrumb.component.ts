@@ -14,7 +14,7 @@ export class BreadcrumbComponent {
 
     constructor(private router: Router) {
         this.router.events.pipe(
-            filter(event => event instanceof ActivationEnd && event.snapshot.children.length == 0),
+            filter(event => event instanceof ActivationEnd && event.snapshot.children.length === 0),
             map((event: ActivationStart) => {
                 const data = this.router.getCurrentNavigation().extras.state;
                 if (Object.entries(event.snapshot.data).length !== 0 && event.snapshot.data.constructor === Object) {
@@ -25,6 +25,6 @@ export class BreadcrumbComponent {
             })
         ).subscribe((data: Breadcrumb) => {
             this.data = data;
-        })
+        });
     }
 }

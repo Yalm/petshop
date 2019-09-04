@@ -18,10 +18,12 @@ export class HeaderComponent implements OnInit {
     searchActive: boolean;
     categories$: Observable<Category[]>;
 
-    constructor(private router: Router,
+    constructor(
+        private router: Router,
         public auth: AuthService,
         private categoryService: CategoryService,
-        public shoppingCartService: ShoppingCartService) { }
+        public shoppingCartService: ShoppingCartService
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -34,7 +36,7 @@ export class HeaderComponent implements OnInit {
     search(): void {
         if (this.form.valid) {
             const search = this.form.value.search.trim().toLowerCase();
-            this.router.navigate(['/shop'], { queryParams: { search: search }, queryParamsHandling: 'merge' });
+            this.router.navigate(['/shop'], { queryParams: { search }, queryParamsHandling: 'merge' });
         }
     }
 }

@@ -15,8 +15,8 @@ export class UserEditComponent implements OnInit {
     form: FormGroup;
 
     constructor(private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private userService: UserService) { }
+                private snackBar: MatSnackBar,
+                private userService: UserService) { }
 
     ngOnInit(): void {
         const user = this.route.snapshot.data.user;
@@ -34,8 +34,8 @@ export class UserEditComponent implements OnInit {
         this.userService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Usuario actualizado.', 'OK', { duration: 5000 });
         }, (error: HttpErrorResponse) => {
-            if (error.status == 422) {
-                this.form.get('email').setErrors({ 'unique': true });
+            if (error.status === 422) {
+                this.form.get('email').setErrors({ unique: true });
             }
         });
     }

@@ -20,10 +20,10 @@ export class ProductEditComponent implements OnInit {
     colors: Observable<Color[]>;
 
     constructor(public categoryService: CategoryService,
-        public colorService: ColorService,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private productService: ProductService) { }
+                public colorService: ColorService,
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                private productService: ProductService) { }
 
     ngOnInit(): void {
         const product = this.route.snapshot.data.product;
@@ -32,8 +32,10 @@ export class ProductEditComponent implements OnInit {
             name: new FormControl(product.name, [Validators.required, Validators.maxLength(250), Validators.minLength(5)]),
             price: new FormControl(product.price, [Validators.required, Validators.min(5)]),
             stock: new FormControl(product.stock, [Validators.required, Validators.min(0)]),
-            short_description: new FormControl(product.short_description, [Validators.required, Validators.minLength(5), Validators.maxLength(500)]),
-            category_id: new FormControl(product['category_id'], Validators.required),
+            short_description: new FormControl(product.short_description,
+                [Validators.required, Validators.minLength(5), Validators.maxLength(500)]
+            ),
+            category_id: new FormControl(product.category_id, Validators.required),
             cover: new FormControl(product.cover, Validators.required),
             description: new FormControl(product.description, Validators.minLength(10)),
             transport: new FormGroup({
@@ -46,7 +48,7 @@ export class ProductEditComponent implements OnInit {
                 weight: new FormControl(product.transport ? product.transport.weight : null,
                     Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
             }),
-            color_id: new FormControl(product['color_id'])
+            color_id: new FormControl(product.color_id)
         });
 
         this.colors = this.colorService.index();

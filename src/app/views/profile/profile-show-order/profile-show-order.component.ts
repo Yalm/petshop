@@ -17,8 +17,8 @@ export class ProfileShowOrderComponent implements OnInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private route: ActivatedRoute,
-        private orderService: OrderService,
-        private router: Router) { }
+                private orderService: OrderService,
+                private router: Router) { }
 
     ngOnInit() {
         this.dataSource.paginator = this.paginator;
@@ -28,7 +28,7 @@ export class ProfileShowOrderComponent implements OnInit {
                 this.dataSource.data = this.order.products;
             }, () => {
                 this.router.navigateByUrl('404', { skipLocationChange: true });
-            })
+            });
         });
     }
 }

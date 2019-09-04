@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, forwardRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -11,21 +11,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
             useExisting: forwardRef(() => UploadComponent),
             multi: true
         }
-    ],
+    ]
 })
-export class UploadComponent implements OnInit, ControlValueAccessor {
+export class UploadComponent implements ControlValueAccessor {
 
     @ViewChild('fileInput', { static: true }) private fileInput: ElementRef;
     @Input() multi: boolean;
     files: Array<any>;
-    valueForm: any;
     isDisabled: boolean;
-    onChange = (_: any) => { }
-    onTouch = () => { }
-
-    constructor() { }
-
-    ngOnInit() { }
+    onChange = (_: any) => { };
+    onTouch = () => { };
 
     async startUpload(files: FileList) {
         if (files && files[0]) {
@@ -45,7 +40,6 @@ export class UploadComponent implements OnInit, ControlValueAccessor {
             this.fileInput.nativeElement.value = '';
         }
     }
-
 
     deleteFile(index: number, event: Event) {
         this.files.splice(index, 1);

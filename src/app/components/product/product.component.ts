@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Product } from 'src/app/models/Product.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { MatDialog } from '@angular/material';
@@ -9,15 +9,14 @@ import { AddProductComponent } from '../add-product/add-product.component';
     templateUrl: './product.component.html',
     styleUrls: ['./product.component.sass']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
 
     @Input() product: Product;
 
-    constructor(private shoppingCartService: ShoppingCartService,
+    constructor(
+        private shoppingCartService: ShoppingCartService,
         private dialog: MatDialog
     ) { }
-
-    ngOnInit() { }
 
     addCartProduct() {
         if (this.product.stock > 0) {

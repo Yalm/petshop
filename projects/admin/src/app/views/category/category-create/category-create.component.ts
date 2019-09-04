@@ -17,7 +17,7 @@ export class CategoryCreateComponent implements OnInit {
     categories$: Observable<Category[]>;
 
     constructor(private categoryService: CategoryService,
-        private snackBar: MatSnackBar) { }
+                private snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -32,8 +32,8 @@ export class CategoryCreateComponent implements OnInit {
             this.snackBar.open('Categoría creada.', 'OK', { duration: 4000 });
             this.form.reset();
         }, (error: HttpErrorResponse) => {
-            if (error.status == 422) {
-                this.form.get('name').setErrors({ 'unique': true });
+            if (error.status === 422) {
+                this.form.get('name').setErrors({ unique: true });
             }
         });
     }

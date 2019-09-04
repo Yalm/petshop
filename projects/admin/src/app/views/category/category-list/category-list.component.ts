@@ -12,13 +12,13 @@ import { DialogDeleteComponent } from '../../../components/dialog-delete/dialog-
 export class CategoryListComponent implements OnInit {
 
     displayedColumns: string[] = ['name', 'actions'];
-    dataSource = new MatTableDataSource<Category>()
+    dataSource = new MatTableDataSource<Category>();
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private categoryService: CategoryService,
-        private dialog: MatDialog) { }
+                private dialog: MatDialog) { }
 
     ngOnInit() {
         this.categoryService.index({ all: true }).subscribe(response => {
@@ -39,7 +39,7 @@ export class CategoryListComponent implements OnInit {
             if (result) {
                 this.categoryService.destroy(id).subscribe(
                     () => {
-                        const index = this.dataSource.data.findIndex(x => x.id == id);
+                        const index = this.dataSource.data.findIndex(x => x.id === id);
                         this.dataSource.data.splice(index, 1);
                         this.dataSource._updateChangeSubscription();
                     }

@@ -109,7 +109,7 @@
                     </li>
                     <li>
                         <span>Metodo de Pago:</span>
-                        <strong class="ml-2">{{form.get('method').value == 'bank_deposit' ? 'Déposito
+                        <strong class="ml-2">{{form.get('method').value === 'bank_deposit' ? 'Déposito
                             Bancario':'Tarjeta de credito' }}</strong>
                     </li>
                 </ul>
@@ -138,7 +138,7 @@
                         </tr>
                         <tr class="payment-method font-weight-bold">
                             <td>Metododo de Pago:</td>
-                            <td class="text-right">{{form.get('method').value == 'bank_deposit' ? 'Déposito
+                            <td class="text-right">{{form.get('method').value === 'bank_deposit' ? 'Déposito
                                 Bancario':'Tarjeta de credito' }}</td>
                         </tr>
                         <tr class="order-total font-weight-bold">

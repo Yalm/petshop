@@ -21,9 +21,9 @@ export class OrderEditComponent implements OnInit {
     states: Observable<State[]>;
 
     constructor(private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private stateService: StateService,
-        private orderService: OrderService) { }
+                private snackBar: MatSnackBar,
+                private stateService: StateService,
+                private orderService: OrderService) { }
 
     ngOnInit(): void {
         this.order = this.route.snapshot.data.order;

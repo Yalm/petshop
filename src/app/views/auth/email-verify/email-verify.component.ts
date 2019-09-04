@@ -11,8 +11,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class EmailVerifyComponent implements OnInit {
     form: FormGroup;
 
-    constructor(private auth: AuthService,
-        private snackBar: MatSnackBar) { }
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -25,8 +27,8 @@ export class EmailVerifyComponent implements OnInit {
             this.form.reset();
             this.snackBar.open('¡Te hemos enviado por correo el enlace de las instrucciones de confirmación.', 'OK', { duration: 4000 });
         }, (err: HttpErrorResponse) => {
-            if (err.status && err.status == 422) {
-                this.form.get('email').setErrors({ 'exists': true });
+            if (err.status && err.status === 422) {
+                this.form.get('email').setErrors({ exists: true });
             }
         });
     }

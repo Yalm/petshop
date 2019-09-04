@@ -16,8 +16,8 @@ export class WelcomeComponent implements OnInit {
     countCustomer: Observable<number>;
 
     constructor(private order: OrderService,
-        private product: ProductService,
-        private customer: CustomerService) { }
+                private product: ProductService,
+                private customer: CustomerService) { }
 
     ngOnInit() {
         this.countOrder = this.order.count();

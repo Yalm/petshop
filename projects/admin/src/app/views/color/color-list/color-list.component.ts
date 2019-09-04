@@ -13,13 +13,13 @@ import { DialogDeleteComponent } from '../../../components/dialog-delete/dialog-
 })
 export class ColorListComponent implements OnInit {
     displayedColumns: string[] = ['name', 'actions'];
-    dataSource = new MatTableDataSource<Color>()
+    dataSource = new MatTableDataSource<Color>();
 
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private colorService: ColorService,
-        private dialog: MatDialog) { }
+                private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.colorService.index().subscribe(response => {
@@ -50,7 +50,7 @@ export class ColorListComponent implements OnInit {
             data
         }).afterClosed().subscribe((result: Color) => {
             if (result) {
-                const index = this.dataSource.data.findIndex(x => x.id == result.id);
+                const index = this.dataSource.data.findIndex(x => x.id === result.id);
                 this.dataSource.data[index] = result;
                 this.dataSource._updateChangeSubscription();
             }
@@ -63,7 +63,7 @@ export class ColorListComponent implements OnInit {
         }).afterClosed().subscribe((result: boolean) => {
             if (result) {
                 this.colorService.destroy(id).subscribe(() => {
-                    const index = this.dataSource.data.findIndex(x => x.id == id);
+                    const index = this.dataSource.data.findIndex(x => x.id === id);
                     this.dataSource.data.splice(index, 1);
                     this.dataSource._updateChangeSubscription();
                     }

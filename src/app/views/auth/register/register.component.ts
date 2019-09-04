@@ -16,10 +16,12 @@ export class RegisterComponent implements OnInit {
     sendEmailVerify: boolean;
     private returnUrl: string;
 
-    constructor(private auth: AuthService,
+    constructor(
+        private auth: AuthService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private router: Router) { }
+        private router: Router
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -30,7 +32,7 @@ export class RegisterComponent implements OnInit {
             terms: new FormControl(null, [Validators.requiredTrue])
         });
         this.form.get('password_confirmation').setValidators(EqualsValidator(this.form.get('password')));
-        this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/profile');
+        this.route.queryParams.subscribe(params => this.returnUrl = params.return || '/profile');
     }
 
     register(): void {
@@ -57,10 +59,10 @@ export class RegisterComponent implements OnInit {
         }
 
         if (err.email) {
-            this.form.get('email').setErrors({ 'unique': true });
+            this.form.get('email').setErrors({ unique: true });
         }
 
-        if (err.code == 'auth/user-disable') {
+        if (err.code === 'auth/user-disable') {
             this.snackBar.open('Su cuenta ha sido suspendida. Póngase en contacto con el administrador.', '', {
                 duration: 5000,
                 panelClass: ['bg-danger', 'text-white']

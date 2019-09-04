@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material';
 export class CartComponent {
 
     constructor(public shoppingCartService: ShoppingCartService,
-        private snackBar: MatSnackBar) { }
+                private snackBar: MatSnackBar) { }
 
     deleteItem(id: number) {
         this.shoppingCartService.delete(id);

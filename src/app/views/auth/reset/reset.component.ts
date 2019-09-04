@@ -13,10 +13,12 @@ import { MatSnackBar } from '@angular/material';
 export class ResetComponent implements OnInit {
 
     form: FormGroup;
-    constructor(private auth: AuthService,
+    constructor(
+        private auth: AuthService,
         private snackBar: MatSnackBar,
         private router: Router,
-        private route: ActivatedRoute) { }
+        private route: ActivatedRoute
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -39,7 +41,7 @@ export class ResetComponent implements OnInit {
 
     private errorsShow(err: any): void {
         if (err.email) {
-            this.form.get('email').setErrors({ 'exists': true });
+            this.form.get('email').setErrors({ exists: true });
             return;
         }
         switch (err.error) {

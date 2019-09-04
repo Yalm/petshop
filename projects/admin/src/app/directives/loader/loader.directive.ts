@@ -18,8 +18,11 @@ export class LoaderDirective implements OnDestroy {
                 debounce(() => timer(1000)),
                 takeWhile((res) => res <= true)
             ).subscribe(state => {
-                if (state) { this.show(); }
-                else { this.hide(); }
+                if (state) {
+                    this.show();
+                } else {
+                    this.hide();
+                }
             });
         this.buttons = this.el.nativeElement.parentElement ? this.el.nativeElement.parentElement.getElementsByTagName('button') : [];
     }
@@ -36,7 +39,7 @@ export class LoaderDirective implements OnDestroy {
 
     private setDisableOrEnable(enable: boolean = true): void {
         for (let index = 0; index < this.buttons.length; index++) {
-            this.buttons[index].disabled = this.count == 0 ? this.buttons[index].disabled : enable;
+            this.buttons[index].disabled = this.count === 0 ? this.buttons[index].disabled : enable;
         }
         this.count++;
     }

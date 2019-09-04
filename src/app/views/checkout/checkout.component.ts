@@ -23,10 +23,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     districts: Observable<any[]>;
 
     constructor(public shoppingCartService: ShoppingCartService,
-        private culqi: CulqiService,
-        private snackBar: MatSnackBar,
-        private ubigueo: UbigeosService,
-        private orderService: OrderService) { }
+                private culqi: CulqiService,
+                private snackBar: MatSnackBar,
+                private ubigueo: UbigeosService,
+                private orderService: OrderService) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.departments = this.ubigueo.departments();
 
         this.provinces = this.form.get('department').valueChanges.pipe(
-            tap(department => this.shoppingCartService.shipping(department == '3655' ? 8 : 28)),
+            tap(department => this.shoppingCartService.shipping(department === '3655' ? 8 : 28)),
             switchMap(department => this.ubigueo.provinces(department))
         );
 
@@ -53,7 +53,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 this.form.get('email').setValue(token.email);
                 this.checkout();
             } else {
-                this.snackBar.open(token['user_message'], 'Ok', {
+                this.snackBar.open(token.user_message, 'Ok', {
                     duration: 5000,
                     panelClass: ['bg-danger', 'text-white']
                 });
@@ -62,9 +62,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     openCulqui(): void {
-        if (this.form.get('method').value == 'credit_card') {
+        if (this.form.get('method').value === 'credit_card') {
             this.culqi.open({
-                amount: this.shoppingCartService.cart_init.totalCart(),
+                amount: this.shoppingCartService.cartInit.totalCart(),
                 title: 'Pet Shop',
                 currency: 'PEN',
                 description: 'Petshop Veterinaria Huancayo'
@@ -77,18 +77,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private checkout(): void {
         this.orderService.store(this.form.value).subscribe(() => {
             this.order = {
-                items: this.shoppingCartService.cart_init.items,
-                subtotal: this.shoppingCartService.cart_init.subtotal,
-                shipping: this.shoppingCartService.cart_init.shipping,
-                total: this.shoppingCartService.cart_init.totalCart()
-            }
+                items: this.shoppingCartService.cartInit.items,
+                subtotal: this.shoppingCartService.cartInit.subtotal,
+                shipping: this.shoppingCartService.cartInit.shipping,
+                total: this.shoppingCartService.cartInit.totalCart()
+            };
             this.shoppingCartService.reset();
         });
     }
 
     shipping(index: number): void {
-        if (index == 0) {
-            this.shoppingCartService.shipping(this.form.get('department').value == '3655' ? 5 : 20);
+        if (index === 0) {
+            this.shoppingCartService.shipping(this.form.get('department').value === '3655' ? 5 : 20);
             this.form.get('shipping').setValue(true);
 
             this.deleteOrAddValidate(Validators.required);
@@ -100,8 +100,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     private deleteOrAddValidate(validators?: ValidatorFn | ValidatorFn[]): void {
-        let items = ['department', 'province'];
-        for (let key of items) {
+        const items = ['department', 'province'];
+        for (const key of items) {
             if (validators) {
                 this.form.get(key).setValidators(validators);
                 this.form.get(key).updateValueAndValidity();

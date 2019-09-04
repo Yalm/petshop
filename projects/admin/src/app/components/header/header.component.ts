@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
     links: any[];
 
     constructor(public auth: AuthService,
-        private router: Router) { }
+                private router: Router) { }
 
     ngOnInit() {
         this.user = this.auth.getPayload();

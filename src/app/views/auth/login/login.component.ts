@@ -15,16 +15,18 @@ export class LoginComponent implements OnInit {
     private returnUrl: string;
     verify: { isVerify: boolean };
 
-    constructor(private auth: AuthService,
+    constructor(
+        private auth: AuthService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
-        private router: Router) { }
+        private router: Router
+    ) { }
 
     ngOnInit() {
-        this.route.queryParams.subscribe(params => this.returnUrl = params['return'] || '/profile');
+        this.route.queryParams.subscribe(params => this.returnUrl = params.return || '/profile');
         this.form = new FormGroup({
             email: new FormControl(null, [Validators.required, Validators.email]),
-            password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            password: new FormControl(null, [Validators.required, Validators.minLength(6)])
         });
 
         if (this.route.snapshot.data.hasOwnProperty('verify')) {

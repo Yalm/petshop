@@ -20,9 +20,9 @@ export class ProductCreateComponent implements OnInit {
     colors: Observable<Color[]>;
 
     constructor(public categoryService: CategoryService,
-        public colorService: ColorService,
-        private snackBar: MatSnackBar,
-        private productService: ProductService) { }
+                public colorService: ColorService,
+                private snackBar: MatSnackBar,
+                private productService: ProductService) { }
 
     ngOnInit() {
         this.form = new FormGroup({

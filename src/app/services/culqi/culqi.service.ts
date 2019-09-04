@@ -16,21 +16,21 @@ export class CulqiService {
     private tokenChange: any = {
         preventValue: { id: null },
         newValue: { id: null }
-    }
+    };
 
     constructor(private load: LoaderService) {
         this.initCulqi();
-        (<any>window).culqi = () => {
+        (window as any).culqi = () => {
             if (Culqi.token) {
                 this.tokenChange.newValue = Culqi.token;
-                if (this.tokenChange.newValue.id != this.tokenChange.preventValue.id) {
+                if (this.tokenChange.newValue.id !== this.tokenChange.preventValue.id) {
                     this.tokenChange.preventValue = this.tokenChange.newValue;
                     this.subject.next(Culqi.token);
                 }
             } else {
                 this.subject.next(Culqi.error);
             }
-        }
+        };
     }
 
     open(settings: { amount: number, title: string, currency: string, description: string }) {
@@ -51,7 +51,7 @@ export class CulqiService {
             this.load.hide();
         }
         const checkCulqi = setInterval(() => {
-            if ((<any>window).Culqi) {
+            if ((window as any).Culqi) {
                 clearInterval(checkCulqi);
                 this.setOptions(key, options);
                 this.load.hide();

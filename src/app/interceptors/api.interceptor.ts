@@ -16,7 +16,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
         const url: string = req.url[0] === '/' ? environment.apiUrl : `${environment.apiUrl}/`;
 
-        let http = new RegExp("^(http|https)://", "i");
+        const http = new RegExp('^(http|https)://', 'i');
         if (!/\.(gif|jpg|jpeg|tiff|png|svg|json)$/i.test(req.url)) {
             req = http.test(req.url) ? req : req.clone({ url: `${url}${req.url}` });
         }
@@ -28,13 +28,13 @@ export class ApiInterceptor implements HttpInterceptor {
             tap(() => {
                 this.loaderService.hide();
             }, (event: HttpErrorResponse) => {
-                if (event.status == 500) {
+                if (event.status === 500) {
                     this.snackBar.open('Oops, ocurrio un error.', 'Ok', {
                         duration: 5000,
                         panelClass: ['bg-danger', 'text-white']
                     });
                 }
                 this.loaderService.hide();
-            }))
+            }));
     }
 }

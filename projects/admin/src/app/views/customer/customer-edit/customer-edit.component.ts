@@ -20,9 +20,9 @@ export class CustomerEditComponent implements OnInit {
     dataSource = new MatTableDataSource<Order>();
 
     constructor(public documentService: DocumentService,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private customerService: CustomerService) { }
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar,
+                private customerService: CustomerService) { }
 
     ngOnInit() {
         const customer = this.route.snapshot.data.customer;
@@ -44,8 +44,8 @@ export class CustomerEditComponent implements OnInit {
         this.customerService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Cliente editado.', 'OK', { duration: 5000 });
         }, error => {
-            if (error.status == 422) {
-                this.form.get('email').setErrors({ 'unique': true });
+            if (error.status === 422) {
+                this.form.get('email').setErrors({ unique: true });
             }
         });
     }

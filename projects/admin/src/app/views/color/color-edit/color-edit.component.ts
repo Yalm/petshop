@@ -26,7 +26,7 @@ export class ColorEditComponent implements OnInit {
         this.form = new FormGroup({
             id: new FormControl(this.data.id, Validators.required),
             name: new FormControl(this.data.name, Validators.required)
-        })
+        });
     }
 
     update(): void {
@@ -34,10 +34,10 @@ export class ColorEditComponent implements OnInit {
             () => {
                 this.dialogRef.close(this.form.value);
             }, (error: HttpErrorResponse) => {
-                if (error.status == 422) {
-                    this.form.get('name').setErrors({ 'unique': true });
+                if (error.status === 422) {
+                    this.form.get('name').setErrors({ unique: true });
                 }
             }
-        )
+        );
     }
 }

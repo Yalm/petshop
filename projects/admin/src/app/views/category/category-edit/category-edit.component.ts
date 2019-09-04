@@ -20,8 +20,8 @@ export class CategoryEditComponent implements OnInit {
     isChild: boolean;
 
     constructor(private categoryService: CategoryService,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar) { }
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
         const category = this.route.snapshot.data.category;
@@ -40,14 +40,14 @@ export class CategoryEditComponent implements OnInit {
         if (child) {
             this.categories$ = this.categoryService.index({ onlyParents: true })
                 .pipe(
-                    map(response => response.filter(x => x.id != category.id))
+                    map(response => response.filter(x => x.id !== category.id))
                 );
         } else {
             this.categories$ = this.categoryService.index({ all: true })
                 .pipe(
                     map(response =>
-                        response.filter(x => x.id != category.id && x.categories.length < 1 && x.parent_id == null)
-                            .concat(response.filter(x => x.parent_id == category.id))
+                        response.filter(x => x.id !== category.id && x.categories.length < 1 && x.parent_id === null)
+                            .concat(response.filter(x => x.parent_id === category.id))
                     )
                 );
         }
@@ -62,8 +62,8 @@ export class CategoryEditComponent implements OnInit {
         this.categoryService.update(this.form.value).subscribe(() => {
             this.snackBar.open('Categoría actualizada.', 'OK', { duration: 5000 });
         }, (error: HttpErrorResponse) => {
-            if (error.status == 422) {
-                this.form.get('name').setErrors({ 'unique': true });
+            if (error.status === 422) {
+                this.form.get('name').setErrors({ unique: true });
             }
         });
     }

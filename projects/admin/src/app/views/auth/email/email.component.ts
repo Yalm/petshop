@@ -13,7 +13,7 @@ export class EmailComponent implements OnInit {
     form: FormGroup;
 
     constructor(private auth: AuthService,
-        private snackBar: MatSnackBar) { }
+                private snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -35,7 +35,7 @@ export class EmailComponent implements OnInit {
             return;
         }
         if (err.email) {
-            this.form.get('email').setErrors({ 'exists': true });
+            this.form.get('email').setErrors({ exists: true });
         }
     }
 }

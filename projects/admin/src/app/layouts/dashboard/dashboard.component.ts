@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -6,14 +6,12 @@ import { DOCUMENT } from '@angular/common';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.sass']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-    darkTheme = localStorage.getItem('dark') ? true : false;;
+    darkTheme = localStorage.getItem('dark') ? true : false;
 
     constructor(@Inject(DOCUMENT) private document: Document) { }
 
-    ngOnInit() {
-    }
     activeDarkTheme(active: boolean): void {
         if (active) {
             this.document.body.classList.add('dark-theme');

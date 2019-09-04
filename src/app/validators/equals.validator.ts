@@ -13,6 +13,6 @@ export function EqualsValidator(controlToCompare: AbstractControl): ValidatorFn 
                 subscription.unsubscribe();
             });
         }
-        return controlToCompare && controlToCompare.value !== c.value ? { 'equals': true } : null;
+        return controlToCompare && controlToCompare.value !== c.value ? { equals: true } : null;
     };
 }

@@ -25,10 +25,10 @@ export class ShopComponent implements OnInit {
     pagination$: Observable<Pagination<Product>>;
 
     constructor(private productService: ProductService,
-        private categoryService: CategoryService,
-        private colorService: ColorService,
-        private router: Router,
-        private route: ActivatedRoute) { }
+                private categoryService: CategoryService,
+                private colorService: ColorService,
+                private router: Router,
+                private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.pagination$ = this.route.queryParams.pipe(
@@ -38,7 +38,7 @@ export class ShopComponent implements OnInit {
         this.colors$ = this.colorService.index();
 
         this.filters$ = this.route.queryParams.pipe(
-            map(params => new PetParams({ params, only: ['category', 'color','search'] }))
+            map(params => new PetParams({ params, only: ['category', 'color', 'search'] }))
         );
     }
 
@@ -52,6 +52,9 @@ export class ShopComponent implements OnInit {
     }
 
     page(event: PageEvent) {
-        this.router.navigate(['/shop'], { queryParams: { results: event.pageSize, page: event.pageIndex + 1 }, queryParamsHandling: 'merge' });
+        this.router.navigate(['/shop'], {
+            queryParams: { results: event.pageSize, page: event.pageIndex + 1 },
+            queryParamsHandling: 'merge'
+        });
     }
 }

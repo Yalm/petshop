@@ -16,6 +16,6 @@ export class LoaderComponent {
             .pipe(
                 debounce(() => timer(1000)),
                 takeWhile((res) => res <= true)
-            )
+            );
     }
 }

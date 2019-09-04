@@ -9,48 +9,48 @@ import { CartItem } from 'src/app/models/CartItem.model';
 
 export class ShoppingCartService {
 
-    public cart$ = new ReplaySubject<ShoppingCart>();
-    cart_init: ShoppingCart;
+    cart$ = new ReplaySubject<ShoppingCart>();
+    cartInit: ShoppingCart;
 
     constructor() {
         this.getCart();
     }
 
     add(item: CartItem): boolean {
-        const result = this.cart_init.add(item);
+        const result = this.cartInit.add(item);
         this.setNewValue();
         return result;
     }
 
     update(item: CartItem): void {
-        const index = this.cart_init.items.findIndex(x => x.id == item.id);
-        this.cart_init.items[index] = item;
+        const index = this.cartInit.items.findIndex(x => x.id === item.id);
+        this.cartInit.items[index] = item;
         this.setNewValue();
     }
 
     delete(id: number): void {
-        this.cart_init.delete(id);
+        this.cartInit.delete(id);
         this.setNewValue();
     }
 
     reset(): void {
-        this.cart_init.items = [];
+        this.cartInit.items = [];
         this.setNewValue();
     }
 
     shipping(total: number): void {
-        this.cart_init.shipping = total;
-        this.cart$.next(this.cart_init);
+        this.cartInit.shipping = total;
+        this.cart$.next(this.cartInit);
     }
 
     private getCart(): void {
         const items: CartItem[] = JSON.parse(localStorage.getItem('items')) || [];
-        this.cart_init = new ShoppingCart(items);
-        this.cart$.next(this.cart_init);
+        this.cartInit = new ShoppingCart(items);
+        this.cart$.next(this.cartInit);
     }
 
     private setNewValue(): void {
-        const CART_ADD = JSON.stringify(this.cart_init.items);
+        const CART_ADD = JSON.stringify(this.cartInit.items);
         localStorage.setItem('items', CART_ADD);
     }
 }

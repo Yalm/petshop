@@ -12,10 +12,11 @@ import { AddProductComponent } from '../add-product/add-product.component';
 export class QtyComponent {
 
     @Input() product: CartItem;
-    @Input() btn: boolean = true;
+    @Input() btn = true;
     @Input() quantity = 1;
 
-    constructor(private shoppingCartService: ShoppingCartService,
+    constructor(
+        private shoppingCartService: ShoppingCartService,
         private dialog: MatDialog
     ) { }
 

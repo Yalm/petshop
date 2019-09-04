@@ -24,9 +24,9 @@ export class OrderService {
             .pipe(
                 map(item => {
                     item.products.map(x => {
-                        x.quantity = x['pivot']['quantity'];
+                        x.quantity = x.pivot.quantity;
                         return x;
-                    })
+                    });
                     return item;
                 })
             );

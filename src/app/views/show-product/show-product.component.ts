@@ -14,8 +14,8 @@ export class ShowProductComponent implements OnInit {
 
     product$: Observable<Product>;
     constructor(private productService: ProductService,
-        private router: Router,
-        private route: ActivatedRoute) { }
+                private router: Router,
+                private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.product$ = this.route.params
@@ -25,6 +25,6 @@ export class ShowProductComponent implements OnInit {
                     this.router.navigateByUrl('404', { skipLocationChange: true });
                     return of(null);
                 })
-            )
+            );
     }
 }

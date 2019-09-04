@@ -14,7 +14,7 @@ export class UserCreateComponent implements OnInit {
     form: FormGroup;
 
     constructor(private snackBar: MatSnackBar,
-        private userService: UserService) { }
+                private userService: UserService) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -31,8 +31,8 @@ export class UserCreateComponent implements OnInit {
             this.snackBar.open('Usuario creado.', 'OK', { duration: 5000 });
             this.form.reset();
         }, (error: HttpErrorResponse) => {
-            if (error.status == 422) {
-                this.form.get('email').setErrors({ 'unique': true });
+            if (error.status === 422) {
+                this.form.get('email').setErrors({ unique: true });
             }
         });
     }

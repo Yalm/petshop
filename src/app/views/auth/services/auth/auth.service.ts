@@ -15,10 +15,12 @@ export class AuthService extends ng2Auth {
     public customer$: Observable<Customer>;
     private authState = new BehaviorSubject<boolean>(this.isAuthenticated());
 
-    constructor(shared: SharedService,
+    constructor(
+        shared: SharedService,
         local: LocalService,
         oauth: OauthService,
-        private http: HttpClient) {
+        private http: HttpClient
+    ) {
         super(shared, local, oauth);
         this.customer$ = this.authState.asObservable().pipe(
             switchMap(customer => {

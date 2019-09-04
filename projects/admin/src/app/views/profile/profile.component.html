@@ -1,7 +1,7 @@
 <div class="profile position-relative d-flex align-items-end">
     <img src="assets/img/vet-bg-2-min.jpg" alt="back" class="img-fluid back-profile position-absolute w-100">
     <div class="media align-items-center p-4">
-        <img [src]="user.avatar" [alt]="user.name" fallback-src class="rounded-circle">
+        <img [src]="user.avatar" [alt]="user.name" appFallbackSrc class="rounded-circle">
         <div class="media-body text-white ml-3">
             <h2 class="mb-0 h2">{{user.name}} {{user.surnames}}</h2>
             {{user.email}}

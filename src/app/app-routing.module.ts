@@ -25,12 +25,12 @@ const routes: Routes = [
     { path: '404', component: PageNotFoundComponent },
     {
         path: '', canActivate: [AuthGuard], loadChildren: () => {
-            return import('./views/profile/profile.module').then(m => m.ProfileModule)
+            return import('./views/profile/profile.module').then(m => m.ProfileModule);
         }
     },
     {
         path: '', loadChildren: () => {
-            return import('./views/auth/auth.module').then(m => m.AuthModule)
+            return import('./views/auth/auth.module').then(m => m.AuthModule);
         }
     },
     { path: '**', component: PageNotFoundComponent }
