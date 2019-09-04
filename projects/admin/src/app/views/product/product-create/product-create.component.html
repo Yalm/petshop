@@ -49,7 +49,7 @@
             </mat-tab>
 
             <mat-tab label="Transporte *">
-                <div class="row" [formGroup]="form.get('transport')">
+                <div class="row" formGroupName="transport">
                     <mat-form-field class="w-100 mb-2 col-sm-6" appearance="outline" hintLabel="Max 191 caracteres">
                         <mat-label>Anchura</mat-label>
                         <input matInput #width maxlength="191" formControlName="width" placeholder="Anchura"

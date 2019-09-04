@@ -47,11 +47,10 @@ export class ProductCreateComponent implements OnInit {
     }
 
     store() {
-        console.log(this.form.value);
-        // this.productService.store(this.form.value).subscribe((data) => {
-        //     this.snackBar.open('Producto creado.', 'OK', { duration: 5000 });
-        //     this.form.reset();
-        // });
+        this.productService.store(this.form.value).subscribe((data) => {
+            this.snackBar.open('Producto creado.', 'OK', { duration: 5000 });
+            this.form.reset();
+        });
     }
 
 }
