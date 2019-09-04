@@ -12,4 +12,13 @@ export interface Product {
     readonly short_description: string;
     readonly category: Category;
     readonly color: Color;
+    readonly transport?: Transport;
+}
+
+interface Transport {
+    readonly id?: number;
+    readonly depth: string;
+    readonly height: number;
+    readonly weight: string;
+    readonly width: string;
 }

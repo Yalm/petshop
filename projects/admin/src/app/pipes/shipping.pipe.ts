@@ -18,9 +18,6 @@ export class ShippingPipe implements PipeTransform {
             case 'province':
                 returnValue = this.ubigeo.province(value.departament_id, value.province_id);
                 break;
-            case 'district':
-                returnValue = this.ubigeo.district(value.province_id, value.district_id);
-                break;
             default:
                 returnValue = of(null);
                 break;

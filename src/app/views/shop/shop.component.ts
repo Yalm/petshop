@@ -10,7 +10,6 @@ import { Color } from 'src/app/models/Color.model';
 import { ColorService } from 'src/app/services/color/color.service';
 import { PageEvent } from '@angular/material';
 import { Pagination } from 'src/app/models/Pagination.model';
-import { HttpParams } from '@angular/common/http';
 import { PetParams } from 'src/app/models/Params.model';
 
 @Component({

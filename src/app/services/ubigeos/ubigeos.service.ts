@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -32,24 +32,6 @@ export class UbigeosService {
 
     province(parent: string, id: string): Observable<string> {
         return this.http.get<any[]>('assets/json/provincias.json').pipe(
-            map(response => {
-                const provinces = Object.keys(response).find(element => element == parent);
-                return response[provinces].find(x => x.id_ubigeo == id).nombre_ubigeo;
-            })
-        );
-    }
-
-    districts(id: string): Observable<any[]> {
-        return this.http.get<any[]>('assets/json/distritos.json').pipe(
-            map(response => {
-                const districts = Object.keys(response).find(element => element == id);
-                return response[districts];
-            })
-        );
-    }
-
-    district(parent: string, id: string): Observable<string> {
-        return this.http.get<any[]>('assets/json/distritos.json').pipe(
             map(response => {
                 const provinces = Object.keys(response).find(element => element == parent);
                 return response[provinces].find(x => x.id_ubigeo == id).nombre_ubigeo;

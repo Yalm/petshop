@@ -33,6 +33,12 @@ export class ProductCreateComponent implements OnInit {
             category_id: new FormControl(null, Validators.required),
             cover: new FormControl(null, Validators.required),
             description: new FormControl(null, Validators.minLength(10)),
+            transport: new FormGroup({
+                width: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                height: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                depth: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                weight: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
+            }),
             color_id: new FormControl(null)
         });
 
@@ -41,10 +47,11 @@ export class ProductCreateComponent implements OnInit {
     }
 
     store() {
-        this.productService.store(this.form.value).subscribe((data) => {
-            this.snackBar.open('Producto creado.', 'OK', { duration: 5000 });
-            this.form.reset();
-        });
+        console.log(this.form.value);
+        // this.productService.store(this.form.value).subscribe((data) => {
+        //     this.snackBar.open('Producto creado.', 'OK', { duration: 5000 });
+        //     this.form.reset();
+        // });
     }
 
 }

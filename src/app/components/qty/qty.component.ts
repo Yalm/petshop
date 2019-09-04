@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
 import { CartItem } from 'src/app/models/CartItem.model';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 @Component({
     selector: 'app-qty',
@@ -15,7 +16,7 @@ export class QtyComponent {
     @Input() quantity = 1;
 
     constructor(private shoppingCartService: ShoppingCartService,
-        private snackBar: MatSnackBar,
+        private dialog: MatDialog
     ) { }
 
     quantityUp(): void {
@@ -45,7 +46,11 @@ export class QtyComponent {
 
     addCartProduct(): void {
         if (this.shoppingCartService.add({ quantity: this.quantity, ... this.product })) {
-            this.snackBar.open('Su producto ha sido agregado.', 'Ok', { duration: 3000 });
+            this.dialog.open(AddProductComponent, {
+                position: { top: '0' },
+                autoFocus: false,
+                data: this.product
+            });
         }
     }
 }

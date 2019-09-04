@@ -1,0 +1,21 @@
+<div class="d-flex text-success border-bottom border-secondary align-content-center pb-2">
+    <i class="material-icons mr-1">check_circle_outline </i>
+    <span class="text-truncate">Tu producto se agregó al carrito</span>
+    <button type="button" class="bg-transparent border-secondary p-0 ml-auto text-secondary rounded-circle btn-close"
+        (click)="onNoClick()">
+        <i class="material-icons">close</i>
+    </button>
+</div>
+<div class="row mx-auto align-items-center py-2">
+    <div class="col-sm-3 col-5 pl-0">
+        <img [src]="data.cover" [alt]="data.name" class="img-fluid">
+    </div>
+    <div class="col-sm-9 col-7 text-dark pl-0">
+        <h6>{{data.name}}</h6>
+        <p class="mb-0">S/ {{data.price}}</p>
+    </div>
+</div>
+<a routerLink="/cart" (click)="onNoClick()"
+    class="align-items-center button-petshop d-flex justify-content-center position-relative text-center text-decoration-none text-white h-32">Ir
+    al carrito</a>
+<button type="button" class="btn btn-link w-100 text-dark" (click)="onNoClick()">Seguir comprando</button>

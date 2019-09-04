@@ -34,8 +34,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Categoría</mat-label>
                     <mat-select placeholder="Categoría" formControlName="category_id" required>
-                        <mat-optgroup *ngFor="let category of categories | async"
-                            [label]="category.name | titlecase">
+                        <mat-optgroup *ngFor="let category of categories | async" [label]="category.name | titlecase">
                             <mat-option *ngFor="let subCategory of category.categories" [value]="subCategory.id">
                                 {{subCategory.name}}
                             </mat-option>
@@ -47,6 +46,46 @@
 
             <mat-tab label="Imagen *">
                 <app-upload formControlName="cover"></app-upload>
+            </mat-tab>
+
+            <mat-tab label="Transporte *">
+                <div class="row" [formGroup]="form.get('transport')">
+                    <mat-form-field class="w-100 mb-2 col-sm-6" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Anchura</mat-label>
+                        <input matInput #width maxlength="191" formControlName="width" placeholder="Anchura"
+                            name="width" required>
+                        <span matSuffix>cm</span>
+                        <mat-hint align="end">{{width.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="width"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-2 col-sm-6" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Altura</mat-label>
+                        <input matInput #height maxlength="191" formControlName="height" placeholder="Altura"
+                            name="height" required>
+                        <span matSuffix>cm</span>
+                        <mat-hint align="end">{{height.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="height"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-2 col-sm-6" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Profundidad</mat-label>
+                        <input matInput #depth maxlength="191" formControlName="depth" placeholder="Altura" name="depth"
+                            required>
+                        <span matSuffix>cm</span>
+                        <mat-hint align="end">{{depth.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="depth"></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100 mb-2 col-sm-6" appearance="outline" hintLabel="Max 191 caracteres">
+                        <mat-label>Peso</mat-label>
+                        <input matInput #weight maxlength="191" formControlName="weight" placeholder="Peso" name="weight"
+                            required>
+                        <span matSuffix>kg</span>
+                        <mat-hint align="end">{{weight.value?.length || 0}}/191</mat-hint>
+                        <mat-error appInvalidMessage="weight"></mat-error>
+                    </mat-form-field>
+                </div>
             </mat-tab>
 
             <mat-tab label="Información extra">
@@ -69,4 +108,5 @@
         </mat-tab-group>
     </mat-card-content>
 </mat-card>
-<button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button class="position-absolute link-new">Guardar</button>
+<button type="button" [disabled]="form.invalid" (click)="store()" mat-raised-button
+    class="position-absolute link-new">Guardar</button>

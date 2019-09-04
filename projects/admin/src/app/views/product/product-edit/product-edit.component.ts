@@ -36,6 +36,16 @@ export class ProductEditComponent implements OnInit {
             category_id: new FormControl(product['category_id'], Validators.required),
             cover: new FormControl(product.cover, Validators.required),
             description: new FormControl(product.description, Validators.minLength(10)),
+            transport: new FormGroup({
+                width: new FormControl(product.transport ? product.transport.width : null,
+                    Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                height: new FormControl(product.transport ? product.transport.height : null,
+                    Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                depth: new FormControl(product.transport ? product.transport.depth : null,
+                    Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
+                weight: new FormControl(product.transport ? product.transport.weight : null,
+                    Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
+            }),
             color_id: new FormControl(product['color_id'])
         });
 

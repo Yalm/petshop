@@ -36,6 +36,7 @@ import { Ng2UiAuthModule } from 'ng2-ui-auth';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { MatPaginatorIntl } from '@angular/material';
 import { getDutchPaginatorIntl } from './shared/class/MatPaginatorIntlCustom';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { getDutchPaginatorIntl } from './shared/class/MatPaginatorIntlCustom';
         ServicesComponent,
         ContactComponent,
         MegaMenuComponent,
-        LoaderComponent
+        LoaderComponent,
+        AddProductComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -75,6 +77,7 @@ import { getDutchPaginatorIntl } from './shared/class/MatPaginatorIntlCustom';
         provide: MatPaginatorIntl,
         useValue: getDutchPaginatorIntl()
     }],
+    entryComponents: [AddProductComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

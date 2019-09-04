@@ -2,8 +2,7 @@
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
-                <img [src]="customer.avatar"
-                    fallback-src class="img-fluid rounded-circle" [alt]="customer.name">
+                <img [src]="customer.avatar" fallback-src class="img-fluid rounded-circle" [alt]="customer.name">
             </a>
         </li>
         <ng-template #login>
@@ -24,7 +23,7 @@
 <nav class="header-section2">
     <ul class="menu-header2 d-flex align-items-center list-unstyled container mb-0">
         <li class="logo px-3">
-            <a routerLink="/"><img src="assets/img/logo-header.png"  alt="logo"></a>
+            <a routerLink="/"><img src="assets/img/logo-header.png" alt="logo"></a>
         </li>
         <li class="px-3"><a class="text-decoration-none" routerLink="/">Inicio</a></li>
         <li class="px-3"><a class="text-decoration-none" routerLink="/about">Nosotros</a></li>
@@ -35,15 +34,8 @@
         <li class="px-3"><a class="text-decoration-none" routerLink="/services">Servicios</a></li>
         <li class="px-3"><a class="text-decoration-none" routerLink="/contact">Contáctanos</a></li>
         <li class="icons-header2 ml-md-auto">
-            <a class="cart-short-view text-decoration-none" routerLink="/cart" aria-label="Ir a la pagina de carrito">
-                <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
-                        <path
-                            d="M16,4V15.38L14.76,16H5.24L4,15.38V4H16M13.5,1h-7L6,1.52V3H3V16l2,1H15l2-1V3H14V1.52L13.5,1ZM7,3V2h6V3Z"
-                            fill="#5e5e5e"></path>
-                        <path d="M7,7H6V6H7Zm7-1H13V7h1ZM7,4H6V5H7Zm7,0H13V5h1Z" fill="#5e5e5e"></path>
-                    </svg>
-                </span>
+            <a class="cart-short-view text-decoration-none d-flex align-items-center" routerLink="/cart" aria-label="Ir a la pagina de carrito">
+                <i class="material-icons">shopping_cart</i>
                 <ng-container *ngIf="shoppingCartService.cart$ | async as cart">
                     <span class="cart-total mx-lg-2">S/ {{cart.subtotal | number: '1.2-2' }}</span>
                     <span

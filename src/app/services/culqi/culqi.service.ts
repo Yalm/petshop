@@ -41,7 +41,6 @@ export class CulqiService {
 
     private initCulqi(key?: string, options?: OptionsCulqi) {
         this.load.show();
-        let c: number = 0;
         if (!document.getElementById('culqui-lib')) {
             const culqiScript = document.createElement('script');
             culqiScript.setAttribute('src', 'https://checkout.culqi.com/js/v3');
@@ -52,11 +51,6 @@ export class CulqiService {
             this.load.hide();
         }
         const checkCulqi = setInterval(() => {
-            c++;
-            if (c > 10) {
-                clearInterval(checkCulqi);
-                this.load.hide();
-            }
             if ((<any>window).Culqi) {
                 clearInterval(checkCulqi);
                 this.setOptions(key, options);

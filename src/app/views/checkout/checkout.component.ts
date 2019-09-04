@@ -47,10 +47,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             switchMap(department => this.ubigueo.provinces(department))
         );
 
-        this.districts = this.form.get('province').valueChanges.pipe(
-            switchMap(province => this.ubigueo.districts(province))
-        );
-
         this.subscription = this.culqi.token.subscribe(token => {
             if (token.id) {
                 this.form.get('culqi_token').setValue(token.id);
@@ -104,7 +100,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     private deleteOrAddValidate(validators?: ValidatorFn | ValidatorFn[]): void {
-        let items = ['department', 'province', 'district'];
+        let items = ['department', 'province'];
         for (let key of items) {
             if (validators) {
                 this.form.get(key).setValidators(validators);

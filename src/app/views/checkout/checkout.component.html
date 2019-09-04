@@ -8,7 +8,7 @@
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">location_searching</mat-icon>
-                            Envío a domicilio
+                            Envío por encomienda
                         </ng-template>
 
                         <mat-form-field class="col-md-6 mb-2 pt-3" appearance="outline">
@@ -29,16 +29,6 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error appInvalidMessage="province"></mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field class="col-md-6 mb-2" appearance="outline">
-                            <mat-label>Distrito</mat-label>
-                            <mat-select placeholder="Distrito" formControlName="district">
-                                <mat-option *ngFor="let item of districts | async" [value]="item.id_ubigeo">
-                                    {{item.nombre_ubigeo}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error appInvalidMessage="district"></mat-error>
                         </mat-form-field>
                     </mat-tab>
 
