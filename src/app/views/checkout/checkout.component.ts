@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.departments = this.ubigueo.departments();
 
         this.provinces = this.form.get('department').valueChanges.pipe(
-            tap(department => this.shoppingCartService.shipping(department === '3655' ? 8 : 28)),
+            tap(department => this.shoppingCartService.shipping(department === '3655' ? 10 : 30)),
             switchMap(department => this.ubigueo.provinces(department))
         );
 
