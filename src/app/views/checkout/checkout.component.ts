@@ -36,8 +36,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             method: new FormControl(null, Validators.required),
             shipping: new FormControl(true),
             department: new FormControl(null, Validators.required),
-            province: new FormControl(null, Validators.required),
-            district: new FormControl(null, Validators.required)
+            province: new FormControl(null, Validators.required)
         });
 
         this.departments = this.ubigueo.departments();
