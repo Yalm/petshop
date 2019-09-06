@@ -67,8 +67,7 @@ class OrderController extends Controller
             'items.*.quantity' => 'required|numeric',
             'shipping' => 'required|boolean',
             'department' => 'required_if:shipping,true',
-            'province' => 'required_if:shipping,true',
-            'district' => 'required_if:shipping,true'
+            'province' => 'required_if:shipping,true'
         ]);
         $request->merge(['customer' => Auth::user()]);
 

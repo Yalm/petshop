@@ -17,9 +17,9 @@ class CreateShippingsTable extends Migration
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders');
 
-            $table->string('departament_id',4)->nullable();
-            $table->string('province_id',4)->nullable();
-            $table->string('district_id',4);
+            $table->string('departament_id',4);
+            $table->string('province_id',4);
+            $table->string('district_id',4)->nullable();
             $table->decimal('price',4,2);
         });
     }

@@ -14,7 +14,7 @@ class Shipping extends Model
         'order_id', 'departament_id', 'province_id','district_id','price'
     ];
 
-    public function orders()
+    public function order()
     {
         return $this->hasOne(Order::class);
     }

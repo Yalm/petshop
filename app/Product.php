@@ -28,6 +28,11 @@ class Product extends Model
         return Storage::url($value);
     }
 
+    public function transport()
+	{
+	  	return $this->hasOne(Transport::class);
+    }
+
     public function scopePrice($query, $min_price, $max_price)
     {
         if ($min_price && $max_price)

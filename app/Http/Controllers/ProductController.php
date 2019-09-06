@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Transport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Rules\NotParentCategory;
@@ -33,20 +34,31 @@ class ProductController extends Controller
             'price' => 'required|numeric|between:3,99999999.99',
             'stock' => 'nullable|numeric|between:0,32767',
             'short_description' => 'required|max:400',
-            'description' => 'string|min:10',
+            'description' => 'nullable|string|min:10',
             'category_id' => ['required', 'numeric', 'exists:categories,id', new NotParentCategory],
-            'color_id' => 'numeric|exists:colors,id',
-            'cover' => 'required|image'
+            'color_id' => 'nullable|numeric|exists:colors,id',
+            'transport.depth' => 'nullable|numeric|between:0,32767',
+            'transport.height' => 'nullable|numeric|between:0,32767',
+            'transport.weight' => 'nullable|numeric|between:0,32767',
+            'transport.width' => 'nullable|numeric|between:0,32767'
         ]);
 
         $request->merge([
             'url' => substr(str_slug($request->input('name')), 0, 191)
         ]);
 
-        $data = $request->except('cover');
-        $data['cover'] = $request->file('cover')->store('products');
+        $product = Product::create($request->except(['cover','transport']));
 
-        $product = Product::create($data);
+        if($request->input('transport') && $request->input('transport.depth')) {
+            Transport::create([
+                'product_id' => $product->id,
+                'depth' => $request->input('transport.depth'),
+                'height' => $request->input('transport.height'),
+                'weight' => $request->input('transport.weight'),
+                'width' => $request->input('transport.width')
+            ]);
+        }
+
         return response()->json($product);
     }
 
@@ -62,7 +74,7 @@ class ProductController extends Controller
         } else {
             $product = Product::where('id', $url)
                 ->where('actived', true)
-                ->with(['category', 'color'])
+                ->with(['category', 'color','transport'])
                 ->firstOrFail();
         }
 
@@ -76,22 +88,29 @@ class ProductController extends Controller
             'price' => 'required|numeric|between:3,99999999.99',
             'stock' => 'required|numeric|between:0,32767',
             'category_id' => ['required', 'numeric', 'exists:categories,id', new NotParentCategory],
-            'color_id' => 'numeric|exists:colors,id',
+            'color_id' => 'nullable|numeric|exists:colors,id',
             'short_description' => 'required|max:400',
-            'description' => 'string|min:10'
+            'description' => 'nullable|string|min:10',
+            'transport.depth' => 'nullable|numeric|between:0,32767',
+            'transport.height' => 'nullable|numeric|between:0,32767',
+            'transport.weight' => 'nullable|numeric|between:0,32767',
+            'transport.width' => 'nullable|numeric|between:0,32767'
         ]);
 
         $product = Product::findOrFail($id);
         $request->merge(['url' => substr(str_slug($request->input('name')), 0, 191)]);
 
-        $data = $request->except('cover');
-
-        if ($request->hasFile('cover')) {
-            Storage::delete($product->getOriginal('cover'));
-            $data['cover'] =  $request->file('cover')->store('products');
+        if($request->input('transport') && $request->input('transport.depth')) {
+            Transport::updateOrCreate([
+                'product_id' => $id,
+                'depth' => $request->input('transport.depth'),
+                'height' => $request->input('transport.height'),
+                'weight' => $request->input('transport.weight'),
+                'width' => $request->input('transport.width')
+            ]);
         }
 
-        $product->update($data);
+        $product->update($request->except(['cover','transport']));
         return response()->json($product);
     }
 
@@ -105,6 +124,25 @@ class ProductController extends Controller
         }
         Storage::delete($product->getOriginal('cover'));
         $product->delete();
+        return response()->json($product);
+    }
+
+    public function upload(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $this->validate($request, [
+            'cover' => 'required|image'
+        ]);
+
+        if($product->cover) {
+            Storage::delete($product->getOriginal('cover'));
+        }
+
+        $product->update([
+            'cover' => $request->file('cover')->store('products')
+        ]);
+
         return response()->json($product);
     }
 

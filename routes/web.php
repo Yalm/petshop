@@ -80,6 +80,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('products/{id}', 'ProductController@update');
     $router->post('products', 'ProductController@store');
     $router->delete('products/{id}', 'ProductController@destroy');
+    $router->post('product/upload/{id}', 'ProductController@upload');
     $router->get('product/count', 'ProductController@count');
 
     $router->get('reports/customer', 'ReportController@topCustomer');

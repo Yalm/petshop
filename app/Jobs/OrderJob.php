@@ -155,7 +155,6 @@ class OrderJob extends Job
                 'order_id' => $order->id,
                 'departament_id' => $this->data['department'],
                 'province_id' => $this->data['province'],
-                'district_id' => $this->data['district'],
                 'price' => $this->data['department'] == '3655' ? 8:28
             ]);
         }
