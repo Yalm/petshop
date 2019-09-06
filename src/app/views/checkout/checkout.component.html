@@ -102,7 +102,8 @@
         <ng-template #orderTemplate>
             <div class="col-12">
                 <h2>Gracias. Tu orden ha sido recibida.</h2>
-                <ul class="pt-2 pb-3 list-unstyled">
+                <p>¡Gracias por comprar en Pet Shop! Te confirmamos los siguientes datos importantes de tu pedido:</p>
+                <ul class="list-unstyled">
                     <li>
                         <span>Total:</span>
                         <strong class="ml-2">S/ {{order.total | number: '1.2-2'}}</strong>
@@ -113,7 +114,18 @@
                             Bancario':'Tarjeta de credito' }}</strong>
                     </li>
                 </ul>
-                <h3>Detalles del pedido</h3>
+                <ng-container *ngIf="form.get('method').value === 'bank_deposit'">
+                    <p>Recuerda que tienes hasta 24 horas útiles para realizar tu pago. Sigue estos sencillos pasos:</p>
+                    <ul class="list-number">
+                        <li>Ver el correo enviado por Pet Shop con tu clave CIP</li>
+                        <li>Elige donde efectuarás tu pago, Banca por internet , móvil,Agencias y agente.</li>
+                        <li>Recuerda indicar tu código CIP y ¡Listo!</li>
+                    </ul>
+                </ng-container>
+                <p class="mb-0">La validación es automática, sin embargo, en algunas ocasiones podría tardar 10 minutos. Para tu
+                    comodidad, Pet Shop enviará actulizaciones sobre tu pedido a través de correos.</p>
+
+                <h3 class="pt-4">Detalles del pedido</h3>
                 <table class="table mt-3">
                     <thead>
                         <tr>
