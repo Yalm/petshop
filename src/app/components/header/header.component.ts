@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
     search(): void {
         if (this.form.valid) {
             const search = this.form.value.search.trim().toLowerCase();
+            this.searchActive = false;
             this.router.navigate(['/shop'], { queryParams: { search }, queryParamsHandling: 'merge' });
         }
     }
