@@ -19,10 +19,12 @@ export class ProductCreateComponent implements OnInit {
     categories: Observable<Category[]>;
     colors: Observable<Color[]>;
 
-    constructor(public categoryService: CategoryService,
-                public colorService: ColorService,
-                private snackBar: MatSnackBar,
-                private productService: ProductService) { }
+    constructor(
+        public categoryService: CategoryService,
+        public colorService: ColorService,
+        private snackBar: MatSnackBar,
+        private productService: ProductService
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -34,10 +36,10 @@ export class ProductCreateComponent implements OnInit {
             cover: new FormControl(null, Validators.required),
             description: new FormControl(null, Validators.minLength(10)),
             transport: new FormGroup({
-                width: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
-                height: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
-                depth: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')),
-                weight: new FormControl(null, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'))
+                width: new FormControl(null, [Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'), Validators.max(32767)]),
+                height: new FormControl(null, [Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'), Validators.max(32767)]),
+                depth: new FormControl(null, [Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'), Validators.max(32767)]),
+                weight: new FormControl(null, [Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$'), Validators.max(32767)])
             }),
             color_id: new FormControl(null)
         });
@@ -47,10 +49,9 @@ export class ProductCreateComponent implements OnInit {
     }
 
     store() {
-        this.productService.store(this.form.value).subscribe((data) => {
+        this.productService.store(this.form.value).subscribe(() => {
             this.snackBar.open('Producto creado.', 'OK', { duration: 5000 });
             this.form.reset();
         });
     }
-
 }

@@ -59,6 +59,9 @@ export class InvalidMessageDirective implements OnInit, OnDestroy {
             case 'min':
                 message = `El tamaño de ${nameControl} debe ser de al menos ${this.control.getError('min').min}.`;
                 break;
+            case 'max':
+                message = `El tamaño de ${nameControl} debe ser de maximo ${this.control.getError('max').max}.`;
+                break;
             case 'unique':
                 message = `El campo ${nameControl} ya ha sido registrado.`;
                 break;
