@@ -155,7 +155,7 @@ class OrderJob extends Job
                 'order_id' => $order->id,
                 'departament_id' => $this->data['department'],
                 'province_id' => $this->data['province'],
-                'price' => $this->data['department'] == '3655' ? 8:28
+                'price' => $this->data['department'] == '3655' ? 10:30
             ]);
         }
     }
@@ -176,7 +176,7 @@ class OrderJob extends Job
             $product->quantity = $this->data['items'][$key]['quantity'];
             $total += $product->price * $product->quantity;
         }
-        $total += $this->data['shipping'] ? $this->data['department'] == '3655' ? 8 : 28 :0;
+        $total += $this->data['shipping'] ? $this->data['department'] == '3655' ? 10 : 30 :0;
 
         $products->total = $total;
 
