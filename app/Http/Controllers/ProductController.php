@@ -68,13 +68,12 @@ class ProductController extends Controller
 
         if ($request->query('url')) {
             $product = Product::where('url', $url)
-                ->where('actived', true)
                 ->with(['category', 'color'])
                 ->firstOrFail();
         } else {
             $product = Product::where('id', $url)
-                ->where('actived', true)
-                ->with(['category', 'color','transport'])
+                ->with(['category', 'color'])
+                ->withoutGlobalScopes()
                 ->firstOrFail();
         }
 
