@@ -23,14 +23,13 @@ class OrderController extends Controller
         if (Auth::guard('user')->check()) {
             $orders = Order::orderBy($request->query('sort', 'created_at'), $request->query('order', 'asc'))
                 ->search($request->query('search'))
-                ->with(['payment', 'customer','state'])
+                ->with(['customer','state'])
                 ->paginate($request->query('results', 9));
 
             return response()->json($orders);
         } else if (Auth::check()) {
             $orders = Order::latest()
                 ->where('customer_id', Auth::user()->getJWTIdentifier())
-                ->with('payment')
                 ->paginate($request->query('results', 10));
             return response()->json($orders);
         }

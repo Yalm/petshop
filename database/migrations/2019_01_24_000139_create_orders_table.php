@@ -19,9 +19,9 @@ class CreateOrdersTable extends Migration
 
             $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->decimal('amount',8,2);
             $table->string('plus_info', 500)->nullable();
             $table->string('error_log', 191)->nullable();
-
             $table->integer('state_id')->unsigned();
             $table->foreign('state_id')->references('id')->on('states');
 

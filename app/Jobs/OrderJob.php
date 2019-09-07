@@ -83,6 +83,7 @@ class OrderJob extends Job
         $order = Order::create([
             'customer_id' => $this->customer->id,
             'plus_info' => $this->plus_info,
+            'amount' => $items->total,
             'state_id' => 4
         ]);
 
@@ -107,6 +108,7 @@ class OrderJob extends Job
         $order = Order::create([
             'customer_id' => $this->customer->id,
             'plus_info' => $this->plus_info,
+            'amount' => $items->total,
             'state_id' => 3
         ]);
 
@@ -132,13 +134,6 @@ class OrderJob extends Job
             $order->delete();
             return;
         }
-
-        Payment::create([
-            'order_id' => $order->id,
-            'amount' => 0.00,
-            'reference_code' => 'SIN PAGAR',
-            'payment_type_id' => 2
-        ]);
 
         foreach ($items as $product) {
             $order->products()->attach($product->id, ['quantity' => $product->quantity]);
