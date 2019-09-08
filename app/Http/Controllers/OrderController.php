@@ -92,7 +92,7 @@ class OrderController extends Controller
         return response()->json($orders);
     }
 
-    public function payment()
+    public function payment(Request $request)
     {
         $this->validate($request, [
             'order_id' => 'required|numeric|exists:orders,id',
