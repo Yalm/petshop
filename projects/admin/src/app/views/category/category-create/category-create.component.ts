@@ -16,8 +16,9 @@ export class CategoryCreateComponent implements OnInit {
     form: FormGroup;
     categories$: Observable<Category[]>;
 
-    constructor(private categoryService: CategoryService,
-                private snackBar: MatSnackBar) { }
+    constructor(
+        private categoryService: CategoryService,
+        private snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.form = new FormGroup({

@@ -23,8 +23,7 @@ export class ProductCreateComponent implements OnInit {
         public categoryService: CategoryService,
         public colorService: ColorService,
         private snackBar: MatSnackBar,
-        private productService: ProductService
-    ) { }
+        private productService: ProductService) { }
 
     ngOnInit() {
         this.form = new FormGroup({

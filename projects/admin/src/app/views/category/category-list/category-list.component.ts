@@ -17,8 +17,9 @@ export class CategoryListComponent implements OnInit {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    constructor(private categoryService: CategoryService,
-                private dialog: MatDialog) { }
+    constructor(
+        private categoryService: CategoryService,
+        private dialog: MatDialog) { }
 
     ngOnInit() {
         this.categoryService.index({ all: true }).subscribe(response => {
@@ -37,13 +38,11 @@ export class CategoryListComponent implements OnInit {
             width: '250px'
         }).afterClosed().subscribe((result: boolean) => {
             if (result) {
-                this.categoryService.destroy(id).subscribe(
-                    () => {
-                        const index = this.dataSource.data.findIndex(x => x.id === id);
-                        this.dataSource.data.splice(index, 1);
-                        this.dataSource._updateChangeSubscription();
-                    }
-                );
+                this.categoryService.destroy(id).subscribe(() => {
+                    const index = this.dataSource.data.findIndex(x => x.id === id);
+                    this.dataSource.data.splice(index, 1);
+                    this.dataSource._updateChangeSubscription();
+                });
             }
         });
     }

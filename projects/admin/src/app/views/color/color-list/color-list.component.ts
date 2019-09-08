@@ -19,7 +19,7 @@ export class ColorListComponent implements OnInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private colorService: ColorService,
-                private dialog: MatDialog) { }
+        private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.colorService.index().subscribe(response => {
@@ -66,8 +66,7 @@ export class ColorListComponent implements OnInit {
                     const index = this.dataSource.data.findIndex(x => x.id === id);
                     this.dataSource.data.splice(index, 1);
                     this.dataSource._updateChangeSubscription();
-                    }
-                );
+                });
             }
         });
 

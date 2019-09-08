@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../../models/User.model';
+import { User } from '../../models/user.model';
 import { CreateFormData } from '../../shared/class/CreateFormData';
 
 @Injectable({

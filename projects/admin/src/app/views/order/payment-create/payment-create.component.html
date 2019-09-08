@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="d-flex justify-content-between align-items-center">
+    Pago Manual
+    <button mat-icon-button aria-label="icon close" cdkFocusInitial (click)="onNoClick()" [disabled]="disabledButtons">
+        <mat-icon>close</mat-icon>
+    </button>
+</h1>
+<form mat-dialog-content [formGroup]="form" appLoader>
+    <p>¡No podrás revertir esto!</p>
+    <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Monto</mat-label>
+        <input matInput #amount maxlength="191" formControlName="amount" placeholder="Monto" name="amount"
+            [readonly]="lock" required>
+        <mat-error appInvalidMessage="amount"></mat-error>
+        <button type="button" mat-icon-button matSuffix (click)="lock = !lock" [disabled]="disabledButtons"
+            [attr.aria-label]="'Desbloquear'" [attr.aria-pressed]="lock">
+            <mat-icon>{{lock ? 'lock' : 'lock_open'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-checkbox formControlName="decrease_stock" color="primary">Disminuir el stock de los productos</mat-checkbox>
+</form>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" [disabled]="disabledButtons">No Gracias</button>
+    <button mat-raised-button (click)="store()" [disabled]="form.invalid || disabledButtons"
+        color="primary">Guardar</button>
+</div>

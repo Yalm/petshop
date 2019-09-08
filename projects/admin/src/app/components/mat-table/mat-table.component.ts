@@ -36,14 +36,21 @@ export class MatTableComponent<T = any> implements OnInit {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-    constructor(private http: HttpClient,
-                private dialog: MatDialog) { }
+    constructor(
+        private http: HttpClient,
+        private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.displayedColumns = this.columns.map(x => x.name);
         this.action = this.columns.find(x => x.name === 'actions');
         this.columns = this.columns.filter(x => x.name !== 'actions');
-        this.dataSource = new PetDataSource(this.paginator, this.url, this.http, this.sort, this.paramsSet);
+        this.dataSource = new PetDataSource({
+            paginator: this.paginator,
+            url: this.url,
+            http: this.http,
+            sort: this.sort,
+            params: this.paramsSet
+        });
     }
 
     applyFilter(filterValue: string): void {

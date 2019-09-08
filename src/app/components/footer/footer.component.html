@@ -2,19 +2,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a routerLink="/"><img src="assets/img/logo.png" alt="logo" width="150" height="70"></a>
+                <a routerLink="/"><img src="/assets/img/logo.png" alt="logo" width="150" height="70"></a>
                 <p class="pt-2 pb-1 text-white">Proporcionamos servicios integrales de la más alta calidad para las
                     mascotas a través de sistemas preventivos, emergentes y de medicina interna para así mejorar la
                     salud de las personas incrementando la relación Humano-Animal.</p>
                 <ul class="list-unstyled d-flex">
-                    &nbsp;&nbsp;&nbsp;
                     <li class="mr-2">
                         <a href="https://es-la.facebook.com/pages/category/Company/Pet-Shop-Veterinaria-Huancayo-EIRL-137878490009558/"
                             target="_blank">
                             <img src="/assets/svg/facebook.svg" class="img-fluid">
                         </a>
                     </li>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="mr-2">
                         <a href="https://www.instagram.com/petshopveterinariahuancayo/?hl=es-la"
                             target="_blank">
@@ -23,7 +21,7 @@
                     </li>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <li class="mr-2">
-                        <a href="https://twitter.com/alejand49905049"
+                        <a href="https://www.youtube.com/watch?v=B1aKh8RL7Ro"
                             target="_blank">
                             <img src="/assets/svg/twitter.svg" class="img-fluid">
                         </a>
@@ -34,7 +32,7 @@
                 <h6 class="title-footer pb-4">Categorías</h6>
                 <ul class="menu-items-footer list-unstyled">
                     <li *ngFor="let category of categories$ | async">
-                        <a class="item-link text-decoration-none text-capitalize" routerLink="/shop"
+                        <a class="item-link text-decoration-none" routerLink="/shop"
                             [queryParams]="{ category: category.name}">{{category.name}}</a>
                     </li>
                 </ul>

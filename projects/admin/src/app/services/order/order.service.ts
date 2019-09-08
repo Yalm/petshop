@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Order } from 'src/app/models/Order.model';
+import { Order, Payment } from 'src/app/models/Order.model';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +12,10 @@ export class OrderService {
 
     update(data: Order): Observable<Order> {
         return this.http.put<Order>(`orders/${data.id}`, data);
+    }
+
+    payment(data: Payment): Observable<Payment> {
+        return this.http.post<Payment>('order/payment', data);
     }
 
     count(): Observable<number> {

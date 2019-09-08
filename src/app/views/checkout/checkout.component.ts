@@ -22,11 +22,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     provinces: Observable<any[]>;
     districts: Observable<any[]>;
 
-    constructor(public shoppingCartService: ShoppingCartService,
-                private culqi: CulqiService,
-                private snackBar: MatSnackBar,
-                private ubigueo: UbigeosService,
-                private orderService: OrderService) { }
+    constructor(
+        public shoppingCartService: ShoppingCartService,
+        private culqi: CulqiService,
+        private snackBar: MatSnackBar,
+        private ubigueo: UbigeosService,
+        private orderService: OrderService) { }
 
     ngOnInit() {
         this.form = new FormGroup({

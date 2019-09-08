@@ -8,10 +8,11 @@ export interface Order {
     readonly state: StatusOrder;
     readonly products: CartItem[];
     readonly plus_info?: string;
-    readonly payment?: Payment;
+    payment?: Payment;
     readonly created_at: string;
     readonly state_id: number;
     readonly error_log: string;
+    readonly amount: number;
     readonly shipping?: Shipping;
 }
 
@@ -30,11 +31,13 @@ export interface Shipping {
     distric: Observable<string>;
 }
 
-interface Payment {
+export interface Payment {
     readonly id: number;
     readonly payment_type_id: number;
     readonly payment_type: PaymentTypes;
     readonly amount: number;
+    readonly md_icon: string;
+    readonly created_at: string;
     readonly reference_code?: string | number;
 }
 

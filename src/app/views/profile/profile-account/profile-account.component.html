@@ -42,7 +42,7 @@
         </mat-form-field>
 
         <div class="form-group col-md-12 d-flex justify-content-end">
-            <button type="submit" class="button-petshop text-center text-white position-relative">Guardar</button>
+            <button type="submit" class="button-petshop text-center text-white position-relative" [disabled]="form.invalid">Guardar</button>
         </div>
     </form>
 </ng-container>

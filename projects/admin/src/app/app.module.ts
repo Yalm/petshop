@@ -14,7 +14,7 @@ import { HeaderComponent } from './components/header/header.component';
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
 import { MatPaginatorIntl } from '@angular/material';
-import { MatPaginatorIntlCustom } from './shared/class/MatPaginatorIntlCustom';
+import { getDutchPaginatorIntl } from 'src/app/shared/class/MatPaginatorIntlCustom';
 
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 registerLocaleData(localeEsAr, 'es-PE');
@@ -54,7 +54,7 @@ import { FallbackSrcDirective } from './directives/fallback-src/fallback-src.dir
         { provide: LOCALE_ID, useValue: 'es-PE' },
         {
             provide: MatPaginatorIntl,
-            useClass: MatPaginatorIntlCustom
+            useValue: getDutchPaginatorIntl()
         },
         {
             provide: HTTP_INTERCEPTORS,

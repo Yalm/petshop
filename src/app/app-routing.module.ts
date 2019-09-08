@@ -24,14 +24,13 @@ const routes: Routes = [
     { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard, CompleteInfoGuard] },
     { path: '404', component: PageNotFoundComponent },
     {
-        path: '', canActivate: [AuthGuard], loadChildren: () => {
-            return import('./views/profile/profile.module').then(m => m.ProfileModule);
-        }
+        path: '', canActivate: [AuthGuard],
+        loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
+
     },
     {
-        path: '', loadChildren: () => {
-            return import('./views/auth/auth.module').then(m => m.AuthModule);
-        }
+        path: '', loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule)
+
     },
     { path: '**', component: PageNotFoundComponent }
 ];

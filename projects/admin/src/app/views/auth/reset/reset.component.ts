@@ -13,17 +13,18 @@ import { EqualsValidator } from 'src/app/validators/equals.validator';
 export class ResetComponent implements OnInit {
     form: FormGroup;
 
-    constructor(private auth: AuthService,
-                private snackBar: MatSnackBar,
-                private router: Router,
-                private route: ActivatedRoute) { }
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private router: Router,
+        private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.form = new FormGroup({
             token: new FormControl(this.route.snapshot.queryParams.token, [Validators.required]),
             email: new FormControl(null, [Validators.required, Validators.email]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-            password_confirmation: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            password_confirmation: new FormControl(null, [Validators.required, Validators.minLength(6)])
         });
         this.form.get('password_confirmation').setValidators(EqualsValidator(this.form.get('password')));
     }

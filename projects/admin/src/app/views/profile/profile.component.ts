@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { User } from '../../models/User.model';
+import { User } from '../../models/user.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
 import { MatSnackBar } from '@angular/material';
@@ -16,9 +16,10 @@ export class ProfileComponent implements OnInit {
     firstFormGroup: FormGroup;
     secondFormGroup: FormGroup;
 
-    constructor(private auth: AuthService,
-                private snackBar: MatSnackBar,
-                private userService: UserService) { }
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar,
+        private userService: UserService) { }
 
     ngOnInit() {
         this.user = this.auth.getPayload();

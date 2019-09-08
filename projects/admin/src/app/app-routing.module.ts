@@ -12,7 +12,6 @@ import { ResetComponent } from './views/auth/reset/reset.component';
 import { EmailComponent } from './views/auth/email/email.component';
 import { ProfileComponent } from './views/profile/profile.component';
 
-
 const routes: Routes = [
     {
         path: '', component: DashboardComponent, canActivate: [AuthGuard],
