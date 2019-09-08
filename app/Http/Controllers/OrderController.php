@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\OrderJob;
@@ -14,7 +15,7 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->middleware('auth:customer', ['only' => ['store']]);
-        $this->middleware('auth:user', ['only' => ['update', 'count']]);
+        $this->middleware('auth:user', ['only' => ['update', 'count','payment']]);
     }
 
     public function index(Request $request)
@@ -89,6 +90,31 @@ class OrderController extends Controller
     {
         $orders = Order::count();
         return response()->json($orders);
+    }
+
+    public function payment()
+    {
+        $this->validate($request, [
+            'order_id' => 'required|numeric|exists:orders,id',
+            'amount' => 'required|numeric|between:0,99999999',
+            'decrease_stock' => 'required',
+        ]);
+
+        $payment = Payment::create([
+            'order_id' => $request->input('order_id'),
+            'amount' => $request->input('amount'),
+            'payment_type_id' => 3
+        ]);
+
+        if($request->input('decrease_stock')) {
+            $order = Order::find($request->input('order_id'));
+
+            foreach ($order->products as $product) {
+                $product->decrement('stock', $product->quantity);
+            }
+        }
+
+        return response()->json($payment);
     }
 
     public function statusChanged(Request $request)

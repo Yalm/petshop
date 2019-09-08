@@ -23,5 +23,11 @@ class PaymentTypeTableSeeder extends Seeder
             'text_user' => 'Banca por Internet o Dépositos Bancarios',
             'md_icon' => 'credit_card'
         ]);
+
+        PaymentType::create([
+            'name' => 'Manual',
+            'text_user' => 'Pago Manual',
+            'md_icon' => 'attach_money'
+        ]);
     }
 }

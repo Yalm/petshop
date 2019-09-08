@@ -64,6 +64,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('orders/{id}', 'OrderController@show');
     $router->put('orders/{id}', 'OrderController@update');
     $router->get('order/count', 'OrderController@count');
+    $router->post('order/payment', 'OrderController@payment');
     $router->post('order-status-changed', 'OrderController@statusChanged');
 
     $router->get('states', 'StateController@index');
