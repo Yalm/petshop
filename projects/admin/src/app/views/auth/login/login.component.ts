@@ -16,10 +16,11 @@ export class LoginComponent implements OnInit {
     form: FormGroup;
     returnUrl: string;
 
-    constructor(public auth: AuthService,
-                private route: ActivatedRoute,
-                private snackBar: MatSnackBar,
-                private router: Router) { }
+    constructor(
+        public auth: AuthService,
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
+        private router: Router) { }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => this.returnUrl = params.return || '/');

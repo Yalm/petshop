@@ -1,4 +1,4 @@
-<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form" appLoader>
+<mat-card class="w-100 mt-n3 p-0" (ngSubmit)="update()" [formGroup]="form">
     <mat-card-content>
         <mat-tab-group class="group-pet">
             <mat-tab label="Información basica">
@@ -22,9 +22,13 @@
                     <h3 mat-subheader>Pago</h3>
 
                     <mat-list-item>
-                        <mat-icon mat-list-icon>payment</mat-icon>
+                        <mat-icon [matTooltip]="order.payment?.payment_type_id | orderIcon: 'text'" mat-list-icon>
+                            {{order.payment?.payment_type_id | orderIcon }}</mat-icon>
                         <h4 mat-line>S/ {{order.payment?.amount || '0.00'}}</h4>
-                        <h4 mat-line>{{order.payment?.reference_code || 'Sin pago' }}</h4>
+                        <h4 mat-line>{{ order.payment?.created_at | date:'medium' }} </h4>
+                        <button mat-icon-button (click)="addPayment()" *ngIf="!order.payment" matTooltip="Agregar pago">
+                            <mat-icon>add_circle</mat-icon>
+                        </button>
                     </mat-list-item>
 
                     <ng-container *ngIf="order.shipping">

@@ -30,14 +30,12 @@ export class ColorEditComponent implements OnInit {
     }
 
     update(): void {
-        this.colorService.update(this.form.value).subscribe(
-            () => {
-                this.dialogRef.close(this.form.value);
-            }, (error: HttpErrorResponse) => {
-                if (error.status === 422) {
-                    this.form.get('name').setErrors({ unique: true });
-                }
+        this.colorService.update(this.form.value).subscribe(() => {
+            this.dialogRef.close(this.form.value);
+        }, (error: HttpErrorResponse) => {
+            if (error.status === 422) {
+                this.form.get('name').setErrors({ unique: true });
             }
-        );
+        });
     }
 }

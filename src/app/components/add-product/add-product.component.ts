@@ -10,7 +10,7 @@ import { CartItem } from 'src/app/models/CartItem.model';
 export class AddProductComponent {
 
     constructor(
-        public dialogRef: MatDialogRef<AddProductComponent>,
+        private dialogRef: MatDialogRef<AddProductComponent>,
         @Inject(MAT_DIALOG_DATA) public data: CartItem
     ) { }
 

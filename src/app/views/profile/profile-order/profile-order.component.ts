@@ -18,6 +18,10 @@ export class ProfileOrderComponent implements OnInit {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.dataSource = new PetDataSource(this.paginator, 'orders', this.http);
+        this.dataSource = new PetDataSource({
+            url: 'orders',
+            http: this.http,
+            paginator: this.paginator
+        });
     }
 }

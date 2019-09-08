@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar, MatTableDataSource } from '@angular/material';
+import { MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
 import { OrderService } from '../../../services/order/order.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Order } from 'src/app/models/Order.model';
+import { Order, Payment } from 'src/app/models/Order.model';
 import { Observable } from 'rxjs';
-import { State } from '../../../models/State.model';
+import { State } from '../../../models/state.model';
 import { StateService } from '../../../services/state/state.service';
+import { PaymentCreateComponent } from '../payment-create/payment-create.component';
 
 @Component({
     selector: 'app-order-edit',
@@ -20,10 +21,12 @@ export class OrderEditComponent implements OnInit {
     order: Order;
     states: Observable<State[]>;
 
-    constructor(private route: ActivatedRoute,
-                private snackBar: MatSnackBar,
-                private stateService: StateService,
-                private orderService: OrderService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
+        private stateService: StateService,
+        private orderService: OrderService,
+        private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.order = this.route.snapshot.data.order;
@@ -35,6 +38,19 @@ export class OrderEditComponent implements OnInit {
 
         this.dataSource.data = this.order.products;
         this.states = this.stateService.index();
+    }
+
+    addPayment() {
+        this.dialog.open(PaymentCreateComponent, {
+            width: '550px',
+            data: this.order,
+            disableClose: true
+        }).afterClosed().subscribe((result: Payment) => {
+            if (result) {
+                this.order.payment = result;
+                this.snackBar.open('Pago agregado.', 'OK', { duration: 5000 });
+            }
+        });
     }
 
     update(): void {

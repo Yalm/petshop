@@ -19,11 +19,12 @@ export class ProductEditComponent implements OnInit {
     categories: Observable<Category[]>;
     colors: Observable<Color[]>;
 
-    constructor(public categoryService: CategoryService,
-                public colorService: ColorService,
-                private route: ActivatedRoute,
-                private snackBar: MatSnackBar,
-                private productService: ProductService) { }
+    constructor(
+        public categoryService: CategoryService,
+        public colorService: ColorService,
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
+        private productService: ProductService) { }
 
     ngOnInit(): void {
         const product = this.route.snapshot.data.product;

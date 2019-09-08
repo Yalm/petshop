@@ -12,8 +12,9 @@ export class EmailComponent implements OnInit {
 
     form: FormGroup;
 
-    constructor(private auth: AuthService,
-                private snackBar: MatSnackBar) { }
+    constructor(
+        private auth: AuthService,
+        private snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.form = new FormGroup({
@@ -22,7 +23,7 @@ export class EmailComponent implements OnInit {
     }
 
     sendEmail() {
-        this.auth.sendPasswordResetEmail(this.form.value.email).subscribe(response => {
+        this.auth.sendPasswordResetEmail(this.form.value.email).subscribe(() => {
             this.snackBar.open('¡Te hemos enviado por correo el enlace para restablecer tu contraseña!', 'OK', { duration: 5000 });
             this.form.reset();
         }, response => {

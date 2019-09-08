@@ -20,7 +20,12 @@ export class OrderListComponent implements OnInit {
     constructor(private http: HttpClient) { }
 
     ngOnInit() {
-        this.dataSource = new PetDataSource(this.paginator, 'orders', this.http, this.sort);
+        this.dataSource = new PetDataSource({
+            paginator: this.paginator,
+            url: 'orders',
+            http: this.http,
+            sort: this.sort
+        });
     }
 
     applyFilter(filterValue: string) {

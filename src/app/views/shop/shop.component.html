@@ -20,7 +20,7 @@
                 <mat-radio-group aria-labelledby="filter-categories" class="d-flex flex-column" color="primary"
                     (change)="setFilter('category',$event.value)">
                     <mat-radio-button *ngFor="let category of categories$ | async"
-                        [checked]="filters.has(category.name)" [value]="category.name" class="pet-check">
+                        [checked]="filters.has(category.name)" [value]="category.name">
                         {{category.name}}
                     </mat-radio-button>
                 </mat-radio-group>

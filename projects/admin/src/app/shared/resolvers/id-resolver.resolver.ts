@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class IdResolver implements Resolve<any> {
     constructor(private http: HttpClient) { }
 
-    resolve(route: ActivatedRouteSnapshot): Observable<any[]> {
-        return this.http.get<any[]>(`${route.data.path}/${route.paramMap.get('id')}`);
+    resolve<T = any>(route: ActivatedRouteSnapshot): Observable<T> {
+        return this.http.get<T>(`${route.data.path}/${route.paramMap.get('id')}`);
     }
 }

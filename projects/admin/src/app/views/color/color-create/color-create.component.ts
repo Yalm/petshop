@@ -27,14 +27,12 @@ export class ColorCreateComponent implements OnInit {
     }
 
     store(): void {
-        this.colorService.store(this.form.value).subscribe(
-            () => {
-                this.dialogRef.close(this.form.value);
-            }, (error: HttpErrorResponse) => {
-                if (error.status === 422) {
-                    this.form.get('name').setErrors({ unique: true });
-                }
+        this.colorService.store(this.form.value).subscribe(() => {
+            this.dialogRef.close(this.form.value);
+        }, (error: HttpErrorResponse) => {
+            if (error.status === 422) {
+                this.form.get('name').setErrors({ unique: true });
             }
-        );
+        });
     }
 }

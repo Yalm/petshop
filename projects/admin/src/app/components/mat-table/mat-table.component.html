@@ -1,5 +1,5 @@
-<table mat-table [dataSource]="dataSource" matSort matSortActive="updated_at" matSortDirection="desc"
-    class="mat-elevation-z8 w-100 table-petshop" [class.mt-n3]="marginTop">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100 table-petshop"
+    [class.mt-n3]="marginTop">
 
     <!-- Columns -->
     <ng-container *ngFor="let column of columns" matColumnDef="{{column.name}}">
@@ -28,7 +28,8 @@
 
         <td mat-cell *matCellDef="let element">
             <div class="d-flex justify-content-end">
-                <a mat-icon-button color="primary" matTooltip="Editar" [routerLink]="action?.link?.actionAndElement(element)">
+                <a mat-icon-button color="primary" matTooltip="Editar"
+                    [routerLink]="action?.link?.actionAndElement(element)">
                     <mat-icon aria-label="Editar">edit</mat-icon>
                 </a>
                 <button mat-icon-button color="primary" class="ml-1" matTooltip="Eliminar" (click)="destroy(element.id)"
@@ -45,7 +46,8 @@
 
 <div class="position-relative">
     <div class="left-items-bottom">
-        <button mat-icon-button aria-label="cloud_download" color="primary" *ngIf="export" (click)="exportAsExcelFile()" matTooltip="Descargar EXCEL">
+        <button mat-icon-button aria-label="cloud_download" color="primary" *ngIf="export" (click)="exportAsExcelFile()"
+            matTooltip="Descargar EXCEL">
             <mat-icon>cloud_download</mat-icon>
         </button>
     </div>

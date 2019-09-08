@@ -17,10 +17,11 @@ export class ProfileAccountComponent implements OnInit {
     form: FormGroup;
     documents: Observable<IdentificationDocument[]>;
 
-    constructor(private document: DocumentService,
-                private snackBar: MatSnackBar,
-                private userService: UserService,
-                private auth: AuthService) { }
+    constructor(
+        private document: DocumentService,
+        private snackBar: MatSnackBar,
+        private userService: UserService,
+        private auth: AuthService) { }
 
     ngOnInit(): void {
         this.auth.me().subscribe(customer => {

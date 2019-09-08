@@ -13,7 +13,7 @@ export class ProductListComponent implements OnInit {
     ngOnInit() {
         this.columns = [
             { name: 'name', colum_name: 'Nombre' },
-            { name: 'price', colum_name: 'Precio', class: 'd-none d-sm-table-cell', prefix: 'S/ ' },
+            { name: 'price', colum_name: 'Precio', class: 'd-none d-sm-table-cell', prefix: 'S/ ', pipe: "number: '1.2-2'" },
             { name: 'stock', colum_name: 'Stock', class: 'd-none d-sm-table-cell' },
             {
                 name: 'actions', link: {

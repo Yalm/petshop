@@ -12,7 +12,7 @@ export class AppComponent {
         this.activeDarkTheme(this.activeDark);
     }
 
-    activeDarkTheme(active: boolean): void {
+    private activeDarkTheme(active: boolean): void {
         if (active) {
             this.document.body.classList.add('dark-theme');
             localStorage.setItem('dark', 'true');

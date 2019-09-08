@@ -19,10 +19,11 @@ export class CustomerEditComponent implements OnInit {
     displayedColumns: string[] = ['id', 'amount', 'payment_type', 'state', 'edit'];
     dataSource = new MatTableDataSource<Order>();
 
-    constructor(public documentService: DocumentService,
-                private route: ActivatedRoute,
-                private snackBar: MatSnackBar,
-                private customerService: CustomerService) { }
+    constructor(
+        public documentService: DocumentService,
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
+        private customerService: CustomerService) { }
 
     ngOnInit() {
         const customer = this.route.snapshot.data.customer;
@@ -36,7 +37,6 @@ export class CustomerEditComponent implements OnInit {
             email: new FormControl(customer.email, [Validators.required, Validators.email])
         });
         this.dataSource.data = customer.orders;
-
         this.documents = this.documentService.index();
     }
 

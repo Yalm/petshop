@@ -19,9 +19,10 @@ export class CategoryEditComponent implements OnInit {
     categories$: Observable<Category[]>;
     isChild: boolean;
 
-    constructor(private categoryService: CategoryService,
-                private route: ActivatedRoute,
-                private snackBar: MatSnackBar) { }
+    constructor(
+        private categoryService: CategoryService,
+        private route: ActivatedRoute,
+        private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
         const category = this.route.snapshot.data.category;
