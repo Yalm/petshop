@@ -110,7 +110,7 @@ class OrderController extends Controller
             $order = Order::find($request->input('order_id'));
 
             foreach ($order->products as $product) {
-                $product->decrement('stock', $product->quantity);
+                $product->decrement('stock', $product->pivot->quantity);
             }
         }
 
