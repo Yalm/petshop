@@ -21,7 +21,7 @@ class PaymentTypeTableSeeder extends Seeder
         PaymentType::create([
             'name' => 'Déposito bancario',
             'text_user' => 'Banca por Internet o Dépositos Bancarios',
-            'md_icon' => 'credit_card'
+            'md_icon' => 'account_balance'
         ]);
 
         PaymentType::create([
