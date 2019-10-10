@@ -31,6 +31,7 @@ class OrderController extends Controller
         } else if (Auth::check()) {
             $orders = Order::latest()
                 ->where('customer_id', Auth::user()->getJWTIdentifier())
+                ->with('state')
                 ->paginate($request->query('results', 10));
             return response()->json($orders);
         }
