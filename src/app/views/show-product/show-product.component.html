@@ -1,6 +1,6 @@
 <ng-container *ngIf="product$ | async as product">
     <div class="bread-crumb">
-        <ul class="d-flex container list-unstyled">
+        <ul class="d-flex container list-unstyled mb-0">
             <li><a routerLink="/" class="text-decoration-none">Inicio</a></li>
             <li>
                 <a routerLink="/shop" [queryParams]="{ category: product.category.name}"

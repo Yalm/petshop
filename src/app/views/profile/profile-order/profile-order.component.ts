@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProfileOrderComponent implements OnInit {
 
     dataSource: PetDataSource<Order[]>;
-    displayedColumns: string[] = ['id', 'created_at', 'amount'];
+    displayedColumns: string[] = ['id', 'created_at', 'state', 'amount'];
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private http: HttpClient) { }

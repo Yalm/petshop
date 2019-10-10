@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class FooterComponent implements OnInit {
 
-    year: number = new Date().getFullYear();
+    year = new Date().getFullYear();
     categories$: Observable<Category[]>;
 
     constructor(private category: CategoryService) { }
