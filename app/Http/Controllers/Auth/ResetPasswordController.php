@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Passwords\PasswordBrokerManager;
 use Illuminate\Support\Facades\Password;
 
-class UserResetPasswordController extends Controller
+class ResetPasswordController extends Controller
 {
 
     /*
