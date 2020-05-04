@@ -1,36 +1,47 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
-import { ShopComponent } from './views/shop/shop.component';
-import { ShowProductComponent } from './views/show-product/show-product.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { CartComponent } from './views/cart/cart.component';
-import { CheckoutComponent } from './views/checkout/checkout.component';
 import { CartGuard } from './guards/cart/cart.guard';
 import { AuthGuard } from './views/auth/guards/auth/auth.guard';
-import { AboutComponent } from './views/about/about.component';
-import { ContactComponent } from './views/contact/contact.component';
-import { ServicesComponent } from './views/services/services.component';
 import { CompleteInfoGuard } from './views/auth/guards/complete-info/complete-info.guard';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'shop', component: ShopComponent },
-    { path: 'about', component: AboutComponent, },
-    { path: 'services', component: ServicesComponent },
-    { path: 'contact', component: ContactComponent },
-    { path: 'p/:url', component: ShowProductComponent },
-    { path: 'cart', component: CartComponent },
-    { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartGuard, CompleteInfoGuard] },
-    { path: '404', component: PageNotFoundComponent },
+    {
+        path: 'shop',
+        loadChildren: () => import('./views/shop/shop.module').then(m => m.ShopModule)
+    },
+    {
+        path: 'about',
+        loadChildren: () => import('./views/about/about.module').then(m => m.AboutModule)
+    },
+    {
+        path: 'services',
+        loadChildren: () => import('./views/services/service.module').then(m => m.ServiceModule)
+    },
+    {
+        path: 'contact',
+        loadChildren: () => import('./views/contact/contact.module').then(m => m.ContactModule)
+    },
+    {
+        path: 'p/:url',
+        loadChildren: () => import('./views/show-product/show-product.module').then(m => m.ShowProductModule)
+    },
+    {
+        path: 'cart',
+        loadChildren: () => import('./views/cart/cart.module').then(m => m.CartModule)
+    },
+    {
+        path: 'checkout', canActivate: [AuthGuard, CartGuard, CompleteInfoGuard],
+        loadChildren: () => import('./views/checkout/checkout.module').then(m => m.CheckoutModule)
+    },
     {
         path: '', canActivate: [AuthGuard],
         loadChildren: () => import('./views/profile/profile.module').then(m => m.ProfileModule)
-
     },
     {
         path: '', loadChildren: () => import('./views/auth/auth.module').then(m => m.AuthModule)
-
     },
     { path: '**', component: PageNotFoundComponent }
 ];

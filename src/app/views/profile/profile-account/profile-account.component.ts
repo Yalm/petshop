@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { IdentificationDocument } from 'src/app/models/IdentificationDocument.model';
 import { AuthService } from '../../auth/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-profile-account',

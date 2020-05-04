@@ -1,11 +1,45 @@
-<mat-carousel [slides]="2" [autoplay]="true" proportion="50">
-    <mat-carousel-slide #matCarouselSlide *ngFor="let slider of sliders" [image]="slider.image">
-        <div class="carousel-conten text-white text-center">
-            <img src="assets/img/logo.png" alt="image" class="image-pet-car">
-            <h3 class="car-title">{{slider.title}}</h3>
-            <img src="assets/img/paw-slider.png" alt="image" class="image-pet-sep">
-            <p>{{ slider.text }}</p>
-        </div>
-    </mat-carousel-slide>
-</mat-carousel>
-<!-- <img src="assets/img/Banner1.jpg" alt="" class="banner"> -->
+<div class="text-white text-center position-relative d-flex justify-content-center">
+    <img src="assets/img/vet-bg-1-min.jpg" alt="vet-bg-2-min" class="img-fluid">
+    <div
+        class="carousel-content px-0 col-xl-5 col-lg-7 col-md-10 position-absolute w-100 h-100 d-flex align-content-center justify-content-center flex-column">
+        <h1 class="mb-0 display-3">Pet Shop</h1>
+        <h2 class="mb-0 h2">Bienestar de la mascota</h2>
+        <img src="assets/img/paw-slider.png" alt="image" class="img-fluid mx-auto my-3" width="45%">
+        <p class="mb-0">Medicina preventiva, consulta, cirugía, imagenología, laboratorio, estética y mas...</p>
+    </div>
+</div>
+<div class="container row mx-auto mt-md-n5 pt-md-0 pt-4">
+    <div class="col-lg-6 col-md-5 px-0">
+        <img src="assets/img/teams-02-min.jpg" alt="teams" class="img-fluid">
+    </div>
+    <div class="col-lg-6 col-md-7 bg-t-primary d-flex flex-column justify-content-center text-center px-lg-5 px-0">
+        <h2 class="h2 font-weight-bold mt-3 mt-md-0">Conoce al profesional en el que puedes confiar</h2>
+        <p class="text-primary my-4 font-weight-bold">Pet Shop Veterinaria Huancayo cuenta con un médico veterinario
+            capacitado para ofrecerte uno de los mejores
+            servicios</p>
+        <p class="mb-0 d-lg-block d-none">La empresa tiene como propósito ofrecer permanente satisfacción a nuestros
+            clientes, ofreciendo productos de
+            buena calidad y a través de la prestación de servicios médicos veterinarios de la mejor calidad,
+            garantizando así el completo bienestar de nuestros pacientes mediante el trabajo de un equipo humano
+            calificado.</p>
+    </div>
+    <div class="col-md-4 text-center py-md-5 mt-5 pl-0 pr-md-3 pr-0">
+        <img class="img-fluid" src="assets/svg/pet-shampoo.svg" alt="Aseo completo">
+        <h3 class="pt-4">Personal Calificado</h3>
+        <p>Nuestra empresa cuenta con un personal altamente capacitado y comprometido con la
+            excelencia en el servicio que ofrecemos.</p>
+    </div>
+    <div class="col-md-4 text-center py-md-5 mt-5 px-md-3 px-0">
+        <img class="img-fluid" src="assets/svg/calendar-with-a-clock-time-tools.svg" alt="Examen regular">
+        <h3 class="pt-4">Horario de atención</h3>
+        <p>Pet Shop Veterinaria Huancayo abre sus puertas de 9:00 am a 9:00 pm de Lunes a Sábado y
+            de 10:00 am a 7:00 pm los Domingos.</p>
+    </div>
+    <div class="col-md-4 text-center py-md-5 mt-5 pr-0 pl-md-3 pl-0">
+        <img class="img-fluid" src="assets/svg/brush.svg" alt="Estilo">
+        <h3 class="pt-4">Servicios Veterinarios</h3>
+        <p>Pet Shop Veterinaria Huancayo ofrece servicios personalizados como: vacunaciones, desparasitaciones,
+            análisis clínico, cirugías, ecografías, rayos x, farmacia, tratamiento e internamiento y belleza canina
+            que garantizan así el completo bienestar de tu mascota.</p>
+    </div>
+</div>

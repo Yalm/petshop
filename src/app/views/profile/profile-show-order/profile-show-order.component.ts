@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order/order.service';
 import { Order } from 'src/app/models/Order.model';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'app-profile-show-order',
@@ -17,8 +18,8 @@ export class ProfileShowOrderComponent implements OnInit {
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     constructor(private route: ActivatedRoute,
-                private orderService: OrderService,
-                private router: Router) { }
+        private orderService: OrderService,
+        private router: Router) { }
 
     ngOnInit() {
         this.dataSource.paginator = this.paginator;

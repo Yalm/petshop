@@ -8,7 +8,9 @@ import { ProfileOrderComponent } from './profile-order/profile-order.component';
 import { ProfileShowOrderComponent } from './profile-show-order/profile-show-order.component';
 import { ProfileAccountComponent } from './profile-account/profile-account.component';
 import { SharedModule } from 'src/app/modules/shared.module';
-import { MatTableModule, MatSortModule, MatInputModule } from '@angular/material';
+import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
     declarations: [

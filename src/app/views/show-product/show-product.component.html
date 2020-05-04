@@ -1,4 +1,4 @@
-<ng-container *ngIf="product$ | async as product">
+<ng-container *ngIf="product$ | async as product;else loading">
     <div class="bread-crumb">
         <ul class="d-flex container list-unstyled mb-0">
             <li><a routerLink="/" class="text-decoration-none">Inicio</a></li>
@@ -39,3 +39,29 @@
         </div>
     </div>
 </ng-container>
+<ng-template #loading>
+    <div class="bread-crumb">
+        <ul class="d-flex container list-unstyled mb-0">
+            <li><div class="skeleton-box rounded" style="height: 10px; width: 58px"></div></li>
+            <li>
+                <div class="skeleton-box rounded" style="height: 10px; width: 58px"></div>
+            </li>
+            <li class="name-product">
+                <div class="skeleton-box rounded" style="height: 10px; width: 58px"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="container pt-4 d-flex justify-content-center flex-wrap">   
+        <div class="col-md-6 pb-3 d-flex justify-content-center">
+            <div class="skeleton-box w-100 rounded" style="height: 297px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="skeleton-box w-100 rounded" style="height: 46px;"></div>
+            <div class="skeleton-box rounded mt-2 mb-3" style="height: 17px; width: 50%"></div>
+            <div class="skeleton-box w-100 rounded" style="height: 84px;"></div>
+        </div>
+        <div class="col-12 pb-md-5 pb-2 pt-4">
+            <div class="skeleton-box w-100 rounded" style="height: 120px;"></div>
+        </div>
+    </div>
+</ng-template>

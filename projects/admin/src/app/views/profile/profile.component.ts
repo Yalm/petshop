@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { User } from '../../models/user.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EqualsValidator } from 'src/app/validators/equals.validator';
 
 @Component({

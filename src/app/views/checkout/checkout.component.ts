@@ -4,7 +4,7 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { CulqiService } from 'src/app/services/culqi/culqi.service';
 import { Validators, FormGroup, FormControl, ValidatorFn } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UbigeosService } from 'src/app/services/ubigeos/ubigeos.service';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -27,7 +27,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         private culqi: CulqiService,
         private snackBar: MatSnackBar,
         private ubigueo: UbigeosService,
-        private orderService: OrderService) { }
+        private orderService: OrderService
+    ) { }
 
     ngOnInit() {
         this.form = new FormGroup({

@@ -10,7 +10,7 @@ import { ResetComponent } from './reset/reset.component';
 import { EmailComponent } from './email/email.component';
 import { EmailVerifyComponent } from './email-verify/email-verify.component';
 import { SharedModule } from 'src/app/modules/shared.module';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
 import { CompleteInfoComponent } from './complete-info/complete-info.component';
 
 @NgModule({

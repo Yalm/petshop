@@ -13,7 +13,7 @@ import { SharedModule } from './modules/shared.module';
 import { HeaderComponent } from './components/header/header.component';
 // importar locales
 import localeEsAr from '@angular/common/locales/es-AR';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getDutchPaginatorIntl } from 'src/app/shared/class/MatPaginatorIntlCustom';
 
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer

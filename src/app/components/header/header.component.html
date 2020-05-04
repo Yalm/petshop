@@ -2,7 +2,8 @@
     <ul class="menu-header1 container d-flex justify-content-end list-unstyled mb-1">
         <li class="user-circle d-flex" *ngIf="auth.customer$ | async as customer;else login">
             <a routerLink="/profile">
-                <img [src]="customer.avatar" appFallbackSrc class="img-fluid rounded-circle h-100" [alt]="customer.name">
+                <img [src]="customer.avatar" appFallbackSrc class="img-fluid rounded-circle h-100"
+                    [alt]="customer.name">
             </a>
         </li>
         <ng-template #login>
@@ -34,7 +35,8 @@
         <li class="px-3"><a class="text-decoration-none" routerLink="/services">Servicios</a></li>
         <li class="px-3"><a class="text-decoration-none" routerLink="/contact">Contáctanos</a></li>
         <li class="icons-header2 ml-md-auto">
-            <a class="cart-short-view text-decoration-none d-flex align-items-center" routerLink="/cart" aria-label="Ir a la pagina de carrito">
+            <a class="cart-short-view text-decoration-none d-flex align-items-center p-0" routerLink="/cart"
+                aria-label="Ir a la pagina de carrito">
                 <i class="material-icons">shopping_cart</i>
                 <ng-container *ngIf="shoppingCartService.cart$ | async as cart">
                     <span class="cart-total mx-lg-2">S/ {{cart.subtotal | number: '1.2-2' }}</span>
@@ -42,7 +44,7 @@
                         class="count-cart bg-primary d-md-inline-flex justify-content-center text-white">{{cart.count()}}</span>
                 </ng-container>
             </a>
-            <span class="icon_search-he d-md-none">
+            <span class="d-md-none c-p ml-2">
                 <svg (click)="searchActive = true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 20 20">
                     <path

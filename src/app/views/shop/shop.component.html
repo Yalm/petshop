@@ -1,5 +1,5 @@
 <app-breadcrumb title="Productos" subTitle="Productos"></app-breadcrumb>
-<div class="container" *ngIf="pagination$ | async as pagination">
+<div class="container">
     <div class="row py-4">
         <mat-accordion class="col-lg-4 col-md-5" *ngIf="filters$ | async as filters">
             <div class="filters px-md-4" *ngIf="filters.params.length > 0">
@@ -34,7 +34,7 @@
                 <mat-radio-group aria-labelledby="filter-categories" class="d-flex flex-column"
                     (change)="setFilter('color',$event.value)">
                     <mat-radio-button *ngFor="let color of colors$ | async" [checked]="filters.has(color.name)"
-                        [value]="color.name">
+                        [value]="color.name" color="primary">
                         {{color.name}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -42,7 +42,7 @@
 
         </mat-accordion>
         <div class="col-lg-8 col-md-7">
-            <div class="row">
+            <div class="row" *ngIf="pagination$ | async as pagination;else loading">
                 <app-product *ngFor="let product of pagination.data" class="col-lg-4 col-6" [product]="product">
                 </app-product>
                 <mat-paginator [length]="pagination.total" (page)="page($event)"
@@ -51,5 +51,15 @@
                 </mat-paginator>
             </div>
         </div>
+        <ng-template #loading>
+            <div class="row">
+                <div class="col-lg-4 col-6" *ngFor="let element of [1,2,3,4,5,6,7,8,9]">
+                    <div class="skeleton-box w-100 rounded" style="height: 297px;"></div>
+                    <div class="skeleton-box w-100 rounded" style="height: 17px;"></div>
+                    <div class="skeleton-box d-block rounded" style="height: 20px; width: 60%"></div>
+                    <div class="skeleton-box rounded" style="height: 20px; width: 30%"></div>
+                </div>
+            </div>
+        </ng-template>
     </div>
 </div>

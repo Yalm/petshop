@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSort, } from '@angular/material/sort';
+import { MatTableDataSource, } from '@angular/material/table';
+import { MatPaginator, } from '@angular/material/paginator';
 import { ColorService } from 'src/app/services/color/color.service';
 import { Color } from 'src/app/models/Color.model';
 import { ColorCreateComponent } from '../color-create/color-create.component';

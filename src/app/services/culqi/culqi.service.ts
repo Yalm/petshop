@@ -8,6 +8,7 @@ declare const Culqi: any;
 @Injectable({
     providedIn: 'root'
 })
+
 export class CulqiService {
 
     private subject = new Subject<Token>();
@@ -60,13 +61,11 @@ export class CulqiService {
     }
 
     private setOptions(key: string, options?: OptionsCulqi): void {
-        Culqi.publicKey = key || environment.cuqli.public_key;
+        Culqi.publicKey = key || environment.culqi.public_key;
         Culqi.options(options || {
             style: {
-                logo: `${window.location.origin}/${environment.cuqli.logo}`,
-                style: {
-                    maincolor: '#da573e'
-                }
+                logo: `${window.location.origin}/${environment.culqi.logo}`,
+                style: { maincolor: '#da573e' }
             }
         });
     }

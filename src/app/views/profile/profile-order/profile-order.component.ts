@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Order } from 'src/app/models/Order.model';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 import { PetDataSource } from 'projects/admin/src/app/shared/class/pet-datasource';
 import { HttpClient } from '@angular/common/http';
 

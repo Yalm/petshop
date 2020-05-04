@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     img_default: 'https://i.stack.imgur.com/l60Hf.png',
-    cuqli: {
+    culqi: {
         public_key: 'pk_test_wvFSgWHdepztNJFh',
         logo: 'assets/img/logo-header.png'
     },

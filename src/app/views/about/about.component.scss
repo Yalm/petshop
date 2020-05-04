@@ -1,0 +1,11 @@
+.contact {
+    background-image: url('/assets/img/contact-07-min.jpg');
+    padding-bottom: 6rem;
+    background-size: cover;
+    .contact-form {
+        box-shadow: 0 5px 15px rgba(0,0,0,.08);
+        background-color: #ffffff;
+        padding: 40px;
+        margin-top: -80px;
+    }
+}

@@ -1,4 +1,5 @@
-import { MatPaginator, MatSort, Sort, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { DataSource } from '@angular/cdk/table';
 import { Observable, merge } from 'rxjs';
 import { map, tap, switchMap, startWith } from 'rxjs/operators';

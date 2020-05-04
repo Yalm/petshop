@@ -5,7 +5,7 @@ import { ColorService } from 'src/app/services/color/color.service';
 import { Observable } from 'rxjs';
 import { Color } from 'src/app/models/Color.model';
 import { Category } from 'src/app/models/Category.model';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from '../../../services/product/product.service';
 
 @Component({

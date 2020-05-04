@@ -8,14 +8,13 @@ import { Category } from 'src/app/models/Category.model';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Color } from 'src/app/models/Color.model';
 import { ColorService } from 'src/app/services/color/color.service';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 import { Pagination } from 'src/app/models/Pagination.model';
 import { PetParams } from 'src/app/models/Params.model';
 
 @Component({
     selector: 'app-shop',
-    templateUrl: './shop.component.html',
-    styleUrls: ['./shop.component.sass']
+    templateUrl: './shop.component.html'
 })
 export class ShopComponent implements OnInit {
 

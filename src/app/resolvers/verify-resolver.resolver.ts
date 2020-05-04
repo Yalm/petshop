@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 })
 
 export class VerifyResolver implements Resolve<any> {
-    constructor(private auth: AuthService, private router: Router) { }
+    constructor(private auth: AuthService) { }
 
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         return this.auth.verifyEmail(route.paramMap.get('token')).pipe(

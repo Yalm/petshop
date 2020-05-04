@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Product } from 'src/app/models/Product.model';
 import { ShoppingCartService } from 'src/app/services/shopping-cart/shopping-cart.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
 
 @Component({

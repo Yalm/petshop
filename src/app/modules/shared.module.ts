@@ -11,7 +11,7 @@ import { MaterialModule } from './material.module';
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule,
+        MaterialModule
     ],
     declarations: [
         FallbackSrcDirective,
